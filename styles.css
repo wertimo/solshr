@@ -1,0 +1,288 @@
+:root {
+    --primary-color: #BB6552;
+    --secondary-color: #ffffff;
+    --text-color: #333333;
+    --primary-font: Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--primary-font);
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+.logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+main {
+    max-width: 1900px;
+    margin: 0 auto;
+    padding: 0rem;
+}
+
+#hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-image: url('join-waitlist2.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#hero .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#mission, #how-it-works {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 1rem;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+#container3D canvas{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#how-it-works {
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.steps {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    
+}
+
+.p {
+    padding: 2rem;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 5vw;
+    font-weight: bold;
+    margin-bottom: 1rem;     
+} 
+
+h2, h3 {
+    font-size: 3vw;
+    font-weight: bold;
+    margin-bottom: 1rem;     
+}
+
+footer { 
+    background-color: #333;
+    color: var(--secondary-color);
+    padding: 3rem;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.icon {
+    font-size: 0;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.instagram { background-image: url('instagram-icon.png'); }
+.discord { background-image: url('discord-icon.png'); }
+.tiktok { background-image: url('tiktok-icon.png'); }
+.youtube { background-image: url('youtube-icon.png'); }
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    padding-left: 20px;
+    width: 100%;
+    max-width: 360px;
+    position: relative;
+    align-items: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;      
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 2px;
+    background-color: var(--text-color);
+    margin: 2.5px;
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        list-style: none;
+        width: 100%;
+    }
+
+    nav ul.show {
+        display: flex; 
+        
+    }
+
+    .burger {
+        display: flex;
+        position: absolute;
+        top: 1.5rem;
+        right: 1rem;
+    }
+
+    h2, h3 {
+        font-size: 5vw;    
+    }
+
+    section {
+        flex-direction: column;
+        padding-bottom: 2rem;
+    }
+
+    .image-placeholder, .content {
+        width: 100%;
+    }
+    
+    .btn {
+        font-size: 2.5vw;
+    }
+
+    #hero {
+        height: 155vw;
+    }
+
+    #how-it-works .steps {
+        flex-direction: column;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+        
+    }
+
+    .step {
+        width: 100%;
+        padding-bottom: 2rem;
+        
+    }
+}
