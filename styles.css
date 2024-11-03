@@ -3,6 +3,7 @@
     --secondary-color: #ffffff;
     --text-color: #333333;
     --primary-font: Arial, sans-serif;
+    --accent-brown: #D29B77;
 }
 
 * {
@@ -30,11 +31,13 @@ nav {
     align-items: center;
     padding: 1rem;
     background-color: var(--secondary-color);
+    position: relative;
 }
 
 nav ul {
     display: flex;
     list-style: none;
+    align-items: center;
 }
 
 nav ul li {
@@ -83,9 +86,12 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 50vh;
     text-align: center;
     padding: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 6rem;  /* Added padding at bottom to prevent overlap */
+    margin-bottom: 3rem;   /* Added margin for extra spacing */
 }
 
 section {
@@ -109,6 +115,9 @@ section {
 #how-it-works {
     flex-direction: column;
     align-items: center;
+    padding: 1rem;
+    padding-bottom: 8rem;  /* Added padding at bottom */
+    margin-bottom: 8rem;   /* Added margin for extra spacing before footer */
 }
 
 
@@ -231,18 +240,24 @@ footer {
     nav {
         flex-direction: row;
         justify-content: space-between;
+        flex-wrap: wrap;  /* Allow wrapping in mobile view */
     }
 
     nav ul {
         display: none;
-        flex-direction: column;
-        list-style: none;
-        width: 100%;
+        width: 100%;     /* Take full width */
+        justify-content: center;  /* Center items horizontally */
+        margin-top: 1rem;  /* Space between logo row and menu row */
+        order: 2;         /* Push below logo and burger */
     }
 
     nav ul.show {
-        display: flex; 
-        
+        display: flex;    /* Keep as flex when shown */
+    }
+
+    nav ul li {
+        margin-left: 1rem;  /* Horizontal spacing between items */
+        margin-right: 1rem; /* Equal spacing on both sides */
     }
 
     .burger {
@@ -286,3 +301,182 @@ footer {
         
     }
 }
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Apply animations to elements */
+#hero .content {
+    animation: fadeIn 1s ease-out;
+}
+
+#mission .content {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+.step {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.step:nth-child(1) { animation-delay: 0.4s; }
+.step:nth-child(2) { animation-delay: 0.6s; }
+.step:nth-child(3) { animation-delay: 0.8s; }
+
+.btn {
+    transition: transform 0.3s ease;
+}
+
+.btn:hover {
+    animation: pulse 1s infinite;
+}
+
+.social-icons .icon {
+    transition: transform 0.3s ease;
+}
+
+.social-icons .icon:hover {
+    transform: translateY(-5px);
+}
+
+.modal {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.burger div {
+    transition: transform 0.3s ease;
+}
+
+.burger:hover div {
+    transform: scaleX(1.2);
+}
+
+/* Initial state for elements */
+[data-animate] {
+  opacity: 0;
+  transition: all 0.8s ease-out;
+}
+
+/* Slide animations */
+[data-animate="fade-up"] {
+  transform: translateY(50px);
+}
+
+[data-animate="fade-down"] {
+  transform: translateY(-50px);
+}
+
+[data-animate="fade-left"] {
+  transform: translateX(-50px);
+}
+
+[data-animate="fade-right"] {
+  transform: translateX(50px);
+}
+
+/* Active state when element is visible */
+[data-animate].animate {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Common shape styles */
+.shape {
+  position: absolute;
+  z-index: 0;
+  background: var(--accent-brown);
+  opacity: 0.3;
+}
+
+/* Mission section */
+#mission {
+  position: relative;
+  overflow: visible;
+  min-height: 18.75rem; /* 300px */
+  padding-bottom: 6rem;  /* Added padding at bottom to prevent overlap */
+  margin-bottom: 3rem;   /* Added margin for extra spacing */
+}
+
+#mission::before {
+  content: '';
+  position: absolute;
+  width: 30.75vw;  /* 300px */
+  height: 30.75vw; /* 300px */
+  background: var(--accent-brown);
+  border-radius: 50%;
+  top: -5.75vw;   /* -50px */
+  right: -5.75vw; /* -50px */
+  opacity: 0.5;
+  z-index: -1;
+}
+
+#mission::after {
+  content: '';
+  position: absolute;
+  width: 25.75vw;  /* 300px */
+  height: 25.75vw; /* 300px */
+  background-image: radial-gradient(var(--accent-brown) 20%, transparent 21%),
+  radial-gradient(var(--accent-brown) 20%, transparent 21%);
+  background-size: 1.875vw 1.875vw;       /* 30px */
+  background-position: 0 0, 0.9375vw 0.9375vw; /* 15px */
+  border-radius: 100%;
+  bottom: -19vw; /* -100px */
+  left: -15.25vw;   /* -100px */
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* How it works section */
+#how-it-works {
+  position: relative;
+  overflow: visible;
+  min-height: 18.75rem; /* 300px */
+  padding: 1rem;
+}
+
+/*#how-it-works::before {
+  content: '';
+  position: absolute;
+  width: 8.25rem;   /* 100px */
+  /*height: 8.25rem;  /* 100px */
+  /*background: var(--accent-brown);
+  border-radius: 100%;
+  opacity: 0.2;
+  top: 3.125rem;    /* 50px */
+  /*right: -2.125rem;  /* 50px */
+  /*z-index: -1;
+}*/
+
+/*#how-it-works::after {
+  content: '';
+  position: absolute;
+  width: 13.75rem;  /* 300px */
+  /*height: 13.75rem; /* 300px */
+ /* background-image: radial-gradient(var(--accent-brown) 20%, transparent 21%),
+  radial-gradient(var(--accent-brown) 20%, transparent 21%);
+  background-size: 1.875rem 1.875rem;       /* 30px */
+ /* background-position: 0 0, 0.9375rem 0.9375rem; /* 15px */
+ /* left: -3.25rem;   /* -100px */
+ /* bottom: 3.125rem; /* 50px */
+ /* border-radius: 100%;
+ /* transform: skew(0deg);
+ /* opacity: 0.2;
+ /* z-index: -1;
+}
+
