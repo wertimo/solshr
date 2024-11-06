@@ -256,8 +256,9 @@ footer {
     }
 
     nav ul li {
-        margin-left: 1rem;  /* Horizontal spacing between items */
-        margin-right: 1rem; /* Equal spacing on both sides */
+        margin-left: 0.5rem;  /* Horizontal spacing between items */
+        margin-right: 0.5rem; /* Equal spacing on both sides */
+        font-size: 3vw;  
     }
 
     .burger {
@@ -287,6 +288,16 @@ footer {
     #hero {
         height: 155vw;
     }
+
+    #mission {
+        position: relative;
+        overflow: visible;
+        min-height: 18.75rem; /* 300px */
+        padding-bottom: 25vw;  /* Added padding at bottom to prevent overlap */
+        margin-bottom: 45vw;   /* Added margin for extra spacing */
+        padding-top: 25vw; 
+        margin-top: 1vw; /* Increased padding at top for desktop view */
+      }
 
     #how-it-works .steps {
         flex-direction: column;
@@ -375,19 +386,19 @@ footer {
 
 /* Slide animations */
 [data-animate="fade-up"] {
-  transform: translateY(50px);
+  transform: translateY(5.15vw);
 }
 
 [data-animate="fade-down"] {
-  transform: translateY(-50px);
+  transform: translateY(-5.15vw);
 }
 
 [data-animate="fade-left"] {
-  transform: translateX(-50px);
+  transform: translateX(-5.15vw);
 }
 
 [data-animate="fade-right"] {
-  transform: translateX(50px);
+  transform: translateX(5.15vw);
 }
 
 /* Active state when element is visible */
@@ -409,19 +420,22 @@ footer {
   position: relative;
   overflow: visible;
   min-height: 18.75rem; /* 300px */
-  padding-bottom: 6rem;  /* Added padding at bottom to prevent overlap */
-  margin-bottom: 3rem;   /* Added margin for extra spacing */
+  padding-top: 25vw; 
+  margin-top: 1vw; /* Increased padding at top for desktop view */
 }
 
 #mission::before {
   content: '';
   position: absolute;
-  width: 30.75vw;  /* 300px */
-  height: 30.75vw; /* 300px */
-  background: var(--accent-brown);
-  border-radius: 50%;
-  top: -5.75vw;   /* -50px */
-  right: -5.75vw; /* -50px */
+  width: 30vw;
+  height: 30vw;
+  background-image: radial-gradient(var(--accent-brown) 20%, transparent 21%),
+  radial-gradient(var(--accent-brown) 20%, transparent 21%);
+  background-size: 2.875vw 2.875vw;       /* 30px */
+  background-position: 0 0, 0.9375vw 0.9375vw; /* 15px */
+  border-radius: 100%  0 0 100%;
+  top: -5.75vw;
+  right: -0vw;
   opacity: 0.5;
   z-index: -1;
 }
@@ -436,7 +450,7 @@ footer {
   background-size: 1.875vw 1.875vw;       /* 30px */
   background-position: 0 0, 0.9375vw 0.9375vw; /* 15px */
   border-radius: 100%;
-  bottom: -19vw; /* -100px */
+  bottom: -1vw; /* -100px */
   left: -15.25vw;   /* -100px */
   opacity: 0.5;
   z-index: -1;
@@ -478,5 +492,13 @@ footer {
  /* transform: skew(0deg);
  /* opacity: 0.2;
  /* z-index: -1;
+}
+
+@media (max-width: 768px) {
+    #mission {
+        padding-top: 8vw;  /* Increased top padding for mobile view */
+        margin-bottom: 6vw;  /* Increased margin for extra spacing in mobile view */
+    }
+    /* ... existing code ... */
 }
 

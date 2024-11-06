@@ -16,7 +16,7 @@ const translations = {
         // Add more translations here
     },
     ro: {
-        "hero-title": "SOLAR ÎNCEPÂND DE LA 1€",
+        "hero-title": "ENERGIE SOLARĂ DE LA 1€",
         "join-waitlist": "ÎNSCRIEȚI-VĂ PE LISTA DE AȘTEPTARE",
         "mission": "MISIUNE",
         "how-it-works": "CUM FUNCȚIONEAZĂ",
