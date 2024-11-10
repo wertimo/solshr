@@ -12,10 +12,17 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     font-family: var(--primary-font);
     line-height: 1.5;
     color: var(--text-color);
+    display: flex;
+    flex-direction: column;
 }
 
 .logo a {
@@ -69,7 +76,7 @@ main {
     justify-content: center;
     height: 100vh;
     text-align: center;
-    background-image: url('join-waitlist2.png');
+    background-image: url('hero-image.png');
     background-size: cover;
     background-position: center;
 }
@@ -82,16 +89,15 @@ main {
     padding: 1rem;
 }
 
-#mission, #how-it-works {
+#mission {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50vh;
     text-align: center;
     padding: 1rem;
-    padding-top: 3rem;
-    padding-bottom: 6rem;  /* Added padding at bottom to prevent overlap */
-    margin-bottom: 3rem;   /* Added margin for extra spacing */
+    padding-bottom: 15vw;
+
 }
 
 section {
@@ -102,7 +108,7 @@ section {
     text-align: center;
 }
 
-#container3D canvas{
+/* #container3D canvas{
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -110,14 +116,32 @@ section {
     top: 0;
     left: 0;
     z-index: 10;
+} */
+#newsletter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    background-image: url('join-waitlist2.png');
+    background-size: cover;
+    background-position: center;
 }
 
+#newsletter .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
 #how-it-works {
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
-    padding-bottom: 8rem;  /* Added padding at bottom */
-    margin-bottom: 8rem;   /* Added margin for extra spacing before footer */
+    padding: 1vw;
+    padding-top: 15vw;
+    padding-bottom: 15vw;
+    margin-bottom: 20px;
 }
 
 
@@ -125,7 +149,8 @@ section {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    
+    padding-top: 3vw;
+    padding-bottom: 3vw;
 }
 
 .p {
@@ -136,7 +161,8 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 100%;
+    padding: 6vw;
 }
 
 .circle {
@@ -190,17 +216,24 @@ footer {
 .youtube { background-image: url('youtube-icon.png'); }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .modal-content {
@@ -295,21 +328,21 @@ footer {
         min-height: 18.75rem; /* 300px */
         padding-bottom: 25vw;  /* Added padding at bottom to prevent overlap */
         margin-bottom: 45vw;   /* Added margin for extra spacing */
-        padding-top: 25vw; 
         margin-top: 1vw; /* Increased padding at top for desktop view */
       }
 
-    #how-it-works .steps {
-        flex-direction: column;
-        padding-top: 4rem;
-        padding-bottom: 4rem;
-        
+    #how-it-works {
+        display: flex; /* Use flexbox for layout */
+        flex-direction: column; /* Display steps in a column (one after another) */
     }
 
-    .step {
+    .steps {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         width: 100%;
-        padding-bottom: 2rem;
-        
+        padding-top: 15vw;
+        padding-bottom: 15vw;
     }
 }
 
@@ -354,11 +387,14 @@ footer {
 }
 
 .social-icons .icon {
-    transition: transform 0.3s ease;
+    color: #fff; /* White text for icons */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Font size for icons */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 
 .social-icons .icon:hover {
-    transform: translateY(-5px);
+    color: #ffcc00; /* Change color on hover (example color) */
 }
 
 .modal {
@@ -492,13 +528,53 @@ footer {
  /* transform: skew(0deg);
  /* opacity: 0.2;
  /* z-index: -1;
+} */
+
+.footer {
+    background-color: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
+    padding: 40px; /* Padding around the footer */
+    text-align: center; /* Center the text */
+    width: 100%; /* Full width */
+    position: relative; /* Ensure it stays in the normal flow */
 }
 
-@media (max-width: 768px) {
-    #mission {
-        padding-top: 8vw;  /* Increased top padding for mobile view */
-        margin-bottom: 6vw;  /* Increased margin for extra spacing in mobile view */
-    }
-    /* ... existing code ... */
+.social-icons {
+    display: flex; /* Use flexbox for horizontal alignment */
+    justify-content: center; /* Center the icons */
+    gap: 1vw; /* Space between icons */
 }
+
+.social-icons .icon {
+    color: #fff; /* White text for icons */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Font size for icons */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.social-icons .icon:hover {
+    color: #ffcc00; /* Change color on hover (example color) */
+}
+
+.footer-content {
+    max-width: 1200px; /* Max width for content */
+    margin: 0 auto; /* Center the content */
+}
+
+.footer a {
+    color: #fff; /* White links */
+    text-decoration: none; /* Remove underline */
+    margin: 0 10px; /* Spacing between links */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.main-content {
+    flex: 1; /* Allow the main content to grow and take available space */
+    
+}
+
+
 
