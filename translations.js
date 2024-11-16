@@ -1,3 +1,34 @@
+function getBrowserLanguage() {
+    // Get browser language (returns something like 'en-US' or 'ro-RO')
+    const browserLang = navigator.language || navigator.userLanguage;
+    
+    // Get the first two characters (language code)
+    const langCode = browserLang.split('-')[0];
+    
+    // Check if we support this language
+    if (translations[langCode]) {
+        return langCode;
+    }
+    
+    // Default to English if language is not supported
+    return 'en';
+}
+
+function setInitialLanguage() {
+    const userLang = getBrowserLanguage();
+    const languageSelect = document.getElementById('languageSelect');
+    
+    if (languageSelect) {
+        languageSelect.value = userLang;
+        changeLanguage(); // Apply translations immediately
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setInitialLanguage();
+    // ... rest of your existing code ...
+});
+
 const translations = {
     en: {
         "hero-title": "SOLAR STARTING AT €1",

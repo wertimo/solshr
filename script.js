@@ -1,73 +1,140 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('nav a');
-    const joinWaitlistButton = document.getElementById('joinWaitlistButton');
-    const joinWaitlistHero = document.getElementById('joinWaitlistHero');
-    const formModal = document.getElementById('formModal');
-    const closeModal = document.getElementById('closeModal');
- 
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            if (link.getAttribute('href').startsWith('#')) {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
-    });
-
-    function openModal(e) {
-        e.preventDefault();
-        formModal.classList.add('show'); // Show the modal
-        console.log('Join Waitlist button clicked, opening modal.');
-    }
-
-    // Make sure these elements exist before adding event listeners
-    if (joinWaitlistButton) {
-        joinWaitlistButton.addEventListener('click', openModal);
-    }
-    if (joinWaitlistHero) {
-        joinWaitlistHero.addEventListener('click', openModal);
-    }
-    if (closeModal) {
-        closeModal.addEventListener('click', () => {
-            formModal.classList.remove('show'); // Hide the modal
-        });
-    }
-
-    window.addEventListener('click', (e) => {
-        if (e.target === formModal) {
-            formModal.classList.remove('show'); // Hide the modal when clicking outside
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+// Add this at the top of your script.js file
+function toggleMenu() {
+    const navList = document.querySelector('nav ul');
     const burger = document.querySelector('.burger');
-    const nav = document.querySelector('nav ul');
-    const navLinks = document.querySelectorAll('nav ul li a');
+    
+    if (navList) {
+        navList.classList.toggle('show');
+        console.log('Toggled menu');
+    }
 
-    // Toggle menu on burger click
-    burger.addEventListener('click', (e) => {
-        e.stopPropagation();  // Prevent click from bubbling to document
-        nav.classList.toggle('show');
-    });
+    // Optional: Animate burger menu
+    if (burger) {
+        burger.classList.toggle('active');
+    }
+}
 
-    // Close menu when clicking a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            nav.classList.remove('show');
-        });
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    // Add burger menu click handler
+    const burger = document.querySelector('.burger');
+    if (burger) {
+        burger.addEventListener('click', toggleMenu);
+    }
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!nav.contains(e.target) && !burger.contains(e.target)) {
-            nav.classList.remove('show');
+    // Get all join waitlist buttons
+    const navButton = document.getElementById('joinWaitlistButton');
+    const heroButton = document.getElementById('joinWaitlistHero');
+    const newsletterButton = document.getElementById('joinWaitlistNewsletter');
+    const modal = document.getElementById('formModal');
+    
+    console.log('Nav button:', navButton);
+    console.log('Hero button:', heroButton);
+    console.log('Newsletter button:', newsletterButton);
+    console.log('Modal element:', modal);
+
+    // Function to open modal
+    const openModal = (e) => {
+        e.preventDefault();
+        console.log('Opening modal');
+        modal.style.display = 'block';
+        modal.classList.add('show'); // Add show class for animation
+    };
+
+    // Add click handlers to all buttons
+    [navButton, heroButton, newsletterButton].forEach(button => {
+        if (button) {
+            button.addEventListener('click', openModal);
+            console.log('Added click handler to button:', button.id);
         }
     });
+
+    // Close modal function
+    const closeModal = () => {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); // Match this with your CSS transition time
+    };
+
+    // Close modal when clicking outside or on close button
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close button handler
+    const closeBtn = document.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    // Check if Firebase is loaded
+    if (typeof firebase === 'undefined') {
+        console.error('Firebase is not loaded. Check your script tags.');
+        return;
+    }
+
+    // Your Firebase configuration - make sure these values are correct
+    const firebaseConfig = {
+        apiKey: "your-actual-api-key",
+        authDomain: "solshr-social.firebaseapp.com",
+        databaseURL: "https://solshr-social-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "solshr-social",
+        storageBucket: "solshr-social.appspot.com",
+        messagingSenderId: "your-actual-sender-id",
+        appId: "your-actual-app-id"
+    };
+
+    try {
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        console.log('Firebase initialized successfully');
+
+        const form = document.getElementById('responseForm');
+        console.log('Form element:', form);
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                console.log('Form submitted - starting process');
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                console.log('Form data:', { name, email });
+
+                try {
+                    const db = firebase.database();
+                    console.log('Database reference obtained');
+
+                    const responsesRef = db.ref('responses');
+                    console.log('Responses reference created');
+
+                    const newResponse = {
+                        name: name,
+                        email: email,
+                        timestamp: Date.now()
+                    };
+                    console.log('Attempting to push data:', newResponse);
+
+                    const result = await responsesRef.push(newResponse);
+                    console.log('Push successful, new key:', result.key);
+
+                    alert('Thank you for joining the waitlist!');
+                    form.reset();
+                    modal.style.display = 'none';
+                } catch (error) {
+                    console.error('Detailed error:', {
+                        message: error.message,
+                        code: error.code,
+                        stack: error.stack,
+                        fullError: error
+                    });
+                    alert('There was an error submitting your response. Please try again.');
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Firebase initialization error:', error);
+    }
 });

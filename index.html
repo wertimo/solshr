@@ -10,14 +10,16 @@
 <body>
     <header>
         <nav>
-            <div class="logo"><a href="#">SOLSHR</a>
-                <div class="burger" onclick="toggleMenu()">
+            <div class="nav-top">
+                <div class="logo">
+                    <a href="#">SOLSHR</a>
+                </div>
+                <div class="burger">
                     <div></div>
                     <div></div>
                     <div></div>
                 </div>
             </div>
-
             <ul>
                 <li>
                     <select id="languageSelect" onchange="changeLanguage()">
@@ -29,7 +31,6 @@
                 <li><a href="#mission">MISSION</a></li>
                 <li><a href="#how-it-works">HOW IT WORKS</a></li>
                 <li><a href="#" id="joinWaitlistButton" class="btn">JOIN WAITLIST</a></li>
-
             </ul>
         </nav>
     </header>
@@ -70,7 +71,7 @@
         <section id="newsletter" data-aos="">
             <div class="content">
                 <h1 data-lang="hero-title">SOLAR STARTING AT €1</h1>
-                <a href="#" id="joinWaitlistHero" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a>
+                <a href="#" id="joinWaitlistNewsletter" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a>
             </div>
         </section> 
 
@@ -87,16 +88,19 @@
 
     <div id="formModal" class="modal">
         <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <!-- Simple Form -->
+            <span class="close">&times;</span>
             <form id="responseForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" required>
-                <button type="submit">Submit</button>
+                <h2>Join Our Waitlist</h2>
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required placeholder="Enter your name">
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                </div>
+                <button type="submit">Join Waitlist</button>
             </form>
-            <!-- End of Form -->
         </div>
     </div>
 
@@ -108,46 +112,9 @@
             mirror: true
         });
     </script>
-    <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script src="translations.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: process.env.FIREBASE_API_KEY,
-            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-            databaseURL: process.env.FIREBASE_DATABASE_URL,
-            projectId: process.env.FIREBASE_PROJECT_ID,
-            storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-            appId: process.env.FIREBASE_APP_ID,
-            measurementId: process.env.FIREBASE_MEASUREMENT_ID
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // Handle form submission
-        document.getElementById('responseForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-
-            // Add a new document with a generated ID
-            db.collection("responses").add({
-                name: name,
-                email: email
-            })
-            .then(() => {
-                alert("Response submitted successfully!");
-                document.getElementById('responseForm').reset();
-            })
-            .catch((error) => {
-                console.error("Error adding document: ", error);
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
