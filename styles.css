@@ -76,9 +76,10 @@ main {
     justify-content: center;
     height: 100vh;
     text-align: center;
-    background-image: url('hero-image.png');
+    background-image: url('hero-image2.jpg');
     background-size: cover;
     background-position: center;
+    color: var(--secondary-color);
 }
 
 #hero .content {
@@ -123,7 +124,7 @@ section {
     justify-content: center;
     height: 100vh;
     text-align: center;
-    background-image: url('join-waitlist2.png');
+    background-image: url('join-waitlist2.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -237,11 +238,42 @@ footer {
 }
 
 .modal-content {
-    padding-left: 20px;
+    background-color: #fff; /* White background for the modal */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    padding-left: 15px;
     width: 100%;
-    max-width: 360px;
+    max-width: 360px;  
     position: relative;
     align-items: center;
+}
+
+.modal-content label {
+    display: block; /* Labels on new lines */
+    margin-bottom: 8px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+}
+
+.modal-content input {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding inside inputs */
+    margin-bottom: 15px; /* Space below inputs */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px; /* Rounded corners for inputs */ 
+}
+
+.modal-content button {
+    background-color: var(--primary-color); /* Use primary color for the button */
+    color: var(--secondary-color); /* Use secondary color for text */
+    padding: 10px 15px; /* Padding inside the button */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners for button */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.modal-content button:hover {
+    background-color: var(--accent-brown); /* Use accent color on hover */
 }
 
 .close {
