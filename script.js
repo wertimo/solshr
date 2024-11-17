@@ -75,18 +75,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Your Firebase configuration - make sure these values are correct
+    // Initialize Firebase using compat version
     const firebaseConfig = {
-        apiKey: "your-actual-api-key",
-        authDomain: "solshr-social.firebaseapp.com",
-        databaseURL: "https://solshr-social-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "solshr-social",
-        storageBucket: "solshr-social.appspot.com",
-        messagingSenderId: "your-actual-sender-id",
-        appId: "your-actual-app-id"
+        apiKey: "your-api-key",
+        authDomain: "your-app.firebaseapp.com",
+        databaseURL: "your-database-url",
+        projectId: "your-project-id",
+        storageBucket: "your-app.appspot.com",
+        messagingSenderId: "your-sender-id",
+        appId: "your-app-id"
     };
 
-    // Initialize Firebase using compat version
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
