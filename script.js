@@ -86,55 +86,39 @@ document.addEventListener('DOMContentLoaded', function() {
         appId: "your-actual-app-id"
     };
 
-    try {
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        console.log('Firebase initialized successfully');
+    // Initialize Firebase using compat version
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        const form = document.getElementById('responseForm');
-        console.log('Form element:', form);
+    const form = document.getElementById('responseForm');
+    
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('Form submitted - starting process');
 
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                console.log('Form submitted - starting process');
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
 
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                console.log('Form data:', { name, email });
+            try {
+                const responsesRef = db.ref('responses');
+                
+                const newResponse = {
+                    name: name,
+                    email: email,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
 
-                try {
-                    const db = firebase.database();
-                    console.log('Database reference obtained');
+                const result = await responsesRef.push(newResponse);
+                console.log('Push successful, new key:', result.key);
 
-                    const responsesRef = db.ref('responses');
-                    console.log('Responses reference created');
-
-                    const newResponse = {
-                        name: name,
-                        email: email,
-                        timestamp: Date.now()
-                    };
-                    console.log('Attempting to push data:', newResponse);
-
-                    const result = await responsesRef.push(newResponse);
-                    console.log('Push successful, new key:', result.key);
-
-                    alert('Thank you for joining the waitlist!');
-                    form.reset();
-                    modal.style.display = 'none';
-                } catch (error) {
-                    console.error('Detailed error:', {
-                        message: error.message,
-                        code: error.code,
-                        stack: error.stack,
-                        fullError: error
-                    });
-                    alert('There was an error submitting your response. Please try again.');
-                }
-            });
-        }
-    } catch (error) {
-        console.error('Firebase initialization error:', error);
+                alert('Thank you for joining the waitlist!');
+                form.reset();
+                modal.style.display = 'none';
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('There was an error submitting your response. Please try again.');
+            }
+        });
     }
 });
