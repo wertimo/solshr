@@ -25,11 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const navButton = document.getElementById('joinWaitlistButton');
     const heroButton = document.getElementById('joinWaitlistHero');
     const newsletterButton = document.getElementById('joinWaitlistNewsletter');
+    const scrollerButton = document.getElementById('joinWaitlistScroller');
     const modal = document.getElementById('formModal');
     
     console.log('Nav button:', navButton);
     console.log('Hero button:', heroButton);
     console.log('Newsletter button:', newsletterButton);
+    console.log('Scroller button:', scrollerButton);
     console.log('Modal element:', modal);
 
     // Function to open modal
@@ -41,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Add click handlers to all buttons
-    [navButton, heroButton, newsletterButton].forEach(button => {
+    [navButton, heroButton, newsletterButton, scrollerButton].forEach(button => {
         if (button) {
             button.addEventListener('click', openModal);
             console.log('Added click handler to button:', button.id);
@@ -121,4 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+
 });

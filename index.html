@@ -28,9 +28,9 @@
                         <option value="ru">RU</option>
                     </select>
                 </li>
-                <li><a href="#mission">MISSION</a></li>
-                <li><a href="#how-it-works">HOW IT WORKS</a></li>
-                <li><a href="#" id="joinWaitlistButton" class="btn">JOIN WAITLIST</a></li>
+                <li><a href="#mission" data-lang="mission">MISSION</a></li>
+                <li><a href="#how-it-works" data-lang="how-it-works">HOW IT WORKS</a></li>
+                <li><a href="#" id="joinWaitlistButton" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a></li>
             </ul>
         </nav>
     </header>
@@ -52,18 +52,21 @@
             <div class="steps">
                 <div class="step">
                     <div class="circle">1</div>
-                    <h3 data-lang="step-1-title">INVESTING</h3>
-                    <p data-lang="step-1-description">If you're working with us you're an investor, not just a customer.</p>
+                    <h3 data-lang="step-1-title">Join the Community</h3>
+                    <p data-lang="step-1-description">Users sign up on the Solar Share platform and become part of a local solar project. Communities collaborate to propose and prioritize renewable energy initiatives tailored to their region.</p>
+                    <p data-lang="step-1-benefit">User Benefit: Get actively involved in decisions about clean energy projects in your area while supporting a sustainable future.</p>
                 </div>
                 <div class="step">
                     <div class="circle">2</div>
-                    <h3 data-lang="step-2-title">BUILDING</h3>
-                    <p data-lang="step-2-description">Most of your money invested will go directly into building and maintaining solar farms.</p>
+                    <h3 data-lang="step-2-title">Solar Energy Generation</h3>
+                    <p data-lang="step-2-description">Solar panels are installed on government-allocated land, and the generated green energy is sold to the national grid.</p>
+                    <p data-lang="step-2-benefit">User Benefit: Your community contributes to a renewable energy mix, reducing dependency on fossil fuels and improving local energy security.</p>
                 </div>
                 <div class="step">
                     <div class="circle">3</div>
-                    <h3 data-lang="step-3-title">ROI</h3>
-                    <p data-lang="step-3-description">We made it easy for every consumer to get a discount on their energy bill.</p>
+                    <h3 data-lang="step-3-title">Share the Impact</h3>
+                    <p data-lang="step-3-description">Users track the energy produced and the environmental benefits (like CO₂ reductions) through the platform while enjoying indirect economic advantages, such as reduced energy costs and local job creation.</p>
+                    <p data-lang="step-3-benefit">User Benefit: Witness the positive social, environmental, and economic impacts of your involvement in clean energy initiatives.</p>
                 </div>
             </div>
         </section>
@@ -75,6 +78,20 @@
             </div>
         </section> 
 
+        <section>
+            <div class="running-line-container">
+                <a href="#" class="running-line" id="joinWaitlistScroller">
+                    <span>JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                    <span>JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                    <span>JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                    <span>JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                </a>
+            </div>
+        </section>
     </div>
 
     <footer class="footer">
@@ -84,22 +101,25 @@
             <a href="#" class="icon tiktok"></a>
             <a href="#" class="icon youtube"></a>
         </div>
+        <div class="footer-info">
+            <p>&copy; 2024 SOLSHR. All rights reserved.</p>
+        </div>
     </footer>
 
     <div id="formModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" data-lang="close">&times;</span>
             <form id="responseForm">
-                <h2>Join Our Waitlist</h2>
+                <h2 data-lang="form-title">Join Our Waitlist</h2>
                 <div>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" required placeholder="Enter your name">
+                    <label for="name" data-lang="name-label">Name:</label>
+                    <input type="text" id="name" required placeholder="Enter your name" data-lang="name-placeholder">
                 </div>
                 <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" required placeholder="Enter your email">
+                    <label for="email" data-lang="email-label">Email:</label>
+                    <input type="email" id="email" required placeholder="Enter your email" data-lang="email-placeholder">
                 </div>
-                <button type="submit">Join Waitlist</button>
+                <button type="submit" data-lang="submit-button">Join Waitlist</button>
             </form>
         </div>
     </div>

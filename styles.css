@@ -2,8 +2,10 @@
     --primary-color: #BB6552;
     --secondary-color: #ffffff;
     --text-color: #333333;
-    --primary-font: Arial, sans-serif;
     --accent-brown: #D29B77;
+    --picture-color: #B17658;
+    --primary-font: Arial, sans-serif;
+    
 }
 
 * {
@@ -131,7 +133,7 @@ main {
     height: 50vh;
     text-align: center;
     padding: 1rem;
-    padding-bottom: 15vw;
+    padding-bottom: 0vw;
 
 }
 
@@ -139,7 +141,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 2rem;
+    padding-bottom: 0rem;
     text-align: center;
 }
 
@@ -174,9 +176,9 @@ section {
     flex-direction: column;
     align-items: center;
     padding: 1vw;
-    padding-top: 15vw;
-    padding-bottom: 15vw;
-    margin-bottom: 20px;
+    padding-top: 0vw;
+    padding-bottom: 0vw;
+    margin-bottom: 0px;
 }
 
 
@@ -410,8 +412,8 @@ footer {
         position: relative;
         overflow: visible;
         min-height: 18.75rem; /* 300px */
-        padding-bottom: 25vw;  /* Added padding at bottom to prevent overlap */
-        margin-bottom: 45vw;   /* Added margin for extra spacing */
+        padding-bottom: 0vw;  /* Added padding at bottom to prevent overlap */
+        margin-bottom: 0vw;   /* Added margin for extra spacing */
         margin-top: 1vw; /* Increased padding at top for desktop view */
       }
 
@@ -549,9 +551,9 @@ footer {
 #mission {
   position: relative;
   overflow: visible;
-  min-height: 18.75rem; /* 300px */
-  padding-top: 25vw; 
-  margin-top: 1vw; /* Increased padding at top for desktop view */
+  min-height: 50vh;  /* Changed from fixed height */
+  padding: 8vw 1rem; /* Added consistent padding */
+  margin: 4vw 0;     /* Added margin for spacing */
 }
 
 #mission::before {
@@ -590,8 +592,8 @@ footer {
 #how-it-works {
   position: relative;
   overflow: visible;
-  min-height: 18.75rem; /* 300px */
-  padding: 1rem;
+  padding: 4vw 1rem;  /* Added consistent padding */
+  margin-bottom: 4vw; /* Added bottom margin */
 }
 
 /*#how-it-works::before {
@@ -739,6 +741,88 @@ footer {
     #responseForm button {
         padding: 0.7rem;
     }
+}
+
+/* Update the running line styles */
+.running-line-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--picture-color);
+    padding: 1rem 0;
+    margin: 0;
+    font-size: 15vw;
+    color: var(--secondary-color);
+    cursor: pointer;
+}
+
+.running-line {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll 30s linear infinite; /* Change to linear for a smooth scroll */
+    text-decoration: none;
+    color: var(--secondary-color);
+    width: calc(500%); /* Set width to double the container to allow seamless scrolling */
+}
+
+.running-line span {
+    color: var(--secondary-color);
+    margin: 0 0.5em;  /* Adds horizontal spacing between elements */
+}
+
+.running-line-container:hover {
+    background-color: var(--accent-brown);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Update the section that contains the running line */
+section:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* Update footer styles */
+.footer {
+    background-color: var(--text-color);
+    color: var(--secondary-color);
+    padding: 80px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    margin-top: 0;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    section:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .footer {
+        padding: 40px;
+    }
+}
+
+.footer-info {
+    margin-top: 20px; /* Space between social icons and footer info */
+}
+
+.contact-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+
+}
+
+.contact-link:hover {
+    text-decoration: underline; /* Underline on hover for better visibility */
 }
 
 
