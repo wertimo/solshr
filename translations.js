@@ -56,6 +56,7 @@ const translations = {
         "email-label": "Email:",
         "email-placeholder": "Enter your email",
         "submit-button": "Join Waitlist",
+        "scroller-join-waitlist": "JOIN WAITLIST",
         
         // Add more translations here
     },
@@ -85,6 +86,7 @@ const translations = {
         "email-label": "Email:",
         "email-placeholder": "Introduceți emailul dvs.",
         "submit-button": "Înscrieți-vă pe lista de așteptare",
+        "scroller-join-waitlist": "ÎNSCRIEȚI-VĂ PE LISTA DE AȘTEPTARE",
         
         // Add more translations here
     },
@@ -114,6 +116,7 @@ const translations = {
         "email-label": "Электронная почта:",
         "email-placeholder": "Введите вашу электронную почту",
         "submit-button": "Присоединяйтесь к списку ожидания",
+        "scroller-join-waitlist": "ПРИСОЕДИНИТЬСЯ К ЛИСТУ ОЖИДАНИЯ",
         
         // Add more translations here
     }
