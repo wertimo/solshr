@@ -123,6 +123,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-
 });
+

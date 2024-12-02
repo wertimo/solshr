@@ -144,3 +144,8 @@ function changeLanguage() {
         }
     });
 }
+
+function toggleLanguageDropdown() {
+    const languageSelect = document.getElementById('languageSelect');
+    languageSelect.style.display = languageSelect.style.display === 'none' ? 'block' : 'none';
+}

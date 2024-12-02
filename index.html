@@ -6,6 +6,7 @@
     <title>SOLSHR - Solar Energy for Everyone</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -22,11 +23,14 @@
             </div>
             <ul>
                 <li>
-                    <select id="languageSelect" onchange="changeLanguage()">
-                        <option value="en">EN</option>
-                        <option value="ro">RO</option>
-                        <option value="ru">RU</option>
-                    </select>
+                    <div class="language-selector">
+                        <i class="fas fa-globe" onclick="toggleLanguageDropdown()"></i>
+                        <select id="languageSelect" onchange="changeLanguage()" style="display: block;">
+                            <option value="en">EN</option>
+                            <option value="ro">RO</option>
+                            <option value="ru">RU</option>
+                        </select>
+                    </div>
                 </li>
                 <li><a href="#mission" data-lang="mission">MISSION</a></li>
                 <li><a href="#how-it-works" data-lang="how-it-works">HOW IT WORKS</a></li>
