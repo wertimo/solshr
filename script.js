@@ -24,21 +24,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!window._env_) {
         console.log('Config not found, attempting to load');
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const baseUrl = isDevelopment ? '' : '/solshr'; // Add base URL for GitHub Pages
         
         const configPaths = isDevelopment 
             ? ['env-config.dev.js'] 
             : [
-                '/env-config.js',
-                './env-config.js',
-                window.location.pathname + 'env-config.js'
+                `${baseUrl}/env-config.js`,
+                `${window.location.pathname}env-config.js`
               ];
 
         console.log('Running in:', isDevelopment ? 'development' : 'production');
+        console.log('Base URL:', baseUrl);
+        console.log('Current path:', window.location.pathname);
         console.log('Attempting to load config from:', configPaths);
 
         const loadConfig = async () => {
             for (const path of configPaths) {
                 try {
+                    console.log('Trying path:', path);
                     const response = await fetch(path);
                     if (response.ok) {
                         const text = await response.text();
