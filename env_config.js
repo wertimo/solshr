@@ -32,7 +32,7 @@ if (typeof module !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
     if (!window._env_) {
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const configPaths = isDevelopment ? ['env-config.dev.js'] : ['env-config.js'];
+        const configPaths = isDevelopment ? ['env-config.dev.js'] : ['env_config.js'];
 
         const loadConfig = async () => {
             for (const path of configPaths) {
