@@ -8,7 +8,7 @@ const getConfig = () => {
   }
   // Fallback to importing the config file
   try {
-    const { getFirebaseConfig } = require('./env-config');
+    const { getFirebaseConfig } = require('./env_config.js');
     return getFirebaseConfig();
   } catch (error) {
     console.error('Failed to load Firebase config:', error);

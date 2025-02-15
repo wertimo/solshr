@@ -59,3 +59,21 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeFirebase();
     }
 });
+
+function initializeFirebase() {
+    if (typeof firebase === 'undefined') {
+        console.error('Firebase is not loaded. Check your script tags.');
+        return;
+    }
+
+    const firebaseConfig = window._env_;
+    if (!firebaseConfig || !firebaseConfig.apiKey) {
+        console.error('Firebase configuration is missing. Check env-config.js is loaded.');
+        return;
+    }
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    setupFormHandling(db);
+}
+
