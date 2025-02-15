@@ -15,6 +15,121 @@ function toggleMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Add early debugging
+    console.log('Script loaded');
+    console.log('Window _env_:', window._env_);
+    console.log('Document readyState:', document.readyState);
+    
+    // Try to load config file if not present
+    if (!window._env_) {
+        console.log('Config not found, attempting to load');
+        const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        
+        const configPaths = isDevelopment 
+            ? ['env-config.dev.js'] 
+            : [
+                '/env-config.js',
+                './env-config.js',
+                window.location.pathname + 'env-config.js'
+              ];
+
+        console.log('Running in:', isDevelopment ? 'development' : 'production');
+        console.log('Attempting to load config from:', configPaths);
+
+        const loadConfig = async () => {
+            for (const path of configPaths) {
+                try {
+                    const response = await fetch(path);
+                    if (response.ok) {
+                        const text = await response.text();
+                        console.log('Successfully loaded config from:', path);
+                        eval(text);
+                        return true;
+                    }
+                } catch (error) {
+                    console.log(`Failed to load from ${path}:`, error);
+                }
+            }
+            throw new Error('Failed to load configuration from any path');
+        };
+
+        // Initialize Firebase after config is loaded
+        loadConfig()
+            .then(() => {
+                initializeFirebase();
+            })
+            .catch(error => {
+                console.error('Configuration loading failed:', error);
+                if (isDevelopment) {
+                    console.error('Development config file (env-config.dev.js) not found. Please create this file with your development Firebase configuration.');
+                }
+            });
+    } else {
+        // Config already exists, initialize Firebase directly
+        initializeFirebase();
+    }
+
+    // Move Firebase initialization to a separate function
+    function initializeFirebase() {
+        // Check if Firebase is loaded
+        if (typeof firebase === 'undefined') {
+            console.error('Firebase is not loaded. Check your script tags.');
+            return;
+        }
+
+        const firebaseConfig = window._env_;
+
+        // Add check for valid config
+        if (!firebaseConfig || !firebaseConfig.apiKey) {
+            console.error('Firebase configuration is missing. Check env-config.js is loaded.');
+            return;
+        }
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Setup form handling
+        setupFormHandling(db);
+    }
+
+    // Move form handling to a separate function
+    function setupFormHandling(db) {
+        const form = document.getElementById('responseForm');
+        
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                console.log('Form submitted - starting process');
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const comment = document.getElementById('comment').value;
+
+                try {
+                    const responsesRef = db.ref('responses');
+                    
+                    const newResponse = {
+                        name: name,
+                        email: email,
+                        comment: comment,
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    };
+
+                    const result = await responsesRef.push(newResponse);
+                    console.log('Push successful, new key:', result.key);
+
+                    alert('Thank you for joining the waitlist!');
+                    form.reset();
+                    modal.style.display = 'none';
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    alert('There was an error submitting your response. Please try again.');
+                }
+            });
+        }
+    }
+
     // Add burger menu click handler
     const burger = document.querySelector('.burger');
     if (burger) {
@@ -69,67 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtn = document.querySelector('.close');
     if (closeBtn) {
         closeBtn.addEventListener('click', closeModal);
-    }
-
-    // Check if Firebase is loaded
-    if (typeof firebase === 'undefined') {
-        console.error('Firebase is not loaded. Check your script tags.');
-        return;
-    }
-
-    // Initialize Firebase using compat version
-    const firebaseConfig = window._env_ ? {
-        apiKey: window._env_.REACT_APP_API_KEY,
-        authDomain: window._env_.REACT_APP_AUTH_DOMAIN,
-        databaseURL: window._env_.REACT_APP_DATABASE_URL,
-        projectId: window._env_.REACT_APP_PROJECT_ID,
-        storageBucket: window._env_.REACT_APP_STORAGE_BUCKET,
-        messagingSenderId: window._env_.REACT_APP_MESSAGING_SENDER_ID,
-        appId: window._env_.REACT_APP_APP_ID
-    } : {};
-
-    // Add check for valid config
-    if (!firebaseConfig.apiKey) {
-        console.error('Firebase configuration is missing. Check env-config.js is loaded.');
-        return;
-    }
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    const form = document.getElementById('responseForm');
-    
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            console.log('Form submitted - starting process');
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const comment = document.getElementById('comment').value;
-
-            try {
-                const responsesRef = db.ref('responses');
-                
-                const newResponse = {
-                    name: name,
-                    email: email,
-                    comment: comment,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                };
-
-                const result = await responsesRef.push(newResponse);
-                console.log('Push successful, new key:', result.key);
-
-                alert('Thank you for joining the waitlist!');
-                form.reset();
-                modal.style.display = 'none';
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('There was an error submitting your response. Please try again.');
-            }
-        });
     }
 });
 

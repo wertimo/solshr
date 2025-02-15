@@ -22,32 +22,26 @@ jobs:
         run: npm install
 
       - name: Build
-        env:
-          REACT_APP_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          REACT_APP_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
-          REACT_APP_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
-          REACT_APP_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-          REACT_APP_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
-          REACT_APP_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
-          REACT_APP_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         run: npm run build
 
       - name: Generate runtime config
         run: |
           mkdir -p ./build
           echo "window._env_ = {" > ./build/env-config.js
-          echo "  REACT_APP_API_KEY: '${{ secrets.FIREBASE_API_KEY }}'," >> ./build/env-config.js
-          echo "  REACT_APP_AUTH_DOMAIN: '${{ secrets.FIREBASE_AUTH_DOMAIN }}'," >> ./build/env-config.js
-          echo "  REACT_APP_DATABASE_URL: '${{ secrets.FIREBASE_DATABASE_URL }}'," >> ./build/env-config.js
-          echo "  REACT_APP_PROJECT_ID: '${{ secrets.FIREBASE_PROJECT_ID }}'," >> ./build/env-config.js
-          echo "  REACT_APP_STORAGE_BUCKET: '${{ secrets.FIREBASE_STORAGE_BUCKET }}'," >> ./build/env-config.js
-          echo "  REACT_APP_MESSAGING_SENDER_ID: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}'," >> ./build/env-config.js
-          echo "  REACT_APP_APP_ID: '${{ secrets.FIREBASE_APP_ID }}'" >> ./build/env-config.js
+          echo "  apiKey: '${{ secrets.FIREBASE_API_KEY }}'," >> ./build/env-config.js
+          echo "  authDomain: '${{ secrets.FIREBASE_AUTH_DOMAIN }}'," >> ./build/env-config.js
+          echo "  databaseURL: '${{ secrets.FIREBASE_DATABASE_URL }}'," >> ./build/env-config.js
+          echo "  projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'," >> ./build/env-config.js
+          echo "  storageBucket: '${{ secrets.FIREBASE_STORAGE_BUCKET }}'," >> ./build/env-config.js
+          echo "  messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}'," >> ./build/env-config.js
+          echo "  appId: '${{ secrets.FIREBASE_APP_ID }}'" >> ./build/env-config.js
           echo "};" >> ./build/env-config.js
           
       - name: Update index.html
         run: |
-          sed -i 's/<head>/<head><script src="\/env-config.js"><\/script>/' ./build/index.html
+          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)
+          cp ./build/env-config.js ./build/${REPO_NAME}-env-config.js  # Create a backup copy
+          sed -i "s/<head>/<head><script src=\"env-config.js\"><\/script>/" ./build/index.html
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
