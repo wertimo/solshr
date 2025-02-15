@@ -29,32 +29,33 @@ if (typeof module !== 'undefined') {
   module.exports = { getFirebaseConfig };
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    if (!window._env_) {
-        const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const configPaths = isDevelopment ? ['env-config.dev.js'] : ['env_config.js'];
+function loadConfig() {
+    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const configPath = isDevelopment ? 'env-config.dev.js' : 'env_config.js';
 
-        const loadConfig = async () => {
-            for (const path of configPaths) {
-                try {
-                    const response = await fetch(path);
-                    if (response.ok) {
-                        const text = await response.text();
-                        eval(text);
-                        return true;
-                    }
-                } catch (error) {
-                    console.error(`Failed to load from ${path}:`, error.message);
-                }
+    console.log('Environment:', isDevelopment ? 'development' : 'production');
+    console.log('Attempting to load config from:', configPath);
+
+    fetch(configPath)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to load config from ${configPath}`);
             }
-            throw new Error('Failed to load configuration from any path');
-        };
-
-        loadConfig().then(() => {
+            return response.text();
+        })
+        .then(text => {
+            eval(text);
+            console.log('Successfully loaded config from:', configPath);
             initializeFirebase();
-        }).catch(error => {
+        })
+        .catch(error => {
             console.error('Configuration loading failed:', error);
         });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (!window._env_) {
+        loadConfig();
     } else {
         initializeFirebase();
     }
@@ -75,5 +76,39 @@ function initializeFirebase() {
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     setupFormHandling(db);
+}
+
+function setupFormHandling(db) {
+    const form = document.getElementById('responseForm');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log('Form submitted - starting process');
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const comment = document.getElementById('comment').value;
+
+            try {
+                const responsesRef = db.ref('responses');
+                const newResponse = {
+                    name: name,
+                    email: email,
+                    comment: comment,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+
+                const result = await responsesRef.push(newResponse);
+                console.log('Push successful, new key:', result.key);
+
+                alert('Thank you for joining the waitlist!');
+                form.reset();
+                modal.style.display = 'none';
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('There was an error submitting your response. Please try again.');
+            }
+        });
+    }
 }
 
