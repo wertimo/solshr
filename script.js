@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const comment = document.getElementById('comment').value;
 
             try {
                 const responsesRef = db.ref('responses');
@@ -108,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const newResponse = {
                     name: name,
                     email: email,
+                    comment: comment,
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 };
 

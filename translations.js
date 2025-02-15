@@ -10,8 +10,8 @@ function getBrowserLanguage() {
         return langCode;
     }
     
-    // Default to English if language is not supported
-    return 'en';
+    // Default to Romanian if language is not supported
+    return 'ro';
 }
 
 function setInitialLanguage() {
@@ -55,6 +55,8 @@ const translations = {
         "name-placeholder": "Enter your name",
         "email-label": "Email:",
         "email-placeholder": "Enter your email",
+        "comment-label": "Comment (optional):",
+        "comment-placeholder": "Enter your comment (optional)",
         "submit-button": "Join Waitlist",
         "scroller-join-waitlist": "JOIN WAITLIST",
         
@@ -85,6 +87,8 @@ const translations = {
         "name-placeholder": "Introduceți numele dvs.",
         "email-label": "Email:",
         "email-placeholder": "Introduceți emailul dvs.",
+        "comment-label": "Comentariu (opțional):",
+        "comment-placeholder": "Introduceți comentariul dvs. (opțional)",
         "submit-button": "Înscrieți-vă pe lista de așteptare",
         "scroller-join-waitlist": "ÎNSCRIEȚI-VĂ PE LISTA DE AȘTEPTARE",
         
@@ -115,6 +119,8 @@ const translations = {
         "name-placeholder": "Введите ваше имя",
         "email-label": "Электронная почта:",
         "email-placeholder": "Введите вашу электронную почту",
+        "comment-label": "Комментарий (необязательно):",
+        "comment-placeholder": "Введите ваш комментарий (необязательно)",
         "submit-button": "Присоединяйтесь к списку ожидания",
         "scroller-join-waitlist": "ПРИСОЕДИНИТЬСЯ К ЛИСТУ ОЖИДАНИЯ",
         
