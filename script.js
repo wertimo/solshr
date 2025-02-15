@@ -27,27 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const configPaths = isDevelopment 
             ? ['env-config.dev.js'] 
-            : [
-                './env-config.js',
-                '../env-config.js',
-                'env-config.js'
-              ];
+            : ['env-config.js'];
 
         console.log('Environment:', isDevelopment ? 'development' : 'production');
-        console.log('Location:', window.location.href);
-        console.log('Pathname:', window.location.pathname);
-        console.log('Config paths to try:', configPaths);
+        console.log('Current path:', window.location.pathname);
 
         const loadConfig = async () => {
             for (const path of configPaths) {
                 try {
                     console.log('Attempting to load config from:', path);
-                    const response = await fetch(path, {
-                        headers: {
-                            'Cache-Control': 'no-cache',
-                            'Pragma': 'no-cache'
-                        }
-                    });
+                    const response = await fetch(path);
                     if (response.ok) {
                         const text = await response.text();
                         console.log('Successfully loaded config from:', path);
