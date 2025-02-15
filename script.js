@@ -24,24 +24,33 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!window._env_) {
         console.log('Config not found, attempting to load');
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const baseUrl = isDevelopment ? '' : '/solshr'; // Add base URL for GitHub Pages
+        
+        // Get the base URL for the environment
+        const getBaseUrl = () => {
+            if (isDevelopment) return '';
+            const pathSegments = window.location.pathname.split('/');
+            return pathSegments[1] ? `/${pathSegments[1]}` : '';
+        };
+        
+        const baseUrl = getBaseUrl();
         
         const configPaths = isDevelopment 
             ? ['env-config.dev.js'] 
             : [
                 `${baseUrl}/env-config.js`,
-                `${window.location.pathname}env-config.js`
+                './env-config.js',
+                'env-config.js'
               ];
 
-        console.log('Running in:', isDevelopment ? 'development' : 'production');
+        console.log('Environment:', isDevelopment ? 'development' : 'production');
         console.log('Base URL:', baseUrl);
         console.log('Current path:', window.location.pathname);
-        console.log('Attempting to load config from:', configPaths);
+        console.log('Config paths to try:', configPaths);
 
         const loadConfig = async () => {
             for (const path of configPaths) {
                 try {
-                    console.log('Trying path:', path);
+                    console.log('Attempting to load config from:', path);
                     const response = await fetch(path);
                     if (response.ok) {
                         const text = await response.text();
@@ -50,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         return true;
                     }
                 } catch (error) {
-                    console.log(`Failed to load from ${path}:`, error);
+                    console.log(`Failed to load from ${path}:`, error.message);
                 }
             }
             throw new Error('Failed to load configuration from any path');
