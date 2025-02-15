@@ -78,15 +78,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Initialize Firebase using compat version
-    const firebaseConfig = {
-        apiKey: "your-api-key",
-        authDomain: "your-app.firebaseapp.com",
-        databaseURL: "your-database-url",
-        projectId: "your-project-id",
-        storageBucket: "your-app.appspot.com",
-        messagingSenderId: "your-sender-id",
-        appId: "your-app-id"
-    };
+    const firebaseConfig = window._env_ ? {
+        apiKey: window._env_.REACT_APP_API_KEY,
+        authDomain: window._env_.REACT_APP_AUTH_DOMAIN,
+        databaseURL: window._env_.REACT_APP_DATABASE_URL,
+        projectId: window._env_.REACT_APP_PROJECT_ID,
+        storageBucket: window._env_.REACT_APP_STORAGE_BUCKET,
+        messagingSenderId: window._env_.REACT_APP_MESSAGING_SENDER_ID,
+        appId: window._env_.REACT_APP_APP_ID
+    } : {};
+
+    // Add check for valid config
+    if (!firebaseConfig.apiKey) {
+        console.error('Firebase configuration is missing. Check env-config.js is loaded.');
+        return;
+    }
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
