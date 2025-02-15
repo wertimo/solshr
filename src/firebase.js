@@ -6,14 +6,7 @@ const getConfig = () => {
   if (typeof window !== 'undefined' && window._env_) {
     return window._env_;
   }
-  // Fallback to importing the config file
-  try {
-    const { getFirebaseConfig } = require('./env_config.js');
-    return getFirebaseConfig();
-  } catch (error) {
-    console.error('Failed to load Firebase config:', error);
-    throw error;
-  }
+  throw new Error('Firebase configuration is missing.');
 };
 
 const app = initializeApp(getConfig());

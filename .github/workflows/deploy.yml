@@ -13,9 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy env-config.js
-        run: cp src/env-config.js build/
-
       - name: Generate runtime config
         run: |
           echo "Generating runtime env-config.js..."
@@ -30,13 +27,6 @@ jobs:
             appId: "${{ secrets.FIREBASE_APP_ID }}"
           };
           EOF
-
-      - name: Verify build files
-        run: |
-          echo "Contents of build directory:"
-          ls -la ./build/
-          echo "Config file exists:"
-          test -f ./build/env-config.js && echo "Yes" || echo "No"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
