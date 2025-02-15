@@ -26,35 +26,42 @@ jobs:
 
       - name: Generate runtime config
         run: |
-          mkdir -p ./build
-          cat > ./build/env-config.js << 'EOF'
-          window._env_ = {
-            apiKey: "${{ secrets.FIREBASE_API_KEY }}",
-            authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
-            databaseURL: "${{ secrets.FIREBASE_DATABASE_URL }}",
-            projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
-            storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
-            messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
-            appId: "${{ secrets.FIREBASE_APP_ID }}"
-          };
-          EOF
+          echo "Generating env-config.js..."
+          echo "window._env_ = {
+            apiKey: '${{ secrets.FIREBASE_API_KEY }}',
+            authDomain: '${{ secrets.FIREBASE_AUTH_DOMAIN }}',
+            databaseURL: '${{ secrets.FIREBASE_DATABASE_URL }}',
+            projectId: '${{ secrets.FIREBASE_PROJECT_ID }}',
+            storageBucket: '${{ secrets.FIREBASE_STORAGE_BUCKET }}',
+            messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
+            appId: '${{ secrets.FIREBASE_APP_ID }}'
+          };" > ./build/env-config.js
 
-      - name: Verify config file
+      - name: Verify build directory
         run: |
-          echo "Checking env-config.js exists and contents:"
+          echo "Build directory contents:"
           ls -la ./build/
+          echo "Config file contents:"
           cat ./build/env-config.js
-          
+          echo "File permissions:"
+          stat ./build/env-config.js
+
       - name: Update index.html
         run: |
-          # Remove any existing script tag for env-config.js
-          sed -i '/<script.*env-config.js.*>/d' ./build/index.html
-          # Add the new script tag right after the head tag
-          sed -i '/<head>/a \    <script src="/solshr/env-config.js"></script>' ./build/index.html
-          
+          echo "Updating index.html..."
+          sed -i 's|<script src="/solshr/env-config.js"></script>|<script src="./env-config.js"></script>|' ./build/index.html
+          echo "Updated index.html contents:"
+          grep -A 5 "<head>" ./build/index.html
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build
           clean: true
+
+      - name: Verify deployment
+        run: |
+          echo "Deployment complete. Please verify the following URLs are accessible:"
+          echo "- https://wertimo.github.io/solshr/"
+          echo "- https://wertimo.github.io/solshr/env-config.js"

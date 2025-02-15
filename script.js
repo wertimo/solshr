@@ -25,33 +25,29 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Config not found, attempting to load');
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         
-        // Get the base URL for the environment
-        const getBaseUrl = () => {
-            if (isDevelopment) return '';
-            const pathSegments = window.location.pathname.split('/');
-            return pathSegments[1] ? `/${pathSegments[1]}` : '';
-        };
-        
-        const baseUrl = getBaseUrl();
-        
         const configPaths = isDevelopment 
             ? ['env-config.dev.js'] 
             : [
-                `${baseUrl}/env-config.js`,
                 './env-config.js',
+                '../env-config.js',
                 'env-config.js'
               ];
 
         console.log('Environment:', isDevelopment ? 'development' : 'production');
-        console.log('Base URL:', baseUrl);
-        console.log('Current path:', window.location.pathname);
+        console.log('Location:', window.location.href);
+        console.log('Pathname:', window.location.pathname);
         console.log('Config paths to try:', configPaths);
 
         const loadConfig = async () => {
             for (const path of configPaths) {
                 try {
                     console.log('Attempting to load config from:', path);
-                    const response = await fetch(path);
+                    const response = await fetch(path, {
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
                     if (response.ok) {
                         const text = await response.text();
                         console.log('Successfully loaded config from:', path);
