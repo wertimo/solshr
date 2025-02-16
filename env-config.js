@@ -27,7 +27,7 @@ const getFirebaseConfig = () => {
 window._env_ = {
     apiKey: "${{ secrets.FIREBASE_API_KEY }}",
     authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
-    databaseURL: "${{ secrets.FIREBASE_DATABASE_URL }}",
+    databaseURL: "https://solshr-social-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
     storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
     messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
