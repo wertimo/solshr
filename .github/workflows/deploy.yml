@@ -1,4 +1,3 @@
-# .github/workflows/deploy.yml
 name: Deploy to GitHub Pages
 
 on:
@@ -17,18 +16,17 @@ jobs:
       - name: Generate runtime config
         run: |
           echo "Generating runtime env-config.js..."
-          cat > ./build/env-config.js << EOF
-          window._env_ = {
-            apiKey: "${{ secrets.FIREBASE_API_KEY }}",
-            authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
-            databaseURL: "${{ secrets.FIREBASE_DATABASE_URL }}",
-            projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
-            storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
-            messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
-            appId: "${{ secrets.FIREBASE_APP_ID }}",
-            measurementId: "${{ secrets.FIREBASE_MEASUREMENT_ID }}"
-          };
-          EOF
+          touch ./build/env-config.js
+          echo "window._env_ = {" >> ./build/env-config.js
+          echo "  apiKey: \"${{ secrets.FIREBASE_API_KEY }}\"," >> ./build/env-config.js
+          echo "  authDomain: \"${{ secrets.FIREBASE_AUTH_DOMAIN }}\"," >> ./build/env-config.js
+          echo "  databaseURL: \"${{ secrets.FIREBASE_DATABASE_URL }}\"," >> ./build/env-config.js
+          echo "  projectId: \"${{ secrets.FIREBASE_PROJECT_ID }}\"," >> ./build/env-config.js
+          echo "  storageBucket: \"${{ secrets.FIREBASE_STORAGE_BUCKET }}\"," >> ./build/env-config.js
+          echo "  messagingSenderId: \"${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}\"," >> ./build/env-config.js
+          echo "  appId: \"${{ secrets.FIREBASE_APP_ID }}\"," >> ./build/env-config.js
+          echo "  measurementId: \"${{ secrets.FIREBASE_MEASUREMENT_ID }}\"" >> ./build/env-config.js
+          echo "};" >> ./build/env-config.js
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

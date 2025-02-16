@@ -1,3 +1,28 @@
+// Function to get Firebase configuration
+const getFirebaseConfig = () => {
+    // Check if the _env_ object is defined
+    const config = window._env_;
+    
+    // If the configuration is not found, log an error and return null
+    if (!config) {
+        console.error('Firebase configuration not found');
+        return null;
+    }
+    
+    // Return the Firebase configuration object
+    return {
+        apiKey: config.apiKey,
+        authDomain: config.authDomain,
+        databaseURL: config.databaseURL,
+        projectId: config.projectId,
+        storageBucket: config.storageBucket,
+        messagingSenderId: config.messagingSenderId,
+        appId: config.appId,
+        measurementId: config.measurementId || null // Optional
+    };
+};
+
+
 // env-config.js
 window._env_ = {
     apiKey: "${{ secrets.FIREBASE_API_KEY }}",
@@ -102,4 +127,5 @@ function setupFormHandling(db) {
         });
     }
 }
+
 
