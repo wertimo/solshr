@@ -2,6 +2,15 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
+// Initialize Firebase
+const firebaseConfig = getFirebaseConfig();
+if (firebaseConfig) {
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+} else {
+  console.error('Failed to initialize Firebase due to missing configuration.');
+}
+
 // Function to get Firebase configuration
 const getFirebaseConfig = () => {
   const config = window._env_;
@@ -23,11 +32,3 @@ const getFirebaseConfig = () => {
   };
 };
 
-// Initialize Firebase
-const firebaseConfig = getFirebaseConfig();
-if (firebaseConfig) {
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-} else {
-  console.error('Failed to initialize Firebase due to missing configuration.');
-}
