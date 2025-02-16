@@ -23,7 +23,7 @@ const getFirebaseConfig = () => {
 };
 
 
-// env-config.js
+// For GitHub Actions
 window._env_ = {
     apiKey: "${{ secrets.FIREBASE_API_KEY }}",
     authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
@@ -32,7 +32,7 @@ window._env_ = {
     storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
     messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
     appId: "${{ secrets.FIREBASE_APP_ID }}",
-    measurementId: "${{ secrets.FIREBASE_MEASUREMENT_ID }}"
+    measurementId: "G-Z8NXBVCDY9"
   };
 
 // For browser usage
@@ -45,95 +45,98 @@ if (typeof module !== 'undefined') {
   module.exports = { getFirebaseConfig };
 }
 
-function loadConfig() {
-    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const configPath = isDevelopment ? 'env-config.dev.js' : 'env_config.js';
+// function loadConfig() {
+//     const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+//     const configPath = isDevelopment ? 'env-config.dev.js' : 'env_config.js';
 
-    console.log('Environment:', isDevelopment ? 'development' : 'production');
-    console.log('Attempting to load config from:', configPath);
+//     console.log('Environment:', isDevelopment ? 'development' : 'production');
+//     console.log('Attempting to load config from:', configPath);
 
-    fetch(configPath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to load config from ${configPath}`);
-            }
-            return response.text();
-        })
-        .then(text => {
-            eval(text);
-            console.log('Successfully loaded config from:', configPath);
-            initializeFirebase();
-        })
-        .catch(error => {
-            console.error('Configuration loading failed:', error);
-        });
-}
+//     fetch(configPath)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(`Failed to load config from ${configPath}`);
+//             }
+//             return response.text();
+//         })
+//         .then(text => {
+//             eval(text);
+//             console.log('Successfully loaded config from:', configPath);
+//             initializeFirebase();
+//         })
+//         .catch(error => {
+//             console.error('Configuration loading failed:', error);
+//         });
+// }
 
-document.addEventListener('DOMContentLoaded', function() {
-    if (!window._env_) {
-        loadConfig();
-    } else {
-        initializeFirebase();
-    }
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     if (!window._env_) {
+//         loadConfig();
+//     } else {
+//         initializeFirebase();
+//     }
+// });
 
-function initializeFirebase() {
-    if (typeof firebase === 'undefined') {
-        console.error('Firebase is not loaded. Check your script tags.');
-        return;
-    }
+// function initializeFirebase() {
+//     if (typeof firebase === 'undefined') {
+//         console.error('Firebase is not loaded. Check your script tags.');
+//         return;
+//     }
 
-    const firebaseConfig = window._env_;
-    if (!firebaseConfig || !firebaseConfig.apiKey) {
-        console.error('Firebase configuration is missing. Check env-config.js is loaded.');
-        return;
-    }
+//     const firebaseConfig = window._env_;
+//     if (!firebaseConfig || !firebaseConfig.apiKey) {
+//         console.error('Firebase configuration is missing. Check env-config.js is loaded.');
+//         return;
+//     }
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    setupFormHandling(db);
-}
+//     firebase.initializeApp(firebaseConfig);
+//     const db = firebase.database();
+//     setupFormHandling(db);
+// }
 
-function setupFormHandling(db) {
-    const form = document.getElementById('responseForm');
-    const modal = document.getElementById('your-modal-id'); // Replace with actual modal ID
+// function setupFormHandling(db) {
+//     const form = document.getElementById('responseForm');
+//     const modal = document.getElementById('your-modal-id'); // Replace with actual modal ID
 
-    if (form) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            console.log('Form submitted - starting process');
+//     if (form) {
+//         // Remove any previously attached event listener
+//         form.removeEventListener('submit', handleFormSubmit); 
+//         form.addEventListener('submit', handleFormSubmit);
+//     }
 
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const comment = document.getElementById('comment').value;
+//     async function handleFormSubmit(e) {
+//         e.preventDefault();
+//         console.log('Form submitted - starting process');
 
-            try {
-                const responsesRef = db.ref('responses');
-                const newResponse = {
-                    name: name,
-                    email: email,
-                    comment: comment,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                };
+//         const name = document.getElementById('name').value;
+//         const email = document.getElementById('email').value;
+//         const comment = document.getElementById('comment').value;
 
-                const result = await responsesRef.push(newResponse);
-                console.log('Push successful, new key:', result.key);
+//         try {
+//             const responsesRef = db.ref('responses');
+//             const newResponse = {
+//                 name: name,
+//                 email: email,
+//                 comment: comment,
+//                 timestamp: firebase.database.ServerValue.TIMESTAMP
+//             };
 
-                alert('Thank you for joining the waitlist!');
-                form.reset();
+//             const result = await responsesRef.push(newResponse);
+//             console.log('Push successful, new key:', result.key);
 
-                // Check if modal exists before hiding it
-                if (modal) {
-                    modal.style.display = 'none';
-                } else {
-                    console.warn('Modal element not found.');
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('There was an error submitting your response. Please try again.');
-            }
-        });
-    }
-}
+//             alert('Thank you for joining the waitlist!');
+//             form.reset();
 
+//             // Check if modal exists before hiding it
+//             if (modal) {
+//                 modal.style.display = 'none';
+//             } else {
+//                 console.warn('Modal element not found.');
+//             }
+//         } catch (error) {
+//             console.error('Submission error:', error);
+//             alert('There was an error submitting your response. Please try again.');
+//         }
+//     }
+// }
 
