@@ -96,6 +96,8 @@ function initializeFirebase() {
 
 function setupFormHandling(db) {
     const form = document.getElementById('responseForm');
+    const modal = document.getElementById('your-modal-id'); // Replace with actual modal ID
+
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -119,7 +121,13 @@ function setupFormHandling(db) {
 
                 alert('Thank you for joining the waitlist!');
                 form.reset();
-                modal.style.display = 'none';
+
+                // Check if modal exists before hiding it
+                if (modal) {
+                    modal.style.display = 'none';
+                } else {
+                    console.warn('Modal element not found.');
+                }
             } catch (error) {
                 console.error('Submission error:', error);
                 alert('There was an error submitting your response. Please try again.');
