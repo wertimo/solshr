@@ -1,6 +1,12 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { logEvent } from "firebase/analytics";
+
+// Log a test event
+logEvent(analytics, 'notification_received', {
+  message: 'Test notification'
+});
 
 // Initialize Firebase
 const firebaseConfig = getFirebaseConfig();

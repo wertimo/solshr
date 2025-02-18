@@ -139,11 +139,16 @@
             once: false,
             mirror: true
         });
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    </script>   
     <script src="translations.js"></script>
     <script src="env-config.js"></script>
-    <script src="script.js"></script>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <!-- Firebase Analytics -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
+    <!-- Your custom script -->
+    <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
