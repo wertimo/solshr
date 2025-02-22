@@ -244,6 +244,7 @@ footer {
     color: var(--secondary-color);
     padding: 3rem;
     text-align: center;
+    list-style: none;
 }
 
 .social-icons {
@@ -626,7 +627,7 @@ footer {
 
 .footer {
     background-color: #333; /* Dark background for the footer */
-    color: #fff; /* White text color */
+    color: var(--secondary-color);
     padding: 40px; /* Padding around the footer */
     text-align: center; /* Center the text */
     width: 100%; /* Full width */
@@ -855,5 +856,43 @@ html {
     font-size: 1rem; /* Adjust font size if needed */
 }
 
+/* Navigation Bar Icons */
+.nav-icon i {
+    color: inherit; /* Use the text color of the nav bar */
+    font-size: 24px; /* Adjust size as needed */
+}
+
+/* Footer Icons */
+.footer-icon i {
+    color: var(--secondary-color); /* Set secondary color for footer icons */
+    font-size: 1.5rem; /* Adjust size as needed */
+    list-style: none;
+}
+
+/* Individual Icon Styles for Navigation */
+.nav-icon .icon-instagram {
+    font-size: 26px; /* Slightly bigger for Instagram */
+}
+
+.nav-icon .icon-tiktok {
+    font-size: 24px; /* Default size for TikTok */
+}
+
+.nav-icon .icon-youtube {
+    font-size: 27px; /* Default size for YouTube */
+}
+
+/* Individual Icon Styles for Footer */
+.footer-icon .icon-instagram {
+    font-size: 26px; /* Slightly bigger for Instagram */
+}
+
+.footer-icon .icon-tiktok {
+    font-size: 24px; /* Default size for TikTok */
+}
+
+.footer-icon .icon-youtube {
+    font-size: 26px; /* Default size for YouTube */
+}
 
 
