@@ -188,5 +188,36 @@ document.addEventListener('DOMContentLoaded', function() {
     if (closeBtn) {
         closeBtn.addEventListener('click', closeModal);
     }
+
+    // Dark Mode Toggle Functionality
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    if (themeToggleButton) { // Check if the button exists
+        themeToggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Change the icon based on the current mode
+            if (body.classList.contains('dark-mode')) {
+                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>'; // Sun icon for light mode
+            } else {
+                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>'; // Moon icon for dark mode
+            }
+        });
+    }
+
+    // Add to your script.js file
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('languageSelect');
+        const icon = document.querySelector('.fa-globe');
+        
+        // Skip if clicking on the globe icon (let the toggle function handle it)
+        if (event.target === icon) return;
+        
+        // Hide dropdown when clicking outside of it
+        if (dropdown && dropdown.style.display === 'block' && !dropdown.contains(event.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
 });
 

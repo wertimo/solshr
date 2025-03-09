@@ -1,11 +1,18 @@
 :root {
     --primary-color: #BB6552;
-    --secondary-color: #ffffff;
-    --text-color: #333333;
+    --white-text-color: #ffffff; /* Adjusted for visibility */
+    --text-color: #333333; /* Default text color */
+    --background-color: #ffffff; /* Default background color */
     --accent-brown: #D29B77;
     --picture-color: #B17658;
     --primary-font: Arial, sans-serif;
     
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+    --background-color: #333333; /* Dark background */
+    --text-color: #ffffff; /* Light text color */
 }
 
 * {
@@ -17,14 +24,15 @@
 html, body {
     height: 100%;
     margin: 0;
+    color: var(--text-color);
 }
 
 body {
     font-family: var(--primary-font);
     line-height: 1.5;
-    color: var(--text-color);
     display: flex;
     flex-direction: column;
+    background-color: var(--background-color);
 }
 
 .logo a {
@@ -38,7 +46,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--secondary-color);
+    background-color: var(--background-color);
     position: relative;
     padding-left: 1rem;
 }
@@ -92,7 +100,7 @@ nav ul li a {
 
 .btn {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     padding: 0.5rem 0.8rem;
     border-radius: 5px;
     text-decoration: none;
@@ -104,6 +112,7 @@ main {
     max-width: 1900px;
     margin: 0 auto;
     padding: 0rem;
+    
 }
 
 #hero {
@@ -115,7 +124,8 @@ main {
     background-image: url('hero-image2.jpg');
     background-size: cover;
     background-position: center;
-    color: var(--secondary-color);
+    color: var(--white-text-color);
+    
 }
 
 #hero .content {
@@ -124,6 +134,7 @@ main {
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    background-color: transparent;
 }
 
 #mission {
@@ -145,6 +156,9 @@ section {
     text-align: center;
 }
 
+section, div {
+    background-color: inherit;
+}
 /* #container3D canvas{
     width: 100vw;
     height: 100vh;
@@ -163,6 +177,7 @@ section {
     background-image: url('join-waitlist2.jpg');
     background-size: cover;
     background-position: center;
+    
 }
 
 #newsletter .content {
@@ -171,6 +186,7 @@ section {
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    background-color: transparent;
 }
 #how-it-works {
     flex-direction: column;
@@ -179,6 +195,7 @@ section {
     padding-top: 0vw;
     padding-bottom: 0vw;
     margin-bottom: 0px;
+    background-color: var(--background-color);
 }
 
 
@@ -220,7 +237,7 @@ section {
     height: 50px;
     border-radius: 50%;
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -241,7 +258,7 @@ h2, h3 {
 
 footer { 
     background-color: #333;
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     padding: 3rem;
     text-align: center;
     list-style: none;
@@ -284,7 +301,7 @@ footer {
 }
 
 .modal-content {
-    background-color: var(--secondary-color);
+    background-color: var(--background-color);
     margin: 15% auto;
     padding: 2rem;
     width: 90%;
@@ -324,7 +341,7 @@ footer {
 .burger div {
     width: 30px;
     height: 1px;
-    background-color: var(--text-color);
+    background-color: var(--background-color);
     margin: 0px;
     transition: all 0.3s ease;
 }
@@ -376,8 +393,8 @@ footer {
         flex-direction: column;
         align-items: center;
         padding: 1rem;
-        background-color: var(--secondary-color);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        background-color: var(--background-color);
+    
     }
 
     nav ul.show {
@@ -414,11 +431,13 @@ footer {
         padding-bottom: 0vw;  /* Added padding at bottom to prevent overlap */
         margin-bottom: 0vw;   /* Added margin for extra spacing */
         margin-top: 1vw; /* Increased padding at top for desktop view */
+        background-color: var(--background-color);
       }
 
     #how-it-works {
         display: flex; /* Use flexbox for layout */
         flex-direction: column; /* Display steps in a column (one after another) */
+        background-color: var(--background-color);
     }
 
     .steps {
@@ -486,10 +505,6 @@ footer {
     text-decoration: none; /* Remove underline */
     font-size: 18px; /* Font size for icons */
     transition: color 0.3s ease; /* Smooth color transition on hover */
-}
-
-.social-icons .icon:hover {
-    color: #ffcc00; /* Change color on hover (example color) */
 }
 
 .modal {
@@ -627,17 +642,16 @@ footer {
 
 .footer {
     background-color: #333; /* Dark background for the footer */
-    color: var(--secondary-color);
-    padding: 40px; /* Padding around the footer */
-    text-align: center; /* Center the text */
-    width: 100%; /* Full width */
-    position: relative; /* Ensure it stays in the normal flow */
+    color: var(--white-text-color);
+    padding: 3rem;
+    text-align: center;
+    list-style: none;
 }
 
 .social-icons {
     display: flex; /* Use flexbox for horizontal alignment */
     justify-content: center; /* Center the icons */
-    gap: 1vw; /* Space between icons */
+    gap: 1rem; /* Space between icons */
 }
 
 .social-icons .icon {
@@ -647,9 +661,6 @@ footer {
     transition: color 0.3s ease; /* Smooth color transition on hover */
 }
 
-.social-icons .icon:hover {
-    color: #ffcc00; /* Change color on hover (example color) */
-}
 
 .footer-content {
     max-width: 1200px; /* Max width for content */
@@ -660,10 +671,6 @@ footer {
     color: #fff; /* White links */
     text-decoration: none; /* Remove underline */
     margin: 0 10px; /* Spacing between links */
-}
-
-.footer a:hover {
-    text-decoration: underline; /* Underline on hover */
 }
 
 .main-content {
@@ -708,7 +715,7 @@ footer {
 
 #responseForm button {
     background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     padding: 1rem;
     border: none;
     border-radius: 5px;
@@ -755,7 +762,7 @@ footer {
     padding: 1rem 0;
     margin: 0;
     font-size: 15vw;
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     cursor: pointer;
 }
 
@@ -764,12 +771,12 @@ footer {
     white-space: nowrap;
     animation: scroll 30s linear infinite; /* Change to linear for a smooth scroll */
     text-decoration: none;
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     width: calc(500%); /* Set width to double the container to allow seamless scrolling */
 }
 
 .running-line span {
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     margin: 0 0.5em;  /* Adds horizontal spacing between elements */
 }
 
@@ -792,17 +799,6 @@ section:last-of-type {
     margin-bottom: 0;
 }
 
-/* Update footer styles */
-.footer {
-    background-color: var(--text-color);
-    color: var(--secondary-color);
-    padding: 80px;
-    text-align: center;
-    width: 100%;
-    position: relative;
-    margin-top: 0;
-}
-
 /* Mobile specific adjustments */
 @media (max-width: 768px) {
     section:last-of-type {
@@ -820,7 +816,7 @@ section:last-of-type {
 }
 
 .contact-link {
-    color: var(--secondary-color);
+    color: var(--white-text-color);
     text-decoration: none;
 
 }
@@ -864,7 +860,7 @@ html {
 
 /* Footer Icons */
 .footer-icon i {
-    color: var(--secondary-color); /* Set secondary color for footer icons */
+    color: var(--white-text-color); /* Set secondary color for footer icons */
     font-size: 1.5rem; /* Adjust size as needed */
     list-style: none;
 }
@@ -894,5 +890,33 @@ html {
 .footer-icon .icon-youtube {
     font-size: 26px; /* Default size for YouTube */
 }
+
+#theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2rem; /* Match the size of your other icons */
+    color: var(--text-color); /* Use the text color to match other elements */
+}
+
+#theme-toggle:focus {
+    outline: none;
+}
+
+/* Style the moon icon (dark mode off) */
+#theme-toggle .fa-moon {
+    color: var(--text-color);
+}
+
+/* Style the sun icon (dark mode on) */
+body.dark-mode #theme-toggle .fa-sun {
+    color: var(--white-text-color);
+}
+
 
 

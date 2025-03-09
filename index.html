@@ -28,9 +28,14 @@
             </div>
             <ul>
                 <li>
+                    <button id="theme-toggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+                    </button>
+                </li>
+                <li>
                     <div class="language-selector">
                         <i class="fas fa-globe" onclick="toggleLanguageDropdown()"></i>
-                        <select id="languageSelect" onchange="changeLanguage()" style="display: block;">
+                        <select id="languageSelect" onchange="changeLanguage()" style="display: none;">
                             <option value="en">EN</option>
                             <option value="ro">RO</option>
                             <option value="ru">RU</option>
