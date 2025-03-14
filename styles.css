@@ -918,5 +918,60 @@ body.dark-mode #theme-toggle .fa-sun {
     color: var(--white-text-color);
 }
 
+/* Legal Content Pages */
+.legal-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 70vh;
+}
+
+.legal-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.legal-content h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.legal-content h3 {
+    font-size: 1.2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.legal-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.legal-content ul {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.legal-content ul li {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .legal-content {
+        padding: 1rem;
+    }
+    
+    .legal-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .legal-content h2 {
+        font-size: 1.3rem;
+    }
+}
+
 
 
