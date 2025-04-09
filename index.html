@@ -85,6 +85,33 @@
             </div>
         </section>
 
+        <!-- New Calculator Section -->
+        <section id="calculator" data-lang="calculator-section">
+            <h2 data-lang="calculator-title">Potential Savings Calculator</h2>
+            <div class="calculator-container">
+                <div class="toggle-group">
+                    <label for="amount-invested" data-lang="amount-invested-label">Amount Invested (€):</label>
+                    <input type="range" id="amount-invested" min="1" max="10000" step="1" value="1000" oninput="updateSavings()">
+                    <span id="amount-invested-value">€1000</span>
+                </div>
+                <div class="toggle-group">
+                    <label for="power-generated" data-lang="power-generated-label">Power Generated (kWh):</label>
+                    <input type="range" id="power-generated" min="1" max="24" step="0.01" value="2.40" oninput="updateSavings()">
+                    <span id="power-generated-value">2.40 kWh</span>
+                </div>
+                <div class="toggle-group">
+                    <label for="potential-savings" data-lang="potential-savings-label">Potential Savings (€):</label>
+                    <input type="range" id="potential-savings" min="0" max="2000.40" step="1" value="200.40" oninput="updateSavings()">
+                    <span id="potential-savings-value">€200.40</span>
+                </div>
+            </div>
+            <div class="results">
+                <h3 style="font-size: 1rem;" data-lang="co2-reduction-label">Estimated CO2 Reduction:</h3>
+                <p id="co2-reduction" style="font-size: 1.5rem; font-weight: bold;">0 kg CO2</p>
+            </div>
+            <p class="disclaimer" style="font-size: 0.9rem; color: gray;" data-lang="disclaimer">This calculator is for illustrative purposes only. Final savings may vary.</p>
+        </section>
+
         <section id="newsletter" data-aos="">
             <div class="content">
                 <h1 data-lang="hero-title">SOLAR STARTING AT €1</h1>

@@ -219,5 +219,65 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.style.display = 'none';
         }
     });
+
+    function updateSavings() {
+        const amountInvested = parseFloat(document.getElementById('amount-invested').value);
+        const powerGenerated = parseFloat(document.getElementById('power-generated').value);
+        const potentialSavings = parseFloat(document.getElementById('potential-savings').value);
+
+        // Constants
+        const kWhPerKW = 1200; // kWh generated per kW per year
+        const savingsMultiplier = 1.67; // Savings multiplier
+        const savingsDivisor = 24; // Divisor for savings calculation
+
+        // Calculate power generated based on amount invested
+        const calculatedPowerGenerated = (amountInvested / 1000) * 2.4; // Assuming 2.4 kW per 1000 EUR
+        const calculatedPotentialSavings = (calculatedPowerGenerated * kWhPerKW * savingsMultiplier) / savingsDivisor;
+
+        // Update displayed values
+        document.getElementById('amount-invested-value').innerText = `€${amountInvested}`;
+        document.getElementById('power-generated').value = calculatedPowerGenerated.toFixed(2);
+        document.getElementById('power-generated-value').innerText = `${calculatedPowerGenerated.toFixed(2)} kWh`;
+        document.getElementById('potential-savings').value = calculatedPotentialSavings.toFixed(2);
+        document.getElementById('potential-savings-value').innerText = `€${calculatedPotentialSavings.toFixed(2)}`;
+
+        // Calculate CO2 reduction (example calculation)
+        const co2Reduction = (calculatedPowerGenerated * 0.5).toFixed(2); // Example: 0.5 kg CO2 saved per kWh
+        document.getElementById('co2-reduction').innerText = `${co2Reduction} kg CO2`;
+    }
+
+    // Add event listeners to the sliders to update other values accordingly
+    document.getElementById('amount-invested').addEventListener('input', function() {
+        const amountInvested = parseFloat(this.value);
+        const calculatedPowerGenerated = (amountInvested / 1000) * 2.4; // Calculate power generated
+        const calculatedPotentialSavings = (calculatedPowerGenerated * 1200 * 1.67) / 24; // Calculate potential savings
+
+        document.getElementById('power-generated').value = calculatedPowerGenerated.toFixed(2);
+        document.getElementById('potential-savings').value = calculatedPotentialSavings.toFixed(2);
+        updateSavings(); // Update all values
+    });
+
+    document.getElementById('power-generated').addEventListener('input', function() {
+        const powerGenerated = parseFloat(this.value);
+        const calculatedAmountInvested = (powerGenerated / 2.4) * 1000; // Reverse calculation for amount invested
+        const calculatedPotentialSavings = (powerGenerated * 1.67 * 1200) / 24; // Calculate potential savings
+
+        document.getElementById('amount-invested').value = calculatedAmountInvested.toFixed(2);
+        document.getElementById('potential-savings').value = calculatedPotentialSavings.toFixed(2);
+        updateSavings(); // Update all values
+    });
+
+    document.getElementById('potential-savings').addEventListener('input', function() {
+        const potentialSavings = parseFloat(this.value);
+        const calculatedPowerGenerated = (potentialSavings * 24) / (1.67 * 1200); // Reverse calculation for power generated
+        const calculatedAmountInvested = (calculatedPowerGenerated / 2.4) * 1000; // Reverse calculation for amount invested
+
+        document.getElementById('power-generated').value = calculatedPowerGenerated.toFixed(2);
+        document.getElementById('amount-invested').value = calculatedAmountInvested.toFixed(2);
+        updateSavings(); // Update all values
+    });
+
+    // Initial call to set values correctly on page load
+    updateSavings();
 });
 

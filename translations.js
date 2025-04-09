@@ -59,8 +59,12 @@ const translations = {
         "comment-placeholder": "Enter your comment (optional)",
         "submit-button": "Join Waitlist",
         "scroller-join-waitlist": "JOIN WAITLIST",
-        
-        // Add more translations here
+        "calculator-title": "Potential Savings Calculator",
+        "amount-invested-label": "Amount Invested (€):",
+        "power-generated-label": "Power Generated (kWh):",
+        "potential-savings-label": "Potential Savings (€):",
+        "co2-reduction-label": "Estimated CO2 Reduction:",
+        "disclaimer": "This calculator is for illustrative purposes only. Final savings may vary."
     },
     ro: {
         "hero-title": "ENERGIE SOLARĂ DE LA 1€",
@@ -91,8 +95,12 @@ const translations = {
         "comment-placeholder": "Introduceți comentariul dvs. (opțional)",
         "submit-button": "Înscrieți-vă pe lista de așteptare",
         "scroller-join-waitlist": "ÎNSCRIEȚI-VĂ PE LISTA DE AȘTEPTARE",
-        
-        // Add more translations here
+        "calculator-title": "Calculator de Economii Potențiale",
+        "amount-invested-label": "Suma Investită (€):",
+        "power-generated-label": "Puterea Generată (kWh):",
+        "potential-savings-label": "Economii Potențiale (€):",
+        "co2-reduction-label": "Reducerea Estimată a CO2:",
+        "disclaimer": "Acest calculator este doar pentru scopuri ilustrative. Economiile finale pot varia."
     },
     ru: {
         "hero-title": "СОЛНЕЧНАЯ ЭНЕРГИЯ ОТ 1€",
@@ -123,8 +131,12 @@ const translations = {
         "comment-placeholder": "Введите ваш комментарий (необязательно)",
         "submit-button": "Присоединяйтесь к списку ожидания",
         "scroller-join-waitlist": "ПРИСОЕДИНИТЬСЯ К СПИСКУ ОЖИДАНИЯ",
-        
-        // Add more translations here
+        "calculator-title": "Калькулятор Потенциальных Сбережений",
+        "amount-invested-label": "Инвестированная Сумма (€):",
+        "power-generated-label": "Сгенерированная Энергия (кВтч):",
+        "potential-savings-label": "Потенциальные Сбережения (€):",
+        "co2-reduction-label": "Оценка Снижения CO2:",
+        "disclaimer": "Этот калькулятор предназначен только для иллюстративных целей. Окончательные сбережения могут варьироваться."
     }
 };
 
