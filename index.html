@@ -90,17 +90,17 @@
             <h2 data-lang="calculator-title">Potential Savings Calculator</h2>
             <div class="calculator-container">
                 <div class="toggle-group">
-                    <label for="amount-invested" data-lang="amount-invested-label">Amount Invested (€):</label>
+                    <label for="amount-invested" data-lang="amount-invested-label">Invested (€):</label>
                     <input type="range" id="amount-invested" min="1" max="10000" step="1" value="1000" oninput="updateSavings()">
                     <span id="amount-invested-value">€1000</span>
                 </div>
                 <div class="toggle-group">
-                    <label for="power-generated" data-lang="power-generated-label">Power Generated (kWh):</label>
+                    <label for="power-generated" data-lang="power-generated-label">Power (kWh):</label>
                     <input type="range" id="power-generated" min="1" max="24" step="0.01" value="2.40" oninput="updateSavings()">
                     <span id="power-generated-value">2.40 kWh</span>
                 </div>
                 <div class="toggle-group">
-                    <label for="potential-savings" data-lang="potential-savings-label">Potential Savings (€):</label>
+                    <label for="potential-savings" data-lang="potential-savings-label">Savings (€):</label>
                     <input type="range" id="potential-savings" min="0" max="2000.40" step="1" value="200.40" oninput="updateSavings()">
                     <span id="potential-savings-value">€200.40</span>
                 </div>
@@ -185,13 +185,6 @@
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: false,
-            mirror: true
-        });
-    </script>   
     <script src="translations.js"></script>
     <script src="env-config.js"></script>
     <!-- Firebase App (the core Firebase SDK) -->

@@ -219,7 +219,8 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.style.display = 'none';
         }
     });
-
+    
+    // Calculator
     function updateSavings() {
         const amountInvested = parseFloat(document.getElementById('amount-invested').value);
         const powerGenerated = parseFloat(document.getElementById('power-generated').value);
@@ -279,5 +280,93 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial call to set values correctly on page load
     updateSavings();
+
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+        duration: 800,
+        once: false,
+        mirror: true
+    });
+
+    // Initialize all range inputs
+    const rangeInputs = document.querySelectorAll('input[type="range"]');
+    
+    // Set initial values
+    rangeInputs.forEach(function(input) {
+        updateRangeProgress(input);
+        
+        // Update on input change
+        input.addEventListener('input', function() {
+            updateRangeProgress(this);
+        });
+    });
+    
+    function updateRangeProgress(input) {
+        const min = parseFloat(input.min) || 0;
+        const max = parseFloat(input.max) || 100;
+        const value = parseFloat(input.value);
+        
+        // Calculate the percentage
+        const percentage = ((value - min) / (max - min)) * 100;
+        
+        // Apply background gradient for WebKit browsers
+        input.style.background = `linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) ${percentage}%, #cccccc ${percentage}%, #cccccc 100%)`;
+        
+        // Since all sliders are connected, update all sliders with the same percentage
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            if (slider !== input) {
+                // Calculate the relative value for this slider based on the percentage
+                const sliderMin = parseFloat(slider.min) || 0;
+                const sliderMax = parseFloat(slider.max) || 100;
+                const sliderValue = (percentage / 100) * (sliderMax - sliderMin) + sliderMin;
+                
+                // Apply the same gradient
+                slider.style.background = `linear-gradient(to right, var(--primary-color) 0%, var(--primary-color) ${percentage}%, #cccccc ${percentage}%, #cccccc 100%)`;
+            }
+        });
+    }
+
+    // Set up scroll animations for calculator section
+    function setupCalcAnimations() {
+        const calculator = document.getElementById('calculator');
+        if (!calculator) return;
+        
+        const toggleGroups = document.querySelectorAll('.toggle-group');
+        const results = document.querySelector('.results');
+        
+        // Function to check if element is in viewport
+        function isInViewport(element, offset = 0) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * (0.8 - offset) &&
+                rect.bottom >= 0
+            );
+        }
+        
+        // Handle scroll animation
+        function handleScrollAnimation() {
+            // Animate calculator section
+            if (isInViewport(calculator)) {
+                calculator.classList.add('visible');
+                
+                // Animate toggle groups with delay
+                toggleGroups.forEach(group => {
+                    group.classList.add('visible');
+                });
+                
+                // Animate results
+                if (results) {
+                    results.classList.add('visible');
+                }
+            }
+        }
+        
+        // Check on load and scroll
+        handleScrollAnimation();
+        window.addEventListener('scroll', handleScrollAnimation);
+    }
+
+    // Initialize animations
+    setupCalcAnimations();
 });
 
