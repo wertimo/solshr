@@ -304,7 +304,7 @@ footer {
 
 .modal-content {
     background-color: var(--background-color);
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 2rem;
     width: 90%;
     max-width: 500px;
@@ -736,7 +736,7 @@ footer {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .modal-content {
-        margin: 30% auto;
+        margin: 17% auto;
         width: 95%;
         padding: 1.5rem;
     }
