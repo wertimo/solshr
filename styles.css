@@ -1126,11 +1126,14 @@ body.dark-mode #theme-toggle .fa-sun {
     display: flex;
     align-items: flex-start;
     margin-top: 0.5rem;
+    
 }
 
 .checkbox-group input[type="checkbox"] {
     flex:1;
     padding: 1rem;
+    min-width: 16px;
+    max-width: 16px;
 }
 
 .checkbox-group label {
@@ -1138,6 +1141,7 @@ body.dark-mode #theme-toggle .fa-sun {
     font-weight: bold;
     text-align: left; /* Ensure text is left-aligned */
     padding-left: 1rem;
+    flex:1;
 }
 
 .checkbox-group a {
