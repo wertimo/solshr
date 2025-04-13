@@ -1,7 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { logEvent } from "firebase/analytics";
+import { getDatabase } from "firebase/database";
+import { ref, set } from "firebase/database";
 
 // Log a test event
 logEvent(analytics, 'notification_received', {
@@ -37,4 +40,3 @@ const getFirebaseConfig = () => {
     measurementId: config.measurementId || null // Optional
   };
 };
-

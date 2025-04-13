@@ -1121,5 +1121,35 @@ body.dark-mode #theme-toggle .fa-sun {
     transform: translateY(0);
 }
 
+/* Updated checkbox styling */
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    flex:1;
+    padding: 1rem;
+}
+
+.checkbox-group label {
+    font-size: 0.4rem;
+    font-weight: bold;
+    text-align: left; /* Ensure text is left-aligned */
+    padding-left: 1rem;
+}
+
+.checkbox-group a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-weight: bold; /* Make links stand out more */
+    transition: color 0.2s ease; /* Smooth color transition on hover */
+}
+
+.checkbox-group a:hover {
+    color: var(--accent-brown);
+}
+
 
 

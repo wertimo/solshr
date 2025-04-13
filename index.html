@@ -179,6 +179,15 @@
                     <label for="comment" data-lang="comment-label">Comment (optional):</label>
                     <input type="text" id="comment" placeholder="Enter your comment" data-lang="comment-placeholder">
                 </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms-checkbox" required>
+                    <span>
+                        <label for="terms-checkbox" data-lang="terms-agree">I agree to the</label>
+                        <a href="privacy-policy.html" target="_blank" onclick="event.stopPropagation()" data-lang="privacy-policy">Privacy Policy</a> 
+                        <span data-lang="and">and</span> 
+                        <a href="terms-and-conditions.html" target="_blank" onclick="event.stopPropagation()" data-lang="terms-conditions">Terms & Conditions</a>
+                    </span>
+                </div>
                 <button type="submit" data-lang="submit-button">Join Waitlist</button>
             </form>
         </div>

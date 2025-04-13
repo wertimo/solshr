@@ -108,6 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
                 const comment = document.getElementById('comment').value;
+                const termsAccepted = document.getElementById('terms-checkbox').checked;
+                
+                // Validate terms checkbox
+                if (!termsAccepted) {
+                    alert('Please agree to the Privacy Policy and Terms & Conditions');
+                    return;
+                }
 
                 try {
                     const responsesRef = db.ref('responses');
@@ -116,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         name: name,
                         email: email,
                         comment: comment,
+                        termsAccepted: termsAccepted,
                         timestamp: firebase.database.ServerValue.TIMESTAMP
                     };
 
@@ -368,5 +376,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize animations
     setupCalcAnimations();
+    
+    // Fix for checkbox links
+    const policyLinks = document.querySelectorAll('.checkbox-group label a');
+    
+    // Add event listener to each link
+    policyLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        // Stop the event from propagating to the label
+        e.stopPropagation();
+        // This prevents the checkbox from toggling when the link is clicked
+      });
+    });
 });
 
