@@ -6,6 +6,12 @@ import {
     updateProfile
 } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
+// Check Firebase configuration
+if (!window._env_ || !window._env_.apiKey) {
+    console.error('Firebase configuration is missing:', window._env_);
+    throw new Error('Firebase configuration is missing.'); // This will stop execution
+}
+
 // Initialize Firebase
 const app = initializeApp(window._env_);
 const auth = getAuth(app);
@@ -29,8 +35,20 @@ if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn ||
     !switchAuthMode || !authSwitch || !signInButton || !signUpButton || !closeButton) {
     console.error('Required DOM elements not found');
 } else {
+    console.log('authModal:', authModal);
+    console.log('authForm:', authForm);
+    console.log('authTitle:', authTitle);
+    console.log('nameField:', nameField);
+    console.log('authSubmitBtn:', authSubmitBtn);
+    console.log('switchAuthMode:', switchAuthMode);
+    console.log('authSwitch:', authSwitch);
+    console.log('signInButton:', signInButton);
+    console.log('signUpButton:', signUpButton);
+    console.log('closeButton:', closeButton);
+
     // Show/Hide Auth Modal
     function showAuthModal(mode) {
+        console.log('Showing auth modal for:', mode);
         isSignUp = mode === 'signup';
         updateAuthForm();
         authModal.style.display = 'block';
@@ -83,10 +101,8 @@ if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn ||
                     }
                     console.log('Sign up successful');
                 } catch (error) {
-                    if (error.code === 'auth/email-already-in-use') {
-                        throw new Error('This email is already registered. Please sign in instead.');
-                    }
-                    throw error;
+                    console.error('Sign up error:', error);
+                    throw new Error('An error occurred during sign up. Please try again.');
                 }
             } else {
                 console.log('Attempting sign in...');
@@ -94,14 +110,8 @@ if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn ||
                     await signInWithEmailAndPassword(auth, email, password);
                     console.log('Sign in successful');
                 } catch (error) {
-                    if (error.code === 'auth/user-not-found') {
-                        throw new Error('Account not found. Please sign up first.');
-                    } else if (error.code === 'auth/wrong-password') {
-                        throw new Error('Incorrect password. Please try again.');
-                    } else if (error.code === 'auth/invalid-email') {
-                        throw new Error('Invalid email format. Please check your email.');
-                    }
-                    throw error;
+                    console.error('Sign in error:', error);
+                    throw new Error('An error occurred during sign in. Please try again.');
                 }
             }
             
@@ -116,10 +126,10 @@ if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn ||
             
         } catch (error) {
             console.error('Authentication error:', error);
-            // Create and show error message
+            // Show a generic error message to the user
             const errorMessage = document.createElement('div');
             errorMessage.className = 'auth-error';
-            errorMessage.textContent = error.message;
+            errorMessage.textContent = 'An error occurred during authentication. Please try again.';
             
             // Remove any existing error messages
             const existingError = authForm.querySelector('.auth-error');

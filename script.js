@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Attempting to load config from:', path);
                     const response = await fetch(path);
                     if (response.ok) {
-                        const text = await response.text();
-                        console.log('Successfully loaded config from:', path);
-                        eval(text);
+                        const configData = await response.json(); // Assuming the config is in JSON format
+                        window._env_ = configData; // Assign the loaded config directly
+                        console.log('Successfully loaded config:', window._env_);
                         return true;
                     }
                 } catch (error) {
@@ -396,5 +396,13 @@ document.addEventListener('DOMContentLoaded', function() {
         formModal.style.display = 'block';
         formModal.classList.add('show');
     });
+
+    function showAuthModal(mode) {
+        console.log('Showing auth modal for:', mode);
+        isSignUp = mode === 'signup';
+        updateAuthForm();
+        authModal.style.display = 'block';
+        authModal.classList.add('show');
+    }
 });
 
