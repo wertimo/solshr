@@ -388,5 +388,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // This prevents the checkbox from toggling when the link is clicked
       });
     });
+
+    // Add this to your existing event listeners
+    document.getElementById('joinWaitlistButton').addEventListener('click', (e) => {
+        e.preventDefault();
+        const formModal = document.getElementById('formModal');
+        formModal.style.display = 'block';
+        formModal.classList.add('show');
+    });
 });
 
