@@ -118,7 +118,7 @@ const translations = {
         "terms-section-9": "9. Contact Us"
     },
     ro: {
-        "hero-title": "OBȚINEȚI 50% REDUCERE LA URMĂTOAREA FACTURĂ DE ENERGIE*",
+        "hero-title": "50% REDUCERE LA FACTURĂ DE ENERGIE*",
         "hero-subtitle": "*Primii 1.000 de utilizatori, se aplică Termeni și Condiții",
         "join-waitlist": "ÎNSCRIEȚI-VĂ PE LISTA DE AȘTEPTARE",
         "mission": "MISIUNE",
@@ -202,8 +202,8 @@ const translations = {
         "terms-section-9": "9. Contactați-ne"
     },
     ru: {
-        "hero-title": "ПОЛУЧИТЕ СКИДКУ 50% НА СЛЕДУЮЩИЙ СЧЕТ ЗА ЭЛЕКТРОЭНЕРГИЮ*",
-        "hero-subtitle": "*Первые 1000 пользователей, применяются Условия и положения",
+        "hero-title": "СКИДКА 50% НА ЭЛЕКТРОЭНЕРГИЮ*",
+        "hero-subtitle": "*Первые 1000 пользователей, применяются Условия и Положения",
         "join-waitlist": "ПРИСОЕДИНИТЬСЯ К СПИСКУ ОЖИДАНИЯ",
         "mission": "МИССИЯ",
         "how-it-works": "КАК ЭТО РАБОТАЕТ",
