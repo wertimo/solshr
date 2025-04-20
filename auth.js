@@ -20,7 +20,7 @@ const auth = getAuth(app);
 const authModal = document.getElementById('authModal');
 const authForm = document.getElementById('authForm');
 const authTitle = document.getElementById('authTitle');
-const nameField = document.getElementById('nameField');
+const authName = document.getElementById('authName');
 const authSubmitBtn = document.getElementById('authSubmitBtn');
 const switchAuthMode = document.getElementById('switchAuthMode');
 const authSwitch = document.getElementById('authSwitch');
@@ -31,14 +31,14 @@ const closeButton = authModal ? authModal.querySelector('.close') : null;
 let isSignUp = false;
 
 // Verify all required elements exist
-if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn || 
+if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn || 
     !switchAuthMode || !authSwitch || !signInButton || !signUpButton || !closeButton) {
     console.error('Required DOM elements not found');
 } else {
     console.log('authModal:', authModal);
     console.log('authForm:', authForm);
     console.log('authTitle:', authTitle);
-    console.log('nameField:', nameField);
+    console.log('authName:', authName);
     console.log('authSubmitBtn:', authSubmitBtn);
     console.log('switchAuthMode:', switchAuthMode);
     console.log('authSwitch:', authSwitch);
@@ -73,7 +73,7 @@ if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn ||
         authSubmitBtn.setAttribute('data-lang', buttonKey);
         authSwitch.setAttribute('data-lang', switchTextKey);
         switchAuthMode.setAttribute('data-lang', switchLinkKey);
-        nameField.style.display = isSignUp ? 'block' : 'none';
+        authName.style.display = isSignUp ? 'block' : 'none';
 
         // Update translations
         if (typeof changeLanguage === 'function') {
@@ -88,7 +88,7 @@ if (!authModal || !authForm || !authTitle || !nameField || !authSubmitBtn ||
         
         const email = document.getElementById('authEmail').value;
         const password = document.getElementById('authPassword').value;
-        const name = document.getElementById('name').value;
+        const name = authName.value;
 
         try {
             if (isSignUp) {

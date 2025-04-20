@@ -13,8 +13,7 @@ jobs:
 
       - name: Generate runtime config
         run: |
-          echo "Generating runtime env-config.js..."
-          touch ./build/env-config.js
+          mkdir -p ./build
           echo "window._env_ = {" >> ./build/env-config.js
           echo "  apiKey: \"${{ secrets.FIREBASE_API_KEY }}\"," >> ./build/env-config.js
           echo "  authDomain: \"${{ secrets.FIREBASE_AUTH_DOMAIN }}\"," >> ./build/env-config.js
@@ -25,6 +24,10 @@ jobs:
           echo "  appId: \"${{ secrets.FIREBASE_APP_ID }}\"," >> ./build/env-config.js
           echo "  measurementId: \"${{ secrets.FIREBASE_MEASUREMENT_ID }}\"" >> ./build/env-config.js
           echo "};" >> ./build/env-config.js
+          echo "window.getFirebaseConfig = () => window._env_;" >> ./build/env-config.js
+
+      - name: Build project
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

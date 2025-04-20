@@ -3,7 +3,7 @@ const getFirebaseConfig = () => {
     // Check if the _env_ object is defined
     const config = window._env_;
     
-    // If the configuration is not found, log an error and return null
+    /* If the configuration is not found, log an error and return null
     if (!config) {
         console.error('Firebase configuration not found');
         return null;
@@ -19,7 +19,7 @@ const getFirebaseConfig = () => {
         messagingSenderId: config.messagingSenderId,
         appId: config.appId,
         measurementId: config.measurementId || null // Optional
-    };
+    }; */
 };
 
 

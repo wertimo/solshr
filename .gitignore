@@ -13,3 +13,5 @@ dist/
 build/
 
 env-config.dev.js
+
+testing.html

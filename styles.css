@@ -31,7 +31,7 @@ html, body {
 
 body {
     font-family: var(--primary-font);
-    line-height: 1.5;
+    line-height: 1.2;
     display: flex;
     flex-direction: column;
     background-color: var(--background-color);
@@ -137,6 +137,32 @@ main {
     justify-content: center;
     padding: 1rem;
     background-color: transparent;
+    
+    h1 {
+        width: 60%;  
+    }
+    
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 7vw;
+            width: 90%;
+            margin-bottom: 1rem;
+        }
+    }
+
+    p {
+    font-size: 1vw;
+    margin-top: 1rem;
+    color: var(--white-text-color);
+    }
+
+    @media (max-width: 768px) {
+        p {
+            font-size: 2.5vw;
+            margin-top: 0.5rem;
+        }
+    }
 }
 
 #mission {
@@ -179,7 +205,37 @@ section, div {
     background-image: url('join-waitlist2.jpg');
     background-size: cover;
     background-position: center;
+    color: var(--white-text-color);
     
+    h1 {
+        font-size: 3.5vw;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        width: 100%;  
+      
+    } 
+
+    p {
+        font-size: 1vw;
+        margin-top: 1rem;
+        color: var(--white-text-color);
+        }
+    
+        @media (max-width: 768px) {
+            
+            h1 {
+                font-size: 5vw;
+                font-weight: bold;
+                margin-bottom: 1rem;
+                width: 60%;  
+              
+            } 
+            
+            p {
+                font-size: 2.5vw;
+                margin-top: 0.5rem;
+            }
+        }
 }
 
 #newsletter .content {
@@ -249,8 +305,11 @@ section, div {
 h1 {
     font-size: 5vw;
     font-weight: bold;
-    margin-bottom: 1rem;     
+    margin-bottom: 1rem;
+    width: 60%;  
+  
 } 
+
 
 h2, h3 {
     font-size: 3vw;
@@ -279,11 +338,6 @@ footer {
     background-size: contain;
     background-repeat: no-repeat;
 }
-
-.instagram { background-image: url('instagram-icon.png'); }
-.discord { background-image: url('discord-icon.png'); }
-.tiktok { background-image: url('tiktok-icon.png'); }
-.youtube { background-image: url('youtube-icon.png'); }
 
 .modal {
     display: none;
