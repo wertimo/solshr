@@ -404,5 +404,27 @@ document.addEventListener('DOMContentLoaded', function() {
         authModal.style.display = 'block';
         authModal.classList.add('show');
     }
+
+    // FAQ Animation
+    function handleFAQVisibility() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        faqItems.forEach(item => {
+            observer.observe(item);
+        });
+    }
+
+    // Initialize FAQ animations when the page loads
+    handleFAQVisibility();
 });
 
