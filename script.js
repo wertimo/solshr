@@ -426,5 +426,143 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize FAQ animations when the page loads
     handleFAQVisibility();
+
+    // Add payment button click handler
+    console.log('DOM Content Loaded');
+    
+    const paymentForm = document.getElementById('payment-form');
+    if (paymentForm) {
+        console.log('Payment form found');
+        paymentForm.addEventListener('submit', handlePaymentSubmit);
+    } else {
+        console.log('Payment form not found');
+    }
+
+    // Example: Initialize payment when a specific button is clicked
+    const paymentButton = document.getElementById('start-payment');
+    if (paymentButton) {
+        console.log('Payment button found');
+        paymentButton.addEventListener('click', () => {
+            console.log('Payment button clicked');
+            const amount = 1000; // Example amount in cents (€10.00)
+            initializePayment(amount);
+            const paymentModal = document.getElementById('paymentModal');
+            if (paymentModal) {
+                console.log('Opening payment modal');
+                paymentModal.style.display = 'block';
+            } else {
+                console.log('Payment modal not found');
+            }
+        });
+    } else {
+        console.log('Payment button not found');
+    }
 });
+
+// Initialize Stripe
+console.log('Initializing Stripe...');
+if (!window._env_ || !window._env_.STRIPE_PUBLISHABLE_KEY) {
+    console.error('Stripe publishable key not found in environment configuration');
+} else {
+    const stripe = Stripe(window._env_.STRIPE_PUBLISHABLE_KEY);
+    console.log('Stripe initialized');
+}
+
+// Payment handling
+let elements;
+let paymentElement;
+
+async function initializePayment(amount) {
+    console.log('Initializing payment with amount:', amount);
+    try {
+        console.log('Making request to createPaymentIntent...');
+        const response = await fetch('https://us-central1-solshr-social.cloudfunctions.net/createPaymentIntent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount: amount,
+                currency: 'eur'
+            })
+        });
+
+        if (!response.ok) {
+            console.error('Response not OK:', response.status, response.statusText);
+            throw new Error('Network response was not ok');
+        }
+
+        const { clientSecret } = await response.json();
+        console.log('Payment intent created:', clientSecret);
+
+        const appearance = {
+            theme: 'stripe',
+            variables: {
+                colorPrimary: '#0570de',
+                colorBackground: '#ffffff',
+                colorText: '#30313d',
+                colorDanger: '#df1b41',
+                fontFamily: 'Arial, sans-serif',
+                spacingUnit: '4px',
+                borderRadius: '4px'
+            }
+        };
+
+        console.log('Creating Stripe elements...');
+        elements = stripe.elements({ appearance, clientSecret });
+        paymentElement = elements.create('payment');
+        console.log('Mounting payment element...');
+        paymentElement.mount('#payment-element');
+        console.log('Payment element mounted');
+    } catch (error) {
+        console.error('Error initializing payment:', error);
+        showMessage('An error occurred while initializing the payment. Please try again.');
+    }
+}
+
+async function handlePaymentSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: `${window.location.origin}/payment-success.html`,
+            }
+        });
+
+        if (error) {
+            showMessage(error.message);
+        }
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        showMessage('An error occurred while processing your payment. Please try again.');
+    }
+
+    setLoading(false);
+}
+
+function setLoading(isLoading) {
+    if (isLoading) {
+        document.querySelector('#submit-payment').disabled = true;
+        document.querySelector('#spinner').classList.remove('hidden');
+        document.querySelector('#button-text').classList.add('hidden');
+    } else {
+        document.querySelector('#submit-payment').disabled = false;
+        document.querySelector('#spinner').classList.add('hidden');
+        document.querySelector('#button-text').classList.remove('hidden');
+    }
+}
+
+function showMessage(messageText) {
+    const messageContainer = document.querySelector('#payment-message');
+    messageContainer.classList.remove('hidden');
+    messageContainer.textContent = messageText;
+
+    setTimeout(function () {
+        messageContainer.classList.add('hidden');
+        messageContainer.textContent = '';
+    }, 4000);
+}
 

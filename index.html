@@ -259,8 +259,38 @@
     <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Test if Stripe is loaded
+        window.addEventListener('load', function() {
+            if (typeof Stripe === 'undefined') {
+                console.error('Stripe failed to load');
+            } else {
+                console.log('Stripe loaded successfully');
+            }
+        });
+    </script>
+    
     <script type="module" src="script.js"></script>
     <script type="module" src="auth.js"></script>
 
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="payment-form">
+                <h2>Complete Your Payment</h2>
+                <div id="payment-element">
+                    <!-- Stripe Elements will be inserted here -->
+                </div>
+                <button id="submit-payment">
+                    <span id="button-text">Pay Now</span>
+                    <div id="spinner" class="spinner hidden"></div>
+                </button>
+                <div id="payment-message" class="hidden"></div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
