@@ -447,27 +447,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const paymentButton = document.getElementById('start-payment');
     if (paymentButton) {
         console.log('Payment button found');
-        paymentButton.addEventListener('click', () => {
+        paymentButton.addEventListener('click', async () => {
             console.log('Payment button clicked');
-            const amount = 1000; // Example amount in cents (€10.00)
-            initializePayment(amount);
+            // Open modal
             const paymentModal = document.getElementById('paymentModal');
-            if (paymentModal) {
-                console.log('Opening payment modal');
-                paymentModal.style.display = 'block';
-                // Add show class for animation
-                setTimeout(() => {
-                    paymentModal.classList.add('show');
-                }, 10);
-            } else {
-                console.log('Payment modal not found');
-            }
+            paymentModal.style.display = 'block';
+            paymentModal.classList.add('show');
+
+            // Create PaymentIntent on server
+            const response = await fetch('/createPaymentIntent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: 1000, currency: 'eur' }) // €10
+            });
+            const { clientSecret } = await response.json();
+
+            // Mount Stripe Elements
+            elements = Stripe(window._env_.STRIPE_PUBLISHABLE_KEY).elements({ clientSecret });
+            if (paymentElement) paymentElement.unmount();
+            paymentElement = elements.create('payment');
+            paymentElement.mount('#payment-element');
         });
     } else {
         console.log('Payment button not found');
     }
 
-    // Close payment modal when clicking outside or on close button
+    // Handle form submit
+    const form = document.getElementById('payment-form');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('payment-email').value;
+            document.getElementById('submit').disabled = true;
+            document.getElementById('spinner').classList.remove('hidden');
+            document.getElementById('button-text').classList.add('hidden');
+            const { error, paymentIntent } = await Stripe(window._env_.STRIPE_PUBLISHABLE_KEY).confirmPayment({
+                elements,
+                confirmParams: {
+                    receipt_email: email
+                },
+                redirect: 'if_required'
+            });
+            document.getElementById('submit').disabled = false;
+            document.getElementById('spinner').classList.add('hidden');
+            document.getElementById('button-text').classList.remove('hidden');
+            if (error) {
+                document.getElementById('payment-message').textContent = error.message;
+                document.getElementById('payment-message').classList.remove('hidden');
+            } else {
+                document.getElementById('success').classList.remove('hidden');
+                form.classList.add('hidden');
+                document.getElementById('customer-email').textContent = email;
+            }
+        });
+    }
+
+    // Close modal logic
     const paymentModal = document.getElementById('paymentModal');
     if (paymentModal) {
         const closeBtn = paymentModal.querySelector('.close');
@@ -476,16 +511,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 paymentModal.classList.remove('show');
                 setTimeout(() => {
                     paymentModal.style.display = 'none';
+                    // Reset form and UI
+                    if (form) {
+                        form.reset();
+                        form.classList.remove('hidden');
+                    }
+                    document.getElementById('success').classList.add('hidden');
+                    document.getElementById('payment-message').classList.add('hidden');
+                    document.getElementById('payment-message').textContent = '';
+                    if (paymentElement) paymentElement.unmount();
                 }, 300);
             });
         }
-
-        // Close when clicking outside
         window.addEventListener('click', (e) => {
             if (e.target === paymentModal) {
                 paymentModal.classList.remove('show');
                 setTimeout(() => {
                     paymentModal.style.display = 'none';
+                    // Reset form and UI
+                    if (form) {
+                        form.reset();
+                        form.classList.remove('hidden');
+                    }
+                    document.getElementById('success').classList.add('hidden');
+                    document.getElementById('payment-message').classList.add('hidden');
+                    document.getElementById('payment-message').textContent = '';
+                    if (paymentElement) paymentElement.unmount();
                 }, 300);
             }
         });
@@ -496,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
 console.log('Initializing Stripe...');
 console.log('Environment config:', window._env_);
 
-let stripe;
+let stripe, elements, paymentElement;
 function initializeStripe() {
     if (!window._env_) {
         console.error('Environment configuration (window._env_) is not loaded');
