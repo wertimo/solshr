@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Status - SOLSHR</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="payment-status">
+            <h1>Processing your payment...</h1>
+            <div id="status-message"></div>
+        </div>
+    </div>
+
+    <script>
+        const stripe = Stripe(window._env_.STRIPE_PUBLISHABLE_KEY);
+        
+        // Retrieve the "session_id" query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        // Check the status of the Checkout Session
+        async function checkStatus() {
+            try {
+                const response = await fetch(`/session-status?session_id=${sessionId}`);
+                const session = await response.json();
+
+                if (session.status === 'open') {
+                    // The session is still open, redirect to the payment page
+                    window.location.href = '/';
+                } else if (session.status === 'complete') {
+                    // The payment succeeded
+                    document.getElementById('payment-status').innerHTML = `
+                        <h1>Thank you for your payment!</h1>
+                        <p>A confirmation email has been sent to ${session.customer_email}.</p>
+                        <p>If you have any questions, please email <a href="mailto:support@solshr.com">support@solshr.com</a>.</p>
+                        <a href="/" class="btn">Return to Home</a>
+                    `;
+                } else {
+                    // The payment failed or was canceled
+                    document.getElementById('payment-status').innerHTML = `
+                        <h1>Payment Failed</h1>
+                        <p>Your payment could not be processed. Please try again.</p>
+                        <a href="/" class="btn">Try Again</a>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('status-message').textContent = 'An error occurred while checking the payment status.';
+            }
+        }
+
+        // Check the status when the page loads
+        checkStatus();
+    </script>
+</body>
+</html>

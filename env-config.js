@@ -32,8 +32,9 @@ window._env_ = {
     storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
     messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
     appId: "${{ secrets.FIREBASE_APP_ID }}",
-    measurementId: "G-Z8NXBVCDY9"
-  };
+    measurementId: "G-Z8NXBVCDY9",
+    STRIPE_PUBLISHABLE_KEY: "${{ secrets.STRIPE_PUBLISHABLE_KEY }}"
+};
 
 // For browser usage
 if (typeof window !== 'undefined') {

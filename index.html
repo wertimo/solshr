@@ -250,7 +250,26 @@
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="translations.js"></script>
-    <script src="env-config.js"></script>
+    <!-- Load environment configuration -->
+    <script>
+        // Determine if we're in development mode
+        const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const configScript = document.createElement('script');
+        configScript.src = isDevelopment ? 'build/env-config.dev.js' : 'env-config.js';
+        configScript.async = false; // Ensure this loads before other scripts
+        document.head.appendChild(configScript);
+    </script>
+    <!-- Wait for config to load before loading other scripts -->
+    <script>
+        // Wait for config to load before initializing Firebase and Stripe
+        window.addEventListener('load', function() {
+            if (!window._env_) {
+                console.error('Environment configuration not loaded');
+                return;
+            }
+            console.log('Environment configuration loaded:', window._env_);
+        });
+    </script>
     <!-- Firebase App (the core Firebase SDK) -->
     <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
     <!-- Firebase Analytics -->
@@ -280,17 +299,50 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <form id="payment-form">
-                <h2>Complete Your Payment</h2>
-                <div id="payment-element">
-                    <!-- Stripe Elements will be inserted here -->
+                <label>
+                  Email
+                  <input type="text" id="payment-email" placeholder="you@example.com" />
+                </label>
+                <div type="text" id="email-errors"></div>
+                <h4>Billing Address</h4>
+                <div id="billing-address-element">
+                  <!--Stripe.js injects the Address Element-->
                 </div>
-                <button id="submit-payment">
-                    <span id="button-text">Pay Now</span>
-                    <div id="spinner" class="spinner hidden"></div>
+                <h4>Payment</h4>
+                <div id="payment-element">
+                  <!--Stripe.js injects the Payment Element-->
+                </div>
+                <button id="submit" class="btn">
+                  <div class="spinner hidden" id="spinner"></div>
+                  <span id="button-text">Pay now</span>
                 </button>
                 <div id="payment-message" class="hidden"></div>
             </form>
+            <section id="success" class="hidden">
+              <p>
+                We appreciate your business! A confirmation email will be sent to <span id="customer-email"></span>.<br>
+                If you have any questions, please email <a href="mailto:orders@example.com">orders@example.com</a>.
+              </p>
+            </section>
         </div>
     </div>
+
+    <script>
+        document.getElementById('start-payment').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const { url } = await response.json();
+                window.location.href = url;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    </script>
 </body>
 </html>

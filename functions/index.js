@@ -1,253 +1,161 @@
+// Import the new modular SDKs
+const { onRequest } = require('firebase-functions/v2/https');
+const { onValueCreated } = require('firebase-functions/v2/database');
+const { setGlobalOptions } = require('firebase-functions/v2');
+const { initializeApp, applicationDefault } = require('firebase-admin/app');
+const { getDatabase, ServerValue } = require('firebase-admin/database');
+const axios = require('axios');
+const cors = require('cors')({ origin: true });
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const axios = require('axios');
 
-// Initialize Stripe with proper error handling
-let stripe;
-try {
-    const stripeConfig = functions.config().stripe;
-    if (!stripeConfig || !stripeConfig.secret_key) {
-        throw new Error('Stripe secret key not found in Firebase Functions configuration');
-    }
-    stripe = require('stripe')(stripeConfig.secret_key);
-} catch (error) {
-    console.error('Error initializing Stripe:', error);
-    throw error;
-}
+// Set global options (region, etc.)
+setGlobalOptions({ region: 'europe-west1' });
 
-const cors = require('cors')({origin: true});
-
+// Initialize Firebase Admin
 admin.initializeApp();
+
+// Initialize Stripe
+const stripeSecret = process.env.STRIPE_SECRET_KEY || functions.config().stripe.secret_key;
+if (!stripeSecret) {
+  throw new Error('Stripe secret key not found in environment variables or Firebase config');
+}
+const stripe = require('stripe')(stripeSecret);
 
 // HubSpot API configuration
 const HUBSPOT_ACCESS_TOKEN = process.env.HUBSPOT_ACCESS_TOKEN;
 const HUBSPOT_API_URL = 'https://api.hubapi.com/crm/v3';
 
-// Function to create/update contact in HubSpot
-async function syncContactWithHubSpot(contactData) {
+// Sync contacts with HubSpot
+exports.syncWithHubSpot = functions
+  .region('europe-west1')
+  .database
+  .ref('/responses/{responseId}')
+  .onCreate(async (snapshot, context) => {
     try {
-        const { email, name, comment } = contactData;
-        
-        // Prepare contact data for HubSpot
-        const hubspotContact = {
-            properties: {
-                email: email,
-                firstname: name.split(' ')[0],
-                lastname: name.split(' ').slice(1).join(' ') || '',
-                comments: comment || '',
-                source: 'SOLSHR Website',
-                createdate: new Date().toISOString()
-            }
-        };
+      const responseData = snapshot.val();
+      const responseId = context.params.responseId;
 
-        // Check if contact exists in HubSpot
-        const searchResponse = await axios.get(`${HUBSPOT_API_URL}/objects/contacts/search`, {
-            headers: {
-                'Authorization': `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
-                'Content-Type': 'application/json'
-            },
-            data: {
-                filterGroups: [{
-                    filters: [{
-                        propertyName: 'email',
-                        operator: 'EQ',
-                        value: email
-                    }]
-                }]
-            }
+      // Create contact in HubSpot
+      const contact = {
+        properties: {
+          email: responseData.email,
+          firstname: responseData.name,
+          lastname: '',
+          phone: '',
+          company: 'SOLSHR',
+          website: '',
+          lifecyclestage: 'lead',
+          hubspot_owner_id: '123456789', // Replace with your HubSpot owner ID
+          notes: responseData.comment || 'No comment provided'
+        }
+      };
+
+      const response = await axios.post(
+        `https://api.hubapi.com/crm/v3/objects/contacts`,
+        contact,
+        {
+          headers: {
+            'Authorization': `Bearer ${process.env.HUBSPOT_API_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      // Update Firebase with HubSpot contact ID
+      await snapshot.ref.update({
+        hubspotContactId: response.data.id,
+        syncedAt: admin.database.ServerValue.TIMESTAMP
+      });
+
+      return { success: true, contactId: response.data.id };
+    } catch (error) {
+      console.error('Error syncing with HubSpot:', error);
+      throw new functions.https.HttpsError('internal', 'Failed to sync with HubSpot');
+    }
+  });
+
+// Create Payment Intent
+exports.createPaymentIntent = functions
+  .region('europe-west1')
+  .https
+  .onRequest((req, res) => {
+    return cors(req, res, async () => {
+      try {
+        const { amount, currency = 'eur' } = req.body;
+
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount,
+          currency,
+          automatic_payment_methods: {
+            enabled: true,
+          },
         });
 
-        let contactId;
-        if (searchResponse.data.total > 0) {
-            // Update existing contact
-            contactId = searchResponse.data.results[0].id;
-            await axios.patch(
-                `${HUBSPOT_API_URL}/objects/contacts/${contactId}`,
-                hubspotContact,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-        } else {
-            // Create new contact
-            const createResponse = await axios.post(
-                `${HUBSPOT_API_URL}/objects/contacts`,
-                hubspotContact,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            contactId = createResponse.data.id;
-        }
-
-        return contactId;
-    } catch (error) {
-        console.error('Error syncing with HubSpot:', error);
-        throw error;
-    }
-}
-
-// Cloud Function to listen for new responses
-exports.syncWithHubSpot = functions.database
-    .ref('/responses/{responseId}')
-    .onCreate(async (snapshot, context) => {
-        try {
-            const responseData = snapshot.val();
-            const contactId = await syncContactWithHubSpot(responseData);
-            
-            // Update Firebase record with HubSpot contact ID
-            await snapshot.ref.update({
-                hubspotContactId: contactId,
-                syncedAt: admin.database.ServerValue.TIMESTAMP
-            });
-
-            return null;
-        } catch (error) {
-            console.error('Error in syncWithHubSpot function:', error);
-            throw error;
-        }
+        res.json({ clientSecret: paymentIntent.client_secret });
+      } catch (error) {
+        console.error('Error creating payment intent:', error);
+        res.status(500).json({ error: error.message });
+      }
     });
-
-// Create a payment intent
-exports.createPaymentIntent = functions.https.onRequest((req, res) => {
-    cors(req, res, async () => {
-        if (req.method !== 'POST') {
-            return res.status(405).json({ error: 'Method not allowed' });
-        }
-
-        try {
-            const { amount, currency = 'eur' } = req.body;
-
-            const paymentIntent = await stripe.paymentIntents.create({
-                amount: amount * 100, // Convert to cents
-                currency: currency,
-                automatic_payment_methods: {
-                    enabled: true,
-                },
-            });
-
-            res.status(200).json({
-                clientSecret: paymentIntent.client_secret,
-            });
-        } catch (error) {
-            console.error('Error creating payment intent:', error);
-            res.status(500).json({ error: error.message });
-        }
-    });
-});
+  });
 
 // Handle successful payment
-exports.handleSuccessfulPayment = functions.https.onRequest((req, res) => {
-    cors(req, res, async () => {
-        if (req.method !== 'POST') {
-            return res.status(405).json({ error: 'Method not allowed' });
-        }
+exports.handleSuccessfulPayment = functions
+  .region('europe-west1')
+  .https
+  .onRequest((req, res) => {
+    return cors(req, res, async () => {
+      try {
+        const { paymentIntentId, userId } = req.body;
 
-        try {
-            const { paymentIntentId, userId, amount } = req.body;
+        // Update user's payment status in Firebase
+        await admin.database().ref(`/users/${userId}/payments`).push({
+          paymentIntentId,
+          status: 'completed',
+          timestamp: admin.database.ServerValue.TIMESTAMP
+        });
 
-            // Verify the payment with Stripe
-            const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-            
-            if (paymentIntent.status !== 'succeeded') {
-                throw new Error('Payment not successful');
-            }
-
-            // Store payment information in Firebase
-            const paymentRef = admin.database().ref('payments').push();
-            await paymentRef.set({
-                paymentIntentId,
-                userId,
-                amount,
-                status: 'completed',
-                timestamp: admin.database.ServerValue.TIMESTAMP
-            });
-
-            res.status(200).json({ success: true });
-        } catch (error) {
-            console.error('Error handling payment:', error);
-            res.status(500).json({ error: error.message });
-        }
+        res.json({ success: true });
+      } catch (error) {
+        console.error('Error handling successful payment:', error);
+        res.status(500).json({ error: error.message });
+      }
     });
-});
+  });
 
-// Webhook to handle Stripe events
-exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
+// Stripe webhook handler
+exports.stripeWebhook = functions
+  .region('europe-west1')
+  .https
+  .onRequest((req, res) => {
     const sig = req.headers['stripe-signature'];
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(
-            req.rawBody,
-            sig,
-            process.env.STRIPE_WEBHOOK_SECRET
-        );
+      event = stripe.webhooks.constructEvent(
+        req.rawBody,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET || functions.config().stripe.webhook_secret
+      );
     } catch (err) {
-        console.error('Webhook signature verification failed:', err.message);
-        return res.status(400).send(`Webhook Error: ${err.message}`);
+      console.error('Webhook signature verification failed:', err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     // Handle the event
     switch (event.type) {
-        case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-            // Handle successful payment
-            await handlePaymentSuccess(paymentIntent);
-            break;
-        case 'payment_intent.payment_failed':
-            const failedPayment = event.data.object;
-            // Handle failed payment
-            await handlePaymentFailure(failedPayment);
-            break;
-        default:
-            console.log(`Unhandled event type ${event.type}`);
+      case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object;
+        console.log('PaymentIntent was successful!');
+        break;
+      case 'payment_method.attached':
+        const paymentMethod = event.data.object;
+        console.log('PaymentMethod was attached to a Customer!');
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
     }
 
     res.json({ received: true });
-});
-
-async function handlePaymentSuccess(paymentIntent) {
-    try {
-        // Store successful payment in database
-        const paymentRef = admin.database().ref('payments').push();
-        await paymentRef.set({
-            paymentIntentId: paymentIntent.id,
-            amount: paymentIntent.amount / 100, // Convert from cents
-            status: 'completed',
-            timestamp: admin.database.ServerValue.TIMESTAMP
-        });
-
-        // You can add additional logic here, such as:
-        // - Updating user credits
-        // - Sending confirmation emails
-        // - Syncing with HubSpot
-    } catch (error) {
-        console.error('Error handling successful payment:', error);
-    }
-}
-
-async function handlePaymentFailure(paymentIntent) {
-    try {
-        // Store failed payment in database
-        const paymentRef = admin.database().ref('payments').push();
-        await paymentRef.set({
-            paymentIntentId: paymentIntent.id,
-            amount: paymentIntent.amount / 100,
-            status: 'failed',
-            error: paymentIntent.last_payment_error?.message,
-            timestamp: admin.database.ServerValue.TIMESTAMP
-        });
-
-        // You can add additional logic here, such as:
-        // - Notifying the user
-        // - Logging the failure
-    } catch (error) {
-        console.error('Error handling failed payment:', error);
-    }
-} 
+  }); 

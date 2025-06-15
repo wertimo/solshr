@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         
         const configPaths = isDevelopment 
-            ? ['env-config.dev.js'] 
+            ? ['build/env-config.dev.js', 'env-config.dev.js'] // Try both locations
             : ['env-config.js'];
 
         console.log('Environment:', isDevelopment ? 'development' : 'production');
@@ -44,10 +44,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Attempting to load config from:', path);
                     const response = await fetch(path);
                     if (response.ok) {
-                        const configData = await response.json(); // Assuming the config is in JSON format
-                        window._env_ = configData; // Assign the loaded config directly
-                        console.log('Successfully loaded config:', window._env_);
-                        return true;
+                        const configText = await response.text();
+                        // Parse the JavaScript file content
+                        const configMatch = configText.match(/window\._env_\s*=\s*({[\s\S]*?});/);
+                        if (configMatch) {
+                            const configData = JSON.parse(configMatch[1]);
+                            window._env_ = configData;
+                            console.log('Successfully loaded config:', window._env_);
+                            return true;
+                        }
                     }
                 } catch (error) {
                     console.log(`Failed to load from ${path}:`, error.message);
@@ -64,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Configuration loading failed:', error);
                 if (isDevelopment) {
-                    console.error('Development config file (env-config.dev.js) not found. Please create this file with your development Firebase configuration.');
+                    console.error('Development config file not found. Please ensure build/env-config.dev.js exists with your development configuration.');
                 }
             });
     } else {
@@ -433,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const paymentForm = document.getElementById('payment-form');
     if (paymentForm) {
         console.log('Payment form found');
-        paymentForm.addEventListener('submit', handlePaymentSubmit);
+        // paymentForm.onsubmit = handlePaymentSubmit;
     } else {
         console.log('Payment form not found');
     }
@@ -450,6 +455,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (paymentModal) {
                 console.log('Opening payment modal');
                 paymentModal.style.display = 'block';
+                // Add show class for animation
+                setTimeout(() => {
+                    paymentModal.classList.add('show');
+                }, 10);
             } else {
                 console.log('Payment modal not found');
             }
@@ -457,112 +466,124 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log('Payment button not found');
     }
+
+    // Close payment modal when clicking outside or on close button
+    const paymentModal = document.getElementById('paymentModal');
+    if (paymentModal) {
+        const closeBtn = paymentModal.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                paymentModal.classList.remove('show');
+                setTimeout(() => {
+                    paymentModal.style.display = 'none';
+                }, 300);
+            });
+        }
+
+        // Close when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === paymentModal) {
+                paymentModal.classList.remove('show');
+                setTimeout(() => {
+                    paymentModal.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
 });
 
 // Initialize Stripe
 console.log('Initializing Stripe...');
-if (!window._env_ || !window._env_.STRIPE_PUBLISHABLE_KEY) {
-    console.error('Stripe publishable key not found in environment configuration');
-} else {
-    const stripe = Stripe(window._env_.STRIPE_PUBLISHABLE_KEY);
-    console.log('Stripe initialized');
+console.log('Environment config:', window._env_);
+
+let stripe;
+function initializeStripe() {
+    if (!window._env_) {
+        console.error('Environment configuration (window._env_) is not loaded');
+        return;
+    }
+    if (!window._env_.STRIPE_PUBLISHABLE_KEY) {
+        console.error('STRIPE_PUBLISHABLE_KEY is missing from environment configuration');
+        return;
+    }
+    try {
+        console.log('Attempting to initialize Stripe with key:', window._env_.STRIPE_PUBLISHABLE_KEY.substring(0, 10) + '...');
+        stripe = Stripe(window._env_.STRIPE_PUBLISHABLE_KEY);
+        console.log('Stripe initialized successfully');
+    } catch (error) {
+        console.error('Error initializing Stripe:', error);
+    }
 }
 
-// Payment handling
-let elements;
-let paymentElement;
+// Wait for environment configuration to load
+window.addEventListener('load', function() {
+    if (window._env_) {
+        initializeStripe();
+    } else {
+        console.error('Environment configuration not loaded');
+    }
+});
 
+// Payment handling
 async function initializePayment(amount) {
-    console.log('Initializing payment with amount:', amount);
     try {
-        console.log('Making request to createPaymentIntent...');
-        const response = await fetch('https://us-central1-solshr-social.cloudfunctions.net/createPaymentIntent', {
+        // Get email from the form if available
+        const emailInput = document.getElementById('payment-email');
+        const email = emailInput ? emailInput.value : null;
+
+        console.log('Creating checkout session for amount:', amount);
+        const response = await fetch('/create-checkout-session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 amount: amount,
-                currency: 'eur'
+                currency: 'eur',
+                email: email
             })
         });
 
         if (!response.ok) {
-            console.error('Response not OK:', response.status, response.statusText);
-            throw new Error('Network response was not ok');
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to create checkout session');
         }
 
-        const { clientSecret } = await response.json();
-        console.log('Payment intent created:', clientSecret);
+        const { url } = await response.json();
+        console.log('Redirecting to checkout URL:', url);
+        
+        // Close the modal if it's open
+        const paymentModal = document.getElementById('paymentModal');
+        if (paymentModal) {
+            paymentModal.classList.remove('show');
+            setTimeout(() => {
+                paymentModal.style.display = 'none';
+            }, 300);
+        }
 
-        const appearance = {
-            theme: 'stripe',
-            variables: {
-                colorPrimary: '#0570de',
-                colorBackground: '#ffffff',
-                colorText: '#30313d',
-                colorDanger: '#df1b41',
-                fontFamily: 'Arial, sans-serif',
-                spacingUnit: '4px',
-                borderRadius: '4px'
-            }
-        };
-
-        console.log('Creating Stripe elements...');
-        elements = stripe.elements({ appearance, clientSecret });
-        paymentElement = elements.create('payment');
-        console.log('Mounting payment element...');
-        paymentElement.mount('#payment-element');
-        console.log('Payment element mounted');
+        // Redirect to Stripe Checkout
+        window.location.href = url;
     } catch (error) {
         console.error('Error initializing payment:', error);
-        showMessage('An error occurred while initializing the payment. Please try again.');
+        alert('An error occurred while initializing the payment. Please try again.');
     }
 }
 
-async function handlePaymentSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/payment-success.html`,
-            }
+// Add payment button click handler
+document.addEventListener('DOMContentLoaded', function() {
+    const paymentButton = document.getElementById('start-payment');
+    if (paymentButton) {
+        console.log('Payment button found');
+        paymentButton.addEventListener('click', () => {
+            console.log('Payment button clicked');
+            const amount = 1000; // Example amount in cents (€10.00)
+            initializePayment(amount);
         });
-
-        if (error) {
-            showMessage(error.message);
-        }
-    } catch (error) {
-        console.error('Error processing payment:', error);
-        showMessage('An error occurred while processing your payment. Please try again.');
-    }
-
-    setLoading(false);
-}
-
-function setLoading(isLoading) {
-    if (isLoading) {
-        document.querySelector('#submit-payment').disabled = true;
-        document.querySelector('#spinner').classList.remove('hidden');
-        document.querySelector('#button-text').classList.add('hidden');
     } else {
-        document.querySelector('#submit-payment').disabled = false;
-        document.querySelector('#spinner').classList.add('hidden');
-        document.querySelector('#button-text').classList.remove('hidden');
+        console.log('Payment button not found');
     }
-}
+});
 
-function showMessage(messageText) {
-    const messageContainer = document.querySelector('#payment-message');
-    messageContainer.classList.remove('hidden');
-    messageContainer.textContent = messageText;
 
-    setTimeout(function () {
-        messageContainer.classList.add('hidden');
-        messageContainer.textContent = '';
-    }, 4000);
-}
+
 
