@@ -157,7 +157,11 @@ const translations = {
         "faq-3-question": "What happens if I move to a different area?",
         "faq-3-answer": "Your investment and benefits are tied to your account, not your location. When you move, you can easily transfer your participation to a new community in your area, ensuring continuous benefits from solar energy.",
         "faq-4-question": "How long does it take to see the benefits?",
-        "faq-4-answer": "Once your local community solar farm is operational, you'll start seeing benefits immediately. The first energy bill reduction typically appears within 1-2 billing cycles after the solar farm begins generating power."
+        "faq-4-answer": "Once your local community solar farm is operational, you'll start seeing benefits immediately. The first energy bill reduction typically appears within 1-2 billing cycles after the solar farm begins generating power.",
+        "pitch-deck": "DOWNLOAD OUR PITCH DECK",
+        "download-deck": "DOWNLOAD",
+        "join-to-download": "Join to Download",
+        "join-and-download": "Join & Download"
     },
     ro: {
         "hero-title": "50% REDUCERE LA FACTURĂ DE ENERGIE*",
@@ -291,7 +295,11 @@ const translations = {
         "faq-3-question": "Ce se întâmplă dacă mă mut într-o altă zonă?",
         "faq-3-answer": "Investiția și beneficiile dvs. sunt legate de contul dvs., nu de locație. Când vă mutați, puteți transfera ușor participarea dvs. la o nouă comunitate din zona dvs., asigurând beneficii continue din energia solară.",
         "faq-4-question": "Cât durează până să vedeți beneficiile?",
-        "faq-4-answer": "Odată ce ferma solară locală a comunității dvs. devine operațională, veți începe să vedeți beneficiile imediat. Prima reducere a facturii de energie apare de obicei în 1-2 cicluri de facturare după ce ferma solară începe să genereze energie."
+        "faq-4-answer": "Odată ce ferma solară locală a comunității dvs. devine operațională, veți începe să vedeți beneficiile imediat. Prima reducere a facturii de energie apare de obicei în 1-2 cicluri de facturare după ce ferma solară începe să genereze energie.",
+        "pitch-deck": "DESCĂRCAȚI PREZENTAREA NOASTRĂ",
+        "download-deck": "DESCĂRCAȚI",
+        "join-to-download": "Alăturați-vă pentru a Descărca",
+        "join-and-download": "Alăturați-vă și Descărcați"
     },
     ru: {
         "hero-title": "СКИДКА 50% НА ЭЛЕКТРОЭНЕРГИЮ*",
@@ -425,7 +433,11 @@ const translations = {
         "faq-3-question": "Что происходит, если я переезжаю в другой район?",
         "faq-3-answer": "Ваши инвестиции и выгоды привязаны к вашему аккаунту, а не к местоположению. При переезде вы можете легко перенести свое участие в новое сообщество в вашем районе, обеспечивая непрерывные выгоды от солнечной энергии.",
         "faq-4-question": "Сколько времени нужно, чтобы увидеть выгоды?",
-        "faq-4-answer": "Как только ваша местная солнечная ферма сообщества станет операционной, вы сразу начнете видеть выгоды. Первое снижение счета за электроэнергию обычно появляется в течение 1-2 циклов выставления счетов после того, как солнечная ферма начинает генерировать энергию."
+        "faq-4-answer": "Как только ваша местная солнечная ферма сообщества станет операционной, вы сразу начнете видеть выгоды. Первое снижение счета за электроэнергию обычно появляется в течение 1-2 циклов выставления счетов после того, как солнечная ферма начинает генерировать энергию.",
+        "pitch-deck": "СКАЧАТЬ НАШУ ПРЕЗЕНТАЦИЮ",
+        "download-deck": "СКАЧАТЬ",
+        "join-to-download": "Присоединяйтесь, чтобы скачать",
+        "join-and-download": "Присоединиться и скачать"
     }
 };
 

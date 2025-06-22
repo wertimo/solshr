@@ -548,10 +548,6 @@ footer {
 .step:nth-child(2) { animation-delay: 0.6s; }
 .step:nth-child(3) { animation-delay: 0.8s; }
 
-.btn {
-    transition: transform 0.3s ease;
-}
-
 .btn:hover {
     animation: pulse 1s infinite;
 }
@@ -561,15 +557,6 @@ footer {
     text-decoration: none; /* Remove underline */
     font-size: 18px; /* Font size for icons */
     transition: color 0.3s ease; /* Smooth color transition on hover */
-}
-
-.modal {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.modal.show {
-    opacity: 1;
 }
 
 .burger div {

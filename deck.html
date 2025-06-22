@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLSHR - solar energy enabler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8NXBVCDY9"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-top">
+                <div class="logo">
+                    <a href="index.html">SOLSHR</a>
+                </div>
+                <div class="burger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <button id="theme-toggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+                    </button>
+                </li>
+                <li>
+                    <div class="language-selector">
+                        <i class="fas fa-globe" onclick="toggleLanguageDropdown()"></i>
+                        <select id="languageSelect" onchange="changeLanguage()" style="display: none;">
+                            <option value="en">EN</option>
+                            <option value="ro">RO</option>
+                            <option value="ru">RU</option>
+                        </select>
+                    </div>
+                </li>
+                <li><a href="#mission" data-lang="mission">MISSION</a></li>
+                <li><a href="#how-it-works" data-lang="how-it-works">HOW IT WORKS</a></li>
+                <li><a href="#" id="joinWaitlistButton" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
+        <section id="hero">
+            <div class="content">
+                <h2 data-lang="pitch-deck">DOWNLOAD OUR PITCH DECK BY JOINING WAITLIST</h2>
+                <a href="#" id="joinWaitlistHero" class="btn" data-lang="download-deck">DOWNLOAD</a>
+            </div>
+        </section> 
+    </div>
+
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-lang="close">&times;</span>
+            <form id="responseForm">
+                <h2 data-lang="join-to-download">Join to Download</h2>
+                <div>
+                    <label for="name" data-lang="name-label">Name:</label>
+                    <input type="text" id="name" required placeholder="Enter your name" data-lang="name-placeholder">
+                </div>
+                <div>
+                    <label for="email" data-lang="email-label">Email:</label>
+                    <input type="email" id="email" required placeholder="Enter your email" data-lang="email-placeholder">
+                </div>
+                <div>
+                    <label for="comment" data-lang="comment-label">Comment (optional):</label>
+                    <input type="text" id="comment" placeholder="Enter your comment" data-lang="comment-placeholder">
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms-checkbox" required>
+                    <span>
+                        <label for="terms-checkbox" data-lang="terms-agree">I agree to the</label>
+                        <a href="privacy-policy.html" target="_blank" onclick="event.stopPropagation()" data-lang="privacy-policy">Privacy Policy</a> 
+                        <span data-lang="and">and</span> 
+                        <a href="terms-and-conditions.html" target="_blank" onclick="event.stopPropagation()" data-lang="terms-conditions">Terms & Conditions</a>
+                    </span>
+                </div>
+                <button type="submit" data-lang="join-and-download">Join & Download</button>
+            </form>
+        </div>
+    </div>
+        
+    <footer class="footer">
+        <div class="social-icons">
+            <li class="footer-icon">
+                <a href="https://www.instagram.com/solshr_official/" target="_blank" aria-label="Instagram">
+                    <i class="fab fab fa-instagram icon-instagram"></i>
+                </a>
+            </li>
+            <li class="footer-icon">
+                <a href="https://www.tiktok.com/@solshr_official" target="_blank" aria-label="TikTok">
+                    <i class="fab fa-tiktok icon-tiktok"></i>
+                </a>
+            </li>
+            <li class="footer-icon">
+                <a href="https://www.youtube.com/@solshr_official" target="_blank" aria-label="YouTube">
+                    <i class="fab fa-youtube icon-youtube"></i>
+                </a>
+            </li>
+        </div>
+        <div class="footer-info">
+            <p>&copy; 2025 SOLSHR. All rights reserved.</p>
+            <p>
+                <a href="privacy-policy.html" class="contact-link">Privacy Policy</a> | 
+                <a href="terms-and-conditions.html" class="contact-link">Terms & Conditions</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('formModal');
+        const heroBtn = document.getElementById('joinWaitlistHero');
+        const navBtn = document.getElementById('joinWaitlistButton');
+        const span = document.querySelector('#formModal .close');
+        const form = document.getElementById('responseForm');
+
+        const openModal = (e) => {
+            e.preventDefault();
+            if (modal) {
+                modal.style.display = "block";
+                setTimeout(() => modal.classList.add('show'), 10); 
+            }
+        };
+
+        const closeModal = () => {
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => modal.style.display = "none", 300);
+            }
+        };
+        
+        if (heroBtn) heroBtn.addEventListener('click', openModal);
+        if (navBtn) navBtn.addEventListener('click', openModal);
+        if (span) span.addEventListener('click', closeModal);
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                closeModal();
+            }
+        });
+
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const comment = document.getElementById('comment').value;
+                const termsAccepted = document.getElementById('terms-checkbox').checked;
+
+                if (!termsAccepted) {
+                    alert('Please agree to the Privacy Policy and Terms & Conditions');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/join-waitlist-deck', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ name, email, comment, termsAccepted }),
+                    });
+
+                    if (response.ok) {
+                        closeModal();
+                        window.location.href = '/deck/solshr-pitch-deck.pptx';
+                    } else {
+                        alert('Could not join waitlist. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html> 

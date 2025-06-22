@@ -2,24 +2,7 @@
 const getFirebaseConfig = () => {
     // Check if the _env_ object is defined
     const config = window._env_;
-    
-    /* If the configuration is not found, log an error and return null
-    if (!config) {
-        console.error('Firebase configuration not found');
-        return null;
-    }
-    
-    // Return the Firebase configuration object
-    return {
-        apiKey: config.apiKey,
-        authDomain: config.authDomain,
-        databaseURL: config.databaseURL,
-        projectId: config.projectId,
-        storageBucket: config.storageBucket,
-        messagingSenderId: config.messagingSenderId,
-        appId: config.appId,
-        measurementId: config.measurementId || null // Optional
-    }; */
+    return config;
 };
 
 
@@ -33,7 +16,9 @@ window._env_ = {
     messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
     appId: "${{ secrets.FIREBASE_APP_ID }}",
     measurementId: "G-Z8NXBVCDY9",
-    STRIPE_PUBLISHABLE_KEY: "${{ secrets.STRIPE_PUBLISHABLE_KEY }}"
+    STRIPE_PUBLISHABLE_KEY: "${{ secrets.STRIPE_PUBLISHABLE_KEY }}",
+    STRIPE_SECRET_KEY: "${{ secrets.STRIPE_SECRET_KEY }}",
+    STRIPE_WEBHOOK_SECRET: "${{ secrets.STRIPE_WEBHOOK_SECRET }}"
 };
 
 // For browser usage
