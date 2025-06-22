@@ -1,0 +1,12 @@
+{
+  "name": "solshr-waitlist",
+  "version": "1.0.0",
+  "description": "Handles waitlist form submissions for the SOLSHR pitch deck.",
+  "main": "index.js",
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.0.0"
+  },
+  "engines": {
+    "node": "18"
+  }
+} 
