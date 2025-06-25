@@ -248,6 +248,15 @@
         </div>
     </div>
 
+    <div id="cookieConsentBanner" class="cookie-banner" style="display:none;">
+      <span>
+        We care about your data. We use cookies to personalize content and to analyze our traffic.
+        No data is collected for marketing purposes.
+        <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+      </span>
+      <button id="cookieConsentAccept" class="btn">Okay!</button>
+    </div>
+
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="translations.js"></script>
     <!-- Load environment configuration -->
@@ -343,6 +352,20 @@
                 alert('Something went wrong. Please try again.');
             }
         });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const banner = document.getElementById('cookieConsentBanner');
+      const acceptBtn = document.getElementById('cookieConsentAccept');
+      if (!localStorage.getItem('cookieConsent')) {
+        banner.style.display = 'flex';
+      }
+      acceptBtn.addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        banner.style.display = 'none';
+      });
+    });
     </script>
 </body>
 </html>
