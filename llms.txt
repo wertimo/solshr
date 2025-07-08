@@ -1,0 +1,188 @@
+# SOLSHR - Solar Energy Community Platform
+
+## Project Overview
+SOLSHR is a web-based platform that enables community-driven solar energy projects. The platform allows users to join waitlists for solar energy initiatives, track their impact, and receive benefits from renewable energy generation.
+
+## Core Functionality
+- Community solar farm waitlist management
+- User registration and form handling
+- Solar energy savings calculator
+- Multi-language support (English, Romanian, Russian)
+- Dark/light theme toggle
+- Cookie consent management
+- Payment processing integration (Stripe)
+- Firebase Realtime Database integration
+
+## Technology Stack
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Backend**: Firebase Functions / Google Cloud Functions
+- **Database**: Firebase Realtime Database
+- **Payment**: Stripe API
+- **Analytics**: Google Analytics
+- **Deployment**: Firebase Hosting / Google Cloud Platform
+
+## Key Files and Directories
+
+### Frontend Files
+- `index.html` - Main landing page with hero section, mission, how-it-works, calculator, FAQ
+- `deck.html` - Pitch deck download page with form submission
+- `styles.css` - Comprehensive styling with CSS variables, responsive design, animations
+- `script.js` - Main JavaScript functionality including form handling, theme toggle, calculator
+- `translations.js` - Multi-language support for EN/RO/RU
+- `auth.js` - Authentication handling
+- `server.js` - Express server for local development and file serving
+
+### Backend Functions
+- `functions/index.js` - Firebase Functions for form processing and database operations
+- `functions/package.json` - Dependencies for Firebase Functions
+- `cloud-function/index.js` - Google Cloud Functions alternative implementation
+- `cloud-function/package.json` - Dependencies for Google Cloud Functions
+
+### Configuration Files
+- `firebase.json` - Firebase project configuration
+- `.firebaserc` - Firebase project settings
+- `env-config.js` - Environment configuration for development/production
+- `build/env-config.dev.js` - Development environment variables
+
+### Legal Pages
+- `privacy-policy.html` - Privacy policy page
+- `terms-and-conditions.html` - Terms and conditions page
+
+### Assets
+- `deck/` - Directory containing pitch deck files (PDF, PPTX)
+- `favicon.ico` - Site favicon
+- Various image assets for hero sections and backgrounds
+
+## Key Features
+
+### 1. Waitlist Management
+- Form submission handling for both main site and deck download
+- Firebase Realtime Database integration for storing user data
+- CORS handling for cross-origin requests
+- Input validation and error handling
+
+### 2. Solar Calculator
+- Interactive slider-based calculator
+- Real-time calculation of:
+  - Investment amount (€)
+  - Power generated (kWh)
+  - Potential savings (€)
+  - CO2 reduction estimates
+- Responsive design with animations
+
+### 3. Multi-language Support
+- Dynamic language switching (EN/RO/RU)
+- Browser language detection
+- Comprehensive translation coverage for all UI elements
+- Language-specific content adaptation
+
+### 4. Theme System
+- Dark/light mode toggle
+- CSS custom properties for theming
+- Persistent theme preference storage
+- Smooth transitions between themes
+
+### 5. Cookie Consent
+- GDPR-compliant cookie banner
+- User consent tracking
+- Privacy policy integration
+- Responsive design for mobile devices
+
+### 6. Payment Integration
+- Stripe payment processing
+- Checkout session creation
+- Payment intent handling
+- Embedded payment forms
+
+## Database Schema
+
+### Firebase Realtime Database Structure
+```
+responses/
+  |- [auto-generated-id]/
+      |- name: string
+      |- email: string
+      |- comment: string (optional)
+      |- termsAccepted: boolean
+      |- timestamp: number
+
+deckWaitlist/
+  |- [auto-generated-id]/
+      |- name: string
+      |- email: string
+      |- comment: string (optional)
+      |- termsAccepted: boolean
+      |- timestamp: number
+```
+
+## API Endpoints
+
+### Firebase Functions
+- `joinWaitlist` - Main waitlist form processing
+- `joinWaitlistDeck` - Deck download form processing
+
+### Google Cloud Functions
+- `joinWaitlistDeck` - Alternative implementation for deck form processing
+
+### Express Server (Local Development)
+- `/create-checkout-session` - Stripe checkout session creation
+- `/createPaymentIntent` - Stripe payment intent creation
+- `/deck/solshr-pitch-deck.pdf` - PDF file serving
+- `/deck/solshr-pitch-deck.pptx` - PPTX file serving
+- `/join-waitlist-deck` - Local form processing endpoint
+
+## Environment Variables
+- `STRIPE_SECRET_KEY` - Stripe API secret key
+- `STRIPE_PRICE_ID` - Stripe product price ID
+- Firebase configuration (apiKey, authDomain, databaseURL, etc.)
+
+## Deployment
+- **Production**: Firebase Hosting with Firebase Functions
+- **Alternative**: Google Cloud Functions with Cloud Run
+- **Local Development**: Express server with hot reloading
+
+## Security Features
+- CORS configuration for cross-origin requests
+- Input validation and sanitization
+- Firebase security rules for database access
+- HTTPS enforcement in production
+- Cookie consent compliance
+
+## Performance Optimizations
+- CSS animations with hardware acceleration
+- Lazy loading for images
+- Minified assets in production
+- CDN usage for external libraries
+- Efficient database queries
+
+## Browser Support
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- Mobile responsive design
+- Progressive enhancement approach
+- Fallback support for older browsers
+
+## Development Workflow
+1. Local development with Express server
+2. Firebase emulators for function testing
+3. Staging deployment for testing
+4. Production deployment via Firebase CLI
+
+## Monitoring and Analytics
+- Google Analytics integration
+- Firebase Analytics
+- Function logging and error tracking
+- Performance monitoring
+
+## Future Enhancements
+- User authentication system
+- Investment tracking dashboard
+- Real-time energy production data
+- Community features and social integration
+- Advanced analytics and reporting
+
+## Contact Information
+- Email: alex@solshr.com
+- Social Media: Instagram, TikTok, YouTube (@solshr_official)
+- Website: https://solshr.com
+
+This project represents a modern, scalable approach to community solar energy initiatives with a focus on user experience, accessibility, and regulatory compliance. 

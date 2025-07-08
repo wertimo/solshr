@@ -45,6 +45,8 @@
                 <li><a href="#mission" data-lang="mission">MISSION</a></li>
                 <li><a href="#how-it-works" data-lang="how-it-works">HOW IT WORKS</a></li>
                 <li><a href="#" id="joinWaitlistButton" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a></li>
+                <li id="accountMenuItem" style="display:none;"><a href="account.html" data-lang="account">ACCOUNT</a></li>
+                <li id="signOutMenuItem" style="display:none;"><button id="signOutMenuButton" style="background:none;border:none;color:inherit;cursor:pointer;">SIGN OUT</button></li>
             </ul>
         </nav>
     </header>
@@ -178,10 +180,10 @@
                 </a>
             </li>
         </div>
-        <!--<div class="auth-buttons">
+        <!-- <div class="auth-buttons">
             <a href="#" id="signInButton" class="btn" data-lang="sign-in">SIGN IN</a>
             <a href="#" id="signUpButton" class="btn" data-lang="sign-up">SIGN UP</a>
-        </div>-->
+        </div> -->
         <div class="footer-info">
             <p>&copy; 2025 SOLSHR. All rights reserved.</p>
             <p>
@@ -228,8 +230,8 @@
             <form id="authForm">
                 <h2 id="authTitle" data-lang="sign-in-title">Sign In</h2>
                 <div id="authName" style="display: none;">
-                    <label for="authName" data-lang="name-label">Name:</label>
-                    <input type="text" id="authName" required placeholder="Enter your name" data-lang="name-placeholder">
+                    <label for="authNameInput" data-lang="name-label">Name:</label>
+                    <input type="text" id="authNameInput" required placeholder="Enter your name" data-lang="name-placeholder">
                 </div>
                 <div>
                     <label for="authEmail" data-lang="email-label">Email:</label>
@@ -264,7 +266,7 @@
         // Determine if we're in development mode
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const configScript = document.createElement('script');
-        configScript.src = isDevelopment ? 'build/env-config.dev.js' : 'env-config.js';
+        configScript.src ='build/env-config.dev.js';
         configScript.async = false; // Ensure this loads before other scripts
         document.head.appendChild(configScript);
     </script>
@@ -281,6 +283,8 @@
     </script>
     <!-- Firebase App (the core Firebase SDK) -->
     <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <!-- Firebase Auth -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
     <!-- Firebase Analytics -->
     <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
     <!-- Your custom script -->

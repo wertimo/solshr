@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .success { background-color: #d4edda; }
+        .error { background-color: #f8d7da; }
+        .info { background-color: #d1ecf1; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Firebase Authentication Test</h1>
+    
+    <div id="config-test" class="test-section info">
+        <h3>Configuration Test</h3>
+        <p>Checking Firebase configuration...</p>
+    </div>
+    
+    <div id="auth-test" class="test-section info">
+        <h3>Authentication Test</h3>
+        <p>Testing authentication functionality...</p>
+        <button onclick="testSignUp()">Test Sign Up</button>
+        <button onclick="testSignIn()">Test Sign In</button>
+        <button onclick="testSignOut()">Test Sign Out</button>
+    </div>
+    
+    <div id="status" class="test-section">
+        <h3>Status</h3>
+        <p id="status-text">Initializing...</p>
+    </div>
+
+    <script src="/build/env-config.dev.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+        
+        // Test configuration
+        const configTest = document.getElementById('config-test');
+        const statusText = document.getElementById('status-text');
+        
+        if (window._env_ && window._env_.apiKey) {
+            configTest.className = 'test-section success';
+            configTest.innerHTML = '<h3>✅ Configuration Test</h3><p>Firebase configuration loaded successfully!</p>';
+            
+            // Initialize Firebase
+            const app = initializeApp(window._env_);
+            const auth = getAuth(app);
+            
+            // Test auth state
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    statusText.textContent = `✅ User signed in: ${user.email}`;
+                } else {
+                    statusText.textContent = 'ℹ️ No user signed in';
+                }
+            });
+            
+            // Make auth available globally for testing
+            window.testAuth = auth;
+            
+        } else {
+            configTest.className = 'test-section error';
+            configTest.innerHTML = '<h3>❌ Configuration Test</h3><p>Firebase configuration failed to load!</p>';
+            statusText.textContent = '❌ Configuration error';
+        }
+        
+        // Test functions
+        window.testSignUp = async () => {
+            try {
+                const { createUserWithEmailAndPassword } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js');
+                const userCredential = await createUserWithEmailAndPassword(window.testAuth, 'test@example.com', 'password123');
+                alert('Sign up successful!');
+            } catch (error) {
+                alert('Sign up error: ' + error.message);
+            }
+        };
+        
+        window.testSignIn = async () => {
+            try {
+                const { signInWithEmailAndPassword } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js');
+                await signInWithEmailAndPassword(window.testAuth, 'test@example.com', 'password123');
+                alert('Sign in successful!');
+            } catch (error) {
+                alert('Sign in error: ' + error.message);
+            }
+        };
+        
+        window.testSignOut = async () => {
+            try {
+                const { signOut } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js');
+                await signOut(window.testAuth);
+                alert('Sign out successful!');
+            } catch (error) {
+                alert('Sign out error: ' + error.message);
+            }
+        };
+    </script>
+</body>
+</html> 

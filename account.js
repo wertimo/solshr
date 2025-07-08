@@ -1,4 +1,6 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+console.log('account.js loaded');
+
+import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import {
     getAuth,
     onAuthStateChanged,
@@ -10,19 +12,44 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 import { getDatabase, ref, get, remove } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
 
+// Add a loading indicator to the page
+let loadingDiv = document.createElement('div');
+loadingDiv.id = 'account-loading';
+loadingDiv.style.position = 'fixed';
+loadingDiv.style.top = '0';
+loadingDiv.style.left = '0';
+loadingDiv.style.width = '100vw';
+loadingDiv.style.height = '100vh';
+loadingDiv.style.background = 'rgba(255,255,255,0.8)';
+loadingDiv.style.display = 'flex';
+loadingDiv.style.alignItems = 'center';
+loadingDiv.style.justifyContent = 'center';
+loadingDiv.style.zIndex = '9999';
+loadingDiv.innerHTML = '<div style="font-size:2rem; color:#333;">Loading...</div>';
+document.body.appendChild(loadingDiv);
+
 // Ensure the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Account page loaded');
 
     // Get Firebase config safely
     const firebaseConfig = window.getFirebaseConfig?.();
+    console.log('Firebase config in account.js:', firebaseConfig);
     if (!firebaseConfig || !firebaseConfig.apiKey) {
         console.error('Firebase configuration missing');
         return;
     }
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+    // Robust singleton Firebase initialization
+    let app;
+    if (!getApps().length) {
+        app = initializeApp(firebaseConfig);
+        console.log('Firebase app initialized.');
+    } else {
+        app = getApps()[0];
+        console.log('Firebase app already initialized.');
+    }
+
     const auth = getAuth(app);
     const db = getDatabase(app);
 
@@ -36,11 +63,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const changePasswordBtn = document.getElementById('changePasswordBtn');
     const deleteAccountBtn = document.getElementById('deleteAccountBtn');
 
-    // Check authentication state
+    // Warn if any expected DOM element is missing
+    if (!userName) console.warn('userName element not found');
+    if (!userEmail) console.warn('userEmail element not found');
+    if (!totalInvested) console.warn('totalInvested element not found');
+    if (!powerGenerated) console.warn('powerGenerated element not found');
+    if (!co2Saved) console.warn('co2Saved element not found');
+    if (!logoutButton) console.warn('logoutButton element not found');
+    if (!changePasswordBtn) console.warn('changePasswordBtn element not found');
+    if (!deleteAccountBtn) console.warn('deleteAccountBtn element not found');
+
+    // Check authentication state ONLY inside onAuthStateChanged
     onAuthStateChanged(auth, async (user) => {
+        console.log('Auth state changed. User:', user);
+        // Hide loading indicator
+        if (loadingDiv) loadingDiv.style.display = 'none';
+
         if (!user) {
-            console.log('User not authenticated, redirecting to home...');
-            window.location.replace('/index.html');
+            console.log('User not authenticated, redirecting to home in 5 seconds...');
+            // Show a visible message
+            let msg = document.createElement('div');
+            msg.style.position = 'fixed';
+            msg.style.top = '0';
+            msg.style.left = '0';
+            msg.style.width = '100vw';
+            msg.style.height = '100vh';
+            msg.style.background = 'rgba(255,255,255,0.95)';
+            msg.style.display = 'flex';
+            msg.style.alignItems = 'center';
+            msg.style.justifyContent = 'center';
+            msg.style.zIndex = '10000';
+            msg.style.fontSize = '2rem';
+            msg.style.color = '#c00';
+            msg.innerText = 'You are not signed in. Redirecting to home in 5 seconds...';
+            document.body.appendChild(msg);
+
+            setTimeout(() => {
+                window.location.replace('index.html');
+            }, 5000);
             return;
         }
 
@@ -53,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const snapshot = await get(ref(db, 'users/' + user.uid));
             const userData = snapshot.val();
+            console.log('User data from database:', userData);
 
             if (userData && userData.investment) {
                 if (totalInvested) totalInvested.textContent = `€${userData.investment.total || 0}`;
@@ -70,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             try {
                 await signOut(auth);
-                window.location.replace('/index.html');
+                window.location.replace('index.html');
             } catch (error) {
                 console.error('Error signing out:', error);
                 alert('Error signing out. Please try again.');
@@ -123,13 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 await deleteUser(user);
 
                 alert('Your account has been deleted.');
-                window.location.replace('/index.html');
+                window.location.replace('index.html');
             } catch (error) {
                 console.error('Error deleting account:', error);
                 if (error.code === 'auth/requires-recent-login') {
                     alert('For security, please sign in again before deleting your account.');
                     await signOut(auth);
-                    window.location.replace('/index.html');
+                    window.location.replace('index.html');
                 } else {
                     alert('Error deleting account: ' + error.message);
                 }

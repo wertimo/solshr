@@ -124,6 +124,15 @@
         </div>
     </footer>
 
+    <div id="cookieConsentBanner" class="cookie-banner" style="display:none;">
+        <span>
+            We care about your data. We use cookies to personalize content and to analyze our traffic.
+            No data is collected for marketing purposes.
+            <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+        </span>
+        <button id="cookieConsentAccept" class="btn">Okay!</button>
+    </div>
+
     <div id="formModal" class="modal">
         <div class="modal-content">
             <span class="close" data-lang="close">&times;</span>
@@ -160,6 +169,8 @@
     </script>  
 
     <!-- Your scripts -->
+    <script type="module" src="script.js"></script>
+    <script type="module" src="auth.js"></script>
     <script src="translations.js"></script>
     <script src="env-config.js"></script>
     <!-- Firebase App (the core Firebase SDK) -->

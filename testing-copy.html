@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="config.js"></script>
 </head>
 <body>
     <header>
@@ -84,9 +86,59 @@
                     <button id="changePasswordBtn" class="secondary-btn" data-lang="change-password">Change Password</button>
                     <button id="deleteAccountBtn" class="danger-btn" data-lang="delete-account">Delete Account</button>
                 </div>
+
+
             </div>
         </section>
     </main>
+
+    <!-- Payment Testing Section -->
+    <div class="payment-test-section">
+        <h2>Payment Testing</h2>
+        <button id="start-payment" class="btn" style="margin-top: 20px;">Test Payment (€10)</button>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            
+            <!-- Payment Form -->
+            <div id="payment-form">
+                <h2>Test Payment</h2>
+                <p>Complete this €10 test payment to verify the system</p>
+                
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label for="payment-email">Email Address</label>
+                        <input type="email" id="payment-email" required placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment-element">Payment Details</label>
+                        <div id="payment-element"></div>
+                    </div>
+                    
+                    <button type="submit" id="submit">
+                        <div class="spinner hidden" id="spinner"></div>
+                        <span id="button-text">Pay €10</span>
+                    </button>
+                    
+                    <div id="payment-message" class="hidden"></div>
+                </form>
+            </div>
+
+            <!-- Success Section -->
+            <div id="success" class="hidden">
+                <div class="success-content">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h2>Payment Successful!</h2>
+                    <p>Thank you for your test payment. A confirmation has been sent to <span id="customer-email"></span></p>
+                    <button class="btn btn-primary" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="social-icons">
@@ -119,32 +171,6 @@
         </div>
     </footer>
 
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close" data-lang="close">&times;</span>
-            <form id="authForm">
-                <h2 id="authTitle" data-lang="sign-in-title">Sign In</h2>
-                <div id="authName" style="display: none;">
-                    <label for="authNameInput" data-lang="name-label">Name:</label>
-                    <input type="text" id="authNameInput" placeholder="Enter your name" data-lang="name-placeholder">
-                </div>
-                <div>
-                    <label for="authEmail" data-lang="email-label">Email:</label>
-                    <input type="email" id="authEmail" required placeholder="Enter your email" data-lang="email-placeholder">
-                </div>
-                <div>
-                    <label for="authPassword" data-lang="password-label">Password:</label>
-                    <input type="password" id="authPassword" required placeholder="Enter your password" data-lang="password-placeholder">
-                </div>
-                <button type="submit" id="authSubmitBtn" data-lang="sign-in-button">Sign In</button>
-                <p class="auth-switch">
-                    <span id="authSwitch" data-lang="no-account">Don't have an account? </span>
-                    <a href="#" id="switchAuthMode" data-lang="sign-up-link">Sign Up</a>
-                </p>
-            </form>
-        </div>
-    </div>
-
     <div id="cookieConsentBanner" class="cookie-banner" style="display:none;">
         <span>
             We care about your data. We use cookies to personalize content and to analyze our traffic.
@@ -156,10 +182,11 @@
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="translations.js"></script>
-    <script src="/build/env-config.dev.js"></script>
+    <script src="env-config.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
     <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
     <script type="module" src="account.js"></script>
     <script type="module" src="script.js"></script>
-</body> 
+    <script src="payment-test.js"></script>
+</body>
 </html> 

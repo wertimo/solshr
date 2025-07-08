@@ -1,50 +1,53 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { 
-    getAuth, 
+    getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    updateProfile
+    updateProfile,
+    onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
 
-// Check Firebase configuration
-if (!window._env_ || !window._env_.apiKey) {
-    console.error('Firebase configuration is missing:', window._env_);
-    throw new Error('Firebase configuration is missing.'); // This will stop execution
-}
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Auth script loaded');
+    
+    // Check Firebase configuration
+    if (!window._env_ || !window._env_.apiKey) {
+        console.error('Firebase configuration is missing:', window._env_);
+        return;
+    }
 
-// Initialize Firebase
-const app = initializeApp(window._env_);
-const auth = getAuth(app);
+    // Initialize Firebase
+    const app = initializeApp(window._env_);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
 
-// DOM Elements
-const authModal = document.getElementById('authModal');
-const authForm = document.getElementById('authForm');
-const authTitle = document.getElementById('authTitle');
-const authName = document.getElementById('authName');
-const authSubmitBtn = document.getElementById('authSubmitBtn');
-const switchAuthMode = document.getElementById('switchAuthMode');
-const authSwitch = document.getElementById('authSwitch');
-const signInButton = document.getElementById('signInButton');
-const signUpButton = document.getElementById('signUpButton');
-const closeButton = authModal ? authModal.querySelector('.close') : null;
+    // DOM Elements
+    const authModal = document.getElementById('authModal');
+    const authForm = document.getElementById('authForm');
+    const authTitle = document.getElementById('authTitle');
+    const authName = document.getElementById('authName');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const switchAuthMode = document.getElementById('switchAuthMode');
+    const authSwitch = document.getElementById('authSwitch');
+    const signInButton = document.getElementById('signInButton');
+    const signUpButton = document.getElementById('signUpButton');
+    const closeButton = authModal ? authModal.querySelector('.close') : null;
+    const accountMenuItem = document.getElementById('accountMenuItem');
+    const signOutMenuItem = document.getElementById('signOutMenuItem');
+    const signOutMenuButton = document.getElementById('signOutMenuButton');
 
-let isSignUp = false;
+    let isSignUp = false;
 
-// Verify all required elements exist
-if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn || 
-    !switchAuthMode || !authSwitch || !signInButton || !signUpButton || !closeButton) {
-    console.error('Required DOM elements not found');
-} else {
-    console.log('authModal:', authModal);
-    console.log('authForm:', authForm);
-    console.log('authTitle:', authTitle);
-    console.log('authName:', authName);
-    console.log('authSubmitBtn:', authSubmitBtn);
-    console.log('switchAuthMode:', switchAuthMode);
-    console.log('authSwitch:', authSwitch);
-    console.log('signInButton:', signInButton);
-    console.log('signUpButton:', signUpButton);
-    console.log('closeButton:', closeButton);
+    // Verify all required elements exist
+    if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn || 
+        !switchAuthMode || !authSwitch || !signInButton || !signUpButton || !closeButton || !accountMenuItem || !signOutMenuItem || !signOutMenuButton) {
+        console.error('Required DOM elements not found');
+        return;
+    }
+
+    console.log('All auth elements found, setting up event listeners');
 
     // Show/Hide Auth Modal
     function showAuthModal(mode) {
@@ -75,6 +78,16 @@ if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn ||
         switchAuthMode.setAttribute('data-lang', switchLinkKey);
         authName.style.display = isSignUp ? 'block' : 'none';
 
+        // Toggle required attribute for name input
+        const nameInput = document.getElementById('authNameInput');
+        if (nameInput) {
+            if (isSignUp) {
+                nameInput.setAttribute('required', 'required');
+            } else {
+                nameInput.removeAttribute('required');
+            }
+        }
+
         // Update translations
         if (typeof changeLanguage === 'function') {
             changeLanguage();
@@ -88,31 +101,35 @@ if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn ||
         
         const email = document.getElementById('authEmail').value;
         const password = document.getElementById('authPassword').value;
-        const name = authName.value;
+        const name = document.getElementById('authNameInput').value;
 
         try {
             if (isSignUp) {
                 console.log('Attempting sign up...');
-                // Check if email already exists
-                try {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    if (name) {
-                        await updateProfile(userCredential.user, { displayName: name });
-                    }
-                    console.log('Sign up successful');
-                } catch (error) {
-                    console.error('Sign up error:', error);
-                    throw new Error('An error occurred during sign up. Please try again.');
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                
+                // Update profile with display name
+                if (name) {
+                    await updateProfile(userCredential.user, { displayName: name });
                 }
+                
+                // Save user data to database
+                await set(ref(db, 'users/' + userCredential.user.uid), {
+                    email: email,
+                    displayName: name,
+                    createdAt: new Date().toISOString(),
+                    investment: {
+                        total: 0,
+                        power: 0,
+                        co2: 0
+                    }
+                });
+                
+                console.log('Sign up successful');
             } else {
                 console.log('Attempting sign in...');
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    console.log('Sign in successful');
-                } catch (error) {
-                    console.error('Sign in error:', error);
-                    throw new Error('An error occurred during sign in. Please try again.');
-                }
+                await signInWithEmailAndPassword(auth, email, password);
+                console.log('Sign in successful');
             }
             
             // Hide the modal first
@@ -126,10 +143,21 @@ if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn ||
             
         } catch (error) {
             console.error('Authentication error:', error);
-            // Show a generic error message to the user
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'auth-error';
-            errorMessage.textContent = 'An error occurred during authentication. Please try again.';
+            
+            // Show specific error messages
+            let errorMessage = 'An error occurred during authentication. Please try again.';
+            
+            if (error.code === 'auth/email-already-in-use') {
+                errorMessage = 'An account with this email already exists. Please sign in instead.';
+            } else if (error.code === 'auth/user-not-found') {
+                errorMessage = 'No account found with this email. Please sign up instead.';
+            } else if (error.code === 'auth/wrong-password') {
+                errorMessage = 'Incorrect password. Please try again.';
+            } else if (error.code === 'auth/weak-password') {
+                errorMessage = 'Password should be at least 6 characters long.';
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage = 'Please enter a valid email address.';
+            }
             
             // Remove any existing error messages
             const existingError = authForm.querySelector('.auth-error');
@@ -138,7 +166,10 @@ if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn ||
             }
             
             // Insert error message after the form title
-            authTitle.insertAdjacentElement('afterend', errorMessage);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'auth-error';
+            errorDiv.textContent = errorMessage;
+            authTitle.insertAdjacentElement('afterend', errorDiv);
         }
     });
 
@@ -163,15 +194,34 @@ if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn ||
     });
 
     // Handle authentication state changes
-    auth.onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
         if (user) {
             // User is signed in
+            console.log('User signed in:', user.email);
             signInButton.style.display = 'none';
             signUpButton.style.display = 'none';
+            if (accountMenuItem) accountMenuItem.style.display = 'block';
+            if (signOutMenuItem) signOutMenuItem.style.display = 'block';
         } else {
             // User is signed out
+            console.log('User signed out');
             signInButton.style.display = 'inline-block';
             signUpButton.style.display = 'inline-block';
+            if (accountMenuItem) accountMenuItem.style.display = 'none';
+            if (signOutMenuItem) signOutMenuItem.style.display = 'none';
         }
     });
-} 
+
+    // Global sign out function for burger menu
+    window.signOutUser = async function() {
+        try {
+            await auth.signOut();
+            window.location.replace('index.html');
+        } catch (error) {
+            alert('Error signing out. Please try again.');
+        }
+    };
+    if (signOutMenuButton) {
+        signOutMenuButton.addEventListener('click', window.signOutUser);
+    }
+}); 

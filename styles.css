@@ -1547,70 +1547,186 @@ body.dark-mode #theme-toggle .fa-sun {
 }
 
 /* Payment Modal Styles */
+#paymentModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+#paymentModal.show {
+  display: flex;
+  opacity: 1;
+}
+
 #paymentModal .modal-content {
-    max-width: 500px;
-    padding: 2rem;
+  background: var(--background-color);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#paymentModal .close {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.2rem;
+  font-size: 2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+#paymentModal .close:hover {
+  color: var(--primary-color);
 }
 
 #paymentModal h2 {
-    color: var(--text-color);
-    margin-bottom: 1.5rem;
-    text-align: center;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+#paymentModal p {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
 }
 
+.form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--text-color);
+  text-align: left;
+}
+#payment-form input[type="email"] {
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--background-grey);
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  background: var(--background-color);
+  color: var(--text-color);
+  transition: border-color 0.2s;
+}
+#payment-form input[type="email"]:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
 #payment-element {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    border-radius: 4px;
-    background-color: var(--background-color);
+  margin-bottom: 1.2rem;
+  padding: 0.7rem 0.5rem;
+  border-radius: 5px;
+  background: var(--background-grey);
 }
 
-#submit-payment {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: var(--primary-color);
-    color: var(--white-text-color);
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+#submit {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--primary-color);
+  color: var(--white-text-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  transition: background 0.2s;
 }
-
-#submit-payment:hover {
-    background-color: var(--accent-brown);
+#submit:hover:not(:disabled) {
+  background: var(--accent-brown);
 }
-
-#submit-payment:disabled {
-    background-color: var(--background-grey);
-    cursor: not-allowed;
+#submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .spinner {
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: var(--white-text-color);
-    animation: spin 1s ease-in-out infinite;
-    margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: var(--white-text-color);
+  animation: spin 1s linear infinite;
+  display: inline-block;
 }
-
 @keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.hidden {
-    display: none;
+  to { transform: rotate(360deg); }
 }
 
 #payment-message {
-    margin-top: 1rem;
-    padding: 0.8rem;
-    border-radius: 4px;
-    text-align: center;
-    color: var(--text-color);
-    background-color: var(--background-color);
+  margin-top: 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: 5px;
+  background: #f8f8f8;
+  color: #b91c1c;
+  font-size: 1rem;
+  text-align: center;
+}
+#payment-message.hidden {
+  display: none;
+}
+
+#success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0.5rem;
+}
+#success .success-icon {
+  font-size: 3rem;
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+#success h2 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+#success p {
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+#success .btn {
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  #paymentModal .modal-content {
+    padding: 1.2rem 0.5rem;
+    max-width: 98vw;
+  }
+  #paymentModal h2 {
+    font-size: 1.3rem;
+  }
+  #payment-form input[type="email"] {
+    font-size: 0.98rem;
+  }
+  #submit {
+    font-size: 1rem;
+    padding: 0.7rem;
+  }
 }
 
 .cookie-banner {

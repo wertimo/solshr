@@ -115,75 +115,29 @@
         </div>
     </footer>
 
+    <div id="cookieConsentBanner" class="cookie-banner" style="display:none;">
+        <span>
+            We care about your data. We use cookies to personalize content and to analyze our traffic.
+            No data is collected for marketing purposes.
+            <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+        </span>
+        <button id="cookieConsentAccept" class="btn">Okay!</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
     <script src="translations.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('formModal');
-        const heroBtn = document.getElementById('joinWaitlistHero');
-        const navBtn = document.getElementById('joinWaitlistButton');
-        const span = document.querySelector('#formModal .close');
-        const form = document.getElementById('responseForm');
-
-        const openModal = (e) => {
-            e.preventDefault();
-            if (modal) {
-                modal.style.display = "block";
-                setTimeout(() => modal.classList.add('show'), 10); 
-            }
-        };
-
-        const closeModal = () => {
-            if (modal) {
-                modal.classList.remove('show');
-                setTimeout(() => modal.style.display = "none", 300);
-            }
-        };
-        
-        if (heroBtn) heroBtn.addEventListener('click', openModal);
-        if (navBtn) navBtn.addEventListener('click', openModal);
-        if (span) span.addEventListener('click', closeModal);
-
-        window.addEventListener('click', (event) => {
-            if (event.target == modal) {
-                closeModal();
-            }
-        });
-
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const comment = document.getElementById('comment').value;
-                const termsAccepted = document.getElementById('terms-checkbox').checked;
-
-                if (!termsAccepted) {
-                    alert('Please agree to the Privacy Policy and Terms & Conditions');
-                    return;
-                }
-
-                try {
-                    const response = await fetch('https://joinwaitlistdeck-ikvkg3x2zq-ew.a.run.app', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ name, email, comment, termsAccepted }),
-                    });
-
-                    if (response.ok) {
-                        closeModal();
-                        window.location.href = '/deck/solshr-pitch-deck.pdf';
-                    } else {
-                        alert('Could not join waitlist. Please try again.');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                }
-            });
-        }
-    });
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const configScript = document.createElement('script');
+      configScript.src = isDevelopment ? 'build/env-config.dev.js' : 'env-config.js';
+      configScript.async = false; // Ensure this loads before other scripts
+      document.head.appendChild(configScript);
     </script>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+
+
 </body>
 </html> 

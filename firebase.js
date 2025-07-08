@@ -11,15 +11,6 @@ logEvent(analytics, 'notification_received', {
   message: 'Test notification'
 });
 
-// Initialize Firebase
-const firebaseConfig = getFirebaseConfig();
-if (firebaseConfig) {
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-} else {
-  console.error('Failed to initialize Firebase due to missing configuration.');
-}
-
 // Function to get Firebase configuration
 const getFirebaseConfig = () => {
   const config = window._env_;
@@ -40,3 +31,33 @@ const getFirebaseConfig = () => {
     measurementId: config.measurementId || null // Optional
   };
 };
+
+// Initialize Firebase
+let app = null;
+let auth = null;
+let analytics = null;
+let database = null;
+
+const firebaseConfig = getFirebaseConfig();
+if (firebaseConfig) {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  database = getDatabase(app);
+  
+  // Initialize analytics only if measurementId is provided
+  if (firebaseConfig.measurementId) {
+    try {
+      analytics = getAnalytics(app);
+      console.log('Firebase Analytics initialized');
+    } catch (error) {
+      console.warn('Analytics initialization failed:', error);
+    }
+  }
+  
+  console.log('Firebase initialized successfully');
+} else {
+  console.error('Failed to initialize Firebase due to missing configuration.');
+}
+
+// Export Firebase instances
+export { app, auth, analytics, database, getFirebaseConfig };
