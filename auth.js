@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isSignUp = false;
 
-    // Verify all required elements exist
+    // Only run setup if all required elements exist
     if (!authModal || !authForm || !authTitle || !authName || !authSubmitBtn || 
         !switchAuthMode || !authSwitch || !signInButton || !signUpButton || !closeButton || !accountMenuItem || !signOutMenuItem || !signOutMenuButton) {
-        console.error('Required DOM elements not found');
+        console.warn('Auth.js: Required DOM elements not found for auth modal. Skipping auth setup on this page.');
         return;
     }
 

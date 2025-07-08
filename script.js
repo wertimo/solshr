@@ -243,6 +243,7 @@ function main() {
     const potentialSavingsInput = document.getElementById('potential-savings');
 
     function updateFromAmountInvested() {
+        if (!amountInvestedInput || !powerGeneratedInput || !potentialSavingsInput) return;
         const amountInvested = parseFloat(amountInvestedInput.value);
         const calculatedPowerGenerated = (amountInvested / 1000) * 2.4;
         const calculatedPotentialSavings = (calculatedPowerGenerated * 1200 * 1.67) / 24;
@@ -251,6 +252,7 @@ function main() {
         updateSavings();
     }
     function updateFromPowerGenerated() {
+        if (!amountInvestedInput || !powerGeneratedInput || !potentialSavingsInput) return;
         const powerGenerated = parseFloat(powerGeneratedInput.value);
         const calculatedAmountInvested = (powerGenerated / 2.4) * 1000;
         const calculatedPotentialSavings = (powerGenerated * 1200 * 1.67) / 24;
@@ -259,6 +261,7 @@ function main() {
         updateSavings();
     }
     function updateFromPotentialSavings() {
+        if (!amountInvestedInput || !powerGeneratedInput || !potentialSavingsInput) return;
         const potentialSavings = parseFloat(potentialSavingsInput.value);
         const calculatedPowerGenerated = (potentialSavings * 24) / (1.67 * 1200);
         const calculatedAmountInvested = (calculatedPowerGenerated / 2.4) * 1000;
@@ -267,17 +270,13 @@ function main() {
         updateSavings();
     }
 
-    if (amountInvestedInput) {
+    if (amountInvestedInput && powerGeneratedInput && potentialSavingsInput) {
         amountInvestedInput.addEventListener('input', updateFromAmountInvested);
-    }
-    if (powerGeneratedInput) {
         powerGeneratedInput.addEventListener('input', updateFromPowerGenerated);
-    }
-    if (potentialSavingsInput) {
         potentialSavingsInput.addEventListener('input', updateFromPotentialSavings);
+        // Initial call to set values correctly on page load
+        updateFromAmountInvested();
     }
-    // Initial call to set values correctly on page load
-    updateFromAmountInvested();
 
     // Robust AOS initialization
     if (window.AOS) {
