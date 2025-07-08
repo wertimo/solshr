@@ -132,11 +132,21 @@
       const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const configScript = document.createElement('script');
       configScript.src = isDevelopment ? 'build/env-config.dev.js' : 'env-config.js';
-      configScript.async = false; // Ensure this loads before other scripts
+      configScript.async = false;
+      configScript.onload = function() {
+        // Now load your main scripts
+        const script1 = document.createElement('script');
+        script1.type = 'module';
+        script1.src = 'script.js';
+        document.head.appendChild(script1);
+
+        const script2 = document.createElement('script');
+        script2.type = 'module';
+        script2.src = 'auth.js';
+        document.head.appendChild(script2);
+      };
       document.head.appendChild(configScript);
     </script>
-    <script type="module" src="script.js"></script>
-    <script type="module" src="auth.js"></script>
 
 
 </body>

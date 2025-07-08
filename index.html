@@ -266,8 +266,8 @@
         // Determine if we're in development mode
         const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const configScript = document.createElement('script');
-        configScript.src ='build/env-config.dev.js';
-        configScript.async = false; // Ensure this loads before other scripts
+        configScript.src = isDevelopment ? 'build/env-config.dev.js' : 'env-config.js';
+        configScript.async = false; // Ens
         document.head.appendChild(configScript);
     </script>
     <!-- Wait for config to load before loading other scripts -->
