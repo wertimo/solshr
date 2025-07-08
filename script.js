@@ -108,28 +108,62 @@ function main() {
                         });
                         // Only redirect to the deck PDF if on deck.html
                         if (window.location.pathname.endsWith('deck.html')) {
-                            try {
-                                // Create a temporary link to trigger download
-                                const link = document.createElement('a');
-                                link.href = 'deck/solshr-pitch-deck.pdf';
-                                link.download = 'solshr-pitch-deck.pdf';
-                                link.style.display = 'none';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                                
-                                // Show success message
-                                alert('Thank you! Your pitch deck is downloading.');
-                                
-                                // Fallback: if download doesn't work, open in new tab after a delay
-                                setTimeout(() => {
-                                    window.open('deck/solshr-pitch-deck.pdf', '_blank');
-                                }, 1000);
-                            } catch (error) {
-                                console.error('Download failed:', error);
-                                // Fallback to opening in new tab
-                                window.open('deck/solshr-pitch-deck.pdf', '_blank');
-                                alert('Thank you! Your pitch deck is opening in a new tab.');
+                            const pdfUrl = 'deck/solshr-pitch-deck.pdf';
+                            const alternativePdfUrl = '/deck/solshr-pitch-deck.pdf';
+                            console.log('Attempting to download PDF from:', pdfUrl);
+                            console.log('Current page URL:', window.location.href);
+                            
+                            // Check if we're in production
+                            const isProduction = !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1');
+                            console.log('Is production:', isProduction);
+                            
+                            if (isProduction) {
+                                // In production, try direct redirect first
+                                console.log('Production detected, using direct redirect');
+                                window.location.href = pdfUrl;
+                            } else {
+                                // In development, use the fetch check approach
+                                try {
+                                    // First, check if the file exists
+                                    fetch(pdfUrl, { method: 'HEAD' })
+                                        .then(response => {
+                                            if (response.ok) {
+                                                console.log('PDF file found, proceeding with download');
+                                                // Create a temporary link to trigger download
+                                                const link = document.createElement('a');
+                                                link.href = pdfUrl;
+                                                link.download = 'solshr-pitch-deck.pdf';
+                                                link.style.display = 'none';
+                                                document.body.appendChild(link);
+                                                link.click();
+                                                document.body.removeChild(link);
+                                                
+                                                // Show success message
+                                                alert('Thank you! Your pitch deck is downloading.');
+                                                
+                                                // Fallback: if download doesn't work, open in new tab after a delay
+                                                setTimeout(() => {
+                                                    window.open(pdfUrl, '_blank');
+                                                }, 1000);
+                                            } else {
+                                                console.error('PDF file not found (status:', response.status, ')');
+                                                // Try alternative path
+                                                console.log('Trying alternative path:', alternativePdfUrl);
+                                                window.location.href = alternativePdfUrl;
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Error checking PDF file:', error);
+                                            // Try alternative path
+                                            console.log('Trying alternative path due to error:', alternativePdfUrl);
+                                            window.location.href = alternativePdfUrl;
+                                        });
+                                } catch (error) {
+                                    console.error('Download failed:', error);
+                                    // Fallback to opening in new tab
+                                    window.open(pdfUrl, '_blank');
+                                    alert('Thank you! Your pitch deck is opening in a new tab.');
+                                }
                             }
                         } else {
                             alert('Thank you for joining the waitlist!');
