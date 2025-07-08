@@ -20,7 +20,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-Z8NXBVCDY9');
 
-document.addEventListener('DOMContentLoaded', function() {
+function main() {
     // Add early debugging
     console.log('Script loaded');
     console.log('Window _env_:', window._env_);
@@ -585,5 +585,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add any other UI logic here, always checking if elements exist before using them
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', main);
+} else {
+    main();
+}
 
