@@ -108,7 +108,29 @@ function main() {
                         });
                         // Only redirect to the deck PDF if on deck.html
                         if (window.location.pathname.endsWith('deck.html')) {
-                            window.location.href = 'deck/solshr-pitch-deck.pdf';
+                            try {
+                                // Create a temporary link to trigger download
+                                const link = document.createElement('a');
+                                link.href = 'deck/solshr-pitch-deck.pdf';
+                                link.download = 'solshr-pitch-deck.pdf';
+                                link.style.display = 'none';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                
+                                // Show success message
+                                alert('Thank you! Your pitch deck is downloading.');
+                                
+                                // Fallback: if download doesn't work, open in new tab after a delay
+                                setTimeout(() => {
+                                    window.open('deck/solshr-pitch-deck.pdf', '_blank');
+                                }, 1000);
+                            } catch (error) {
+                                console.error('Download failed:', error);
+                                // Fallback to opening in new tab
+                                window.open('deck/solshr-pitch-deck.pdf', '_blank');
+                                alert('Thank you! Your pitch deck is opening in a new tab.');
+                            }
                         } else {
                             alert('Thank you for joining the waitlist!');
                             form.reset();
