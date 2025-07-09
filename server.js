@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 // Check if Stripe secret key is available
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -100,6 +101,19 @@ app.post('/createPaymentIntent', async (req, res) => {
   }
 });
 
+// Join waitlist deck endpoint
+app.post('/join-waitlist-deck', (req, res) => {
+    const { name, email, comment, termsAccepted } = req.body;
+    console.log('New deck download request:');
+    console.log(`  Name: ${name}`);
+    console.log(`  Email: ${email}`);
+    console.log(`  Comment: ${comment}`);
+    console.log(`  Terms Accepted: ${termsAccepted}`);
+    
+    // Here you could add logic to save to a database
+    res.status(200).json({ message: "Successfully processed request." });
+});
+
 // Serve the PDF with the correct content type
 app.get('/deck/solshr-pitch-deck.pdf', (req, res) => {
     const filePath = path.join(__dirname, 'deck', 'solshr-pitch-deck.pdf');
@@ -148,36 +162,4 @@ app.listen(port, () => {
   console.log(`🔗 Health check available at http://localhost:${port}/health`);
   console.log(`💳 Stripe integration ready`);
   console.log(`📁 Serving static files from: ${__dirname}`);
-});
-
-// Serve the PDF with the correct content type
-app.get('/deck/solshr-pitch-deck.pdf', (req, res) => {
-  const filePath = path.join(__dirname, 'deck', 'solshr-pitch-deck.pdf');
-  console.log(`Attempting to serve PDF from: ${filePath}`);
-
-  try {
-      const data = fs.readFileSync(filePath);
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Length', data.length);
-      res.send(data);
-      console.log('Successfully sent PDF file.');
-  } catch (error) {
-      console.error('Error reading or sending PDF file:', error);
-      res.status(404).send('File not found');
-  }
-});
-
-// Serve the PPTX with the correct content type
-app.get('/deck/solshr-pitch-deck.pptx', (req, res) => {
-  const filePath = path.join(__dirname, 'deck', 'solshr-pitch-deck.pptx');
-  try {
-      const data = fs.readFileSync(filePath);
-      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.presentationml.presentation');
-      res.setHeader('Content-Disposition', 'attachment; filename="solshr-pitch-deck.pptx"');
-      res.send(data);
-      console.log('Successfully sent PPTX file.');
-  } catch (error) {
-      console.error('Error reading or sending PPTX file:', error);
-      res.status(404).send('File not found');
-  }
 });

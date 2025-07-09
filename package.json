@@ -12,5 +12,14 @@
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "stripe": "^18.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wertimo/Solshr.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/wertimo/Solshr/issues"
+  },
+  "homepage": "https://github.com/wertimo/Solshr#readme"
 }
