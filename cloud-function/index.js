@@ -8,7 +8,7 @@ const functions = require('@google-cloud/functions-framework');
  */
 const cors = (req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'https://solshr.com');
-  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
   res.set('Access-Control-Allow-Headers', 'Content-Type');
   res.set('Access-Control-Max-Age', '3600');
 
@@ -27,6 +27,20 @@ const cors = (req, res, next) => {
 functions.http('joinWaitlistDeck', (req, res) => {
   // Wrap the function logic in the CORS middleware
   cors(req, res, () => {
+    if (req.method === 'GET') {
+      // Serve the PDF file
+      const pdfUrl = 'https://storage.googleapis.com/solshr-pitch-deck/solshr-pitch-deck.pdf';
+      
+      // Set proper headers for PDF download
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'attachment; filename="solshr-pitch-deck.pdf"');
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      
+      // Redirect to the PDF file
+      res.redirect(pdfUrl);
+      return;
+    }
+
     if (req.method !== 'POST') {
       return res.status(405).send('Method Not Allowed');
     }
@@ -48,7 +62,7 @@ functions.http('joinWaitlistDeck', (req, res) => {
       // Return success response with PDF URL
       res.status(200).json({ 
         message: "Successfully processed request.",
-        pdfUrl: "https://solshr.com/deck/solshr-pitch-deck.pdf" // Use your website's PDF URL
+        pdfUrl: "https://europe-west1-928758805701.cloudfunctions.net/joinWaitlistDeck?download=true"
       });
 
     } catch (error) {
