@@ -22,7 +22,7 @@ const cors = (req, res, next) => {
 };
 
 /**
- * HTTP Cloud Function to process waitlist form submissions.
+ * HTTP Cloud Function to process waitlist form submissions and serve PDF.
  */
 functions.http('joinWaitlistDeck', (req, res) => {
   // Wrap the function logic in the CORS middleware
@@ -45,7 +45,11 @@ functions.http('joinWaitlistDeck', (req, res) => {
       console.log(`  Comment: ${comment || 'No comment provided.'}`);
       console.log(`  Terms Accepted: ${termsAccepted}`);
       
-      res.status(200).json({ message: "Successfully processed request." });
+      // Return success response with PDF URL
+      res.status(200).json({ 
+        message: "Successfully processed request.",
+        pdfUrl: "https://solshr.com/deck/solshr-pitch-deck.pdf" // Use your website's PDF URL
+      });
 
     } catch (error) {
       console.error('Error processing request:', error);

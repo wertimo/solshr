@@ -70,8 +70,8 @@ function main() {
                 setTimeout(() => {
                     modal.style.display = 'none';
                 }, 300);
-            }
-        });
+                }
+            });
     } else {
         console.warn('Form modal not found on this page.');
     }
@@ -82,8 +82,8 @@ function main() {
             const firebaseConfig = window._env_;
             if (!firebaseConfig || !firebaseConfig.apiKey) {
                 console.error('Firebase configuration is missing.');
-                return;
-            }
+            return;
+        }
             const app = initializeApp(firebaseConfig);
             const db = getDatabase(app);
             const form = document.getElementById('responseForm');
@@ -96,8 +96,8 @@ function main() {
                     const termsAccepted = document.getElementById('terms-checkbox')?.checked;
                     if (!termsAccepted) {
                         alert('Please agree to the Privacy Policy and Terms & Conditions');
-                        return;
-                    }
+            return;
+        }
                     try {
                         await push(ref(db, 'responses'), {
                             name,
@@ -106,64 +106,54 @@ function main() {
                             termsAccepted,
                             timestamp: serverTimestamp()
                         });
-                        // Only redirect to the deck PDF if on deck.html
+                        
+                        // Only handle deck download if on deck.html
                         if (window.location.pathname.endsWith('deck.html')) {
-                            const pdfUrl = 'deck/solshr-pitch-deck.pdf';
-                            const alternativePdfUrl = '/deck/solshr-pitch-deck.pdf';
-                            console.log('Attempting to download PDF from:', pdfUrl);
-                            console.log('Current page URL:', window.location.href);
+                            // Call cloud function to process form and get PDF URL
+                            const cloudFunctionUrl = 'https://europe-west1-928758805701.cloudfunctions.net/joinWaitlistDeck';
                             
-                            // Check if we're in production
-                            const isProduction = !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1');
-                            console.log('Is production:', isProduction);
-                            
-                            if (isProduction) {
-                                // In production, try direct redirect first
-                                console.log('Production detected, using direct redirect');
-                                window.location.href = pdfUrl;
-                            } else {
-                                // In development, use the fetch check approach
-                                try {
-                                    // First, check if the file exists
-                                    fetch(pdfUrl, { method: 'HEAD' })
-                                        .then(response => {
-                                            if (response.ok) {
-                                                console.log('PDF file found, proceeding with download');
-                                                // Create a temporary link to trigger download
-                                                const link = document.createElement('a');
-                                                link.href = pdfUrl;
-                                                link.download = 'solshr-pitch-deck.pdf';
-                                                link.style.display = 'none';
-                                                document.body.appendChild(link);
-                                                link.click();
-                                                document.body.removeChild(link);
-                                                
-                                                // Show success message
-                                                alert('Thank you! Your pitch deck is downloading.');
-                                                
-                                                // Fallback: if download doesn't work, open in new tab after a delay
-                                                setTimeout(() => {
-                                                    window.open(pdfUrl, '_blank');
-                                                }, 1000);
-                                            } else {
-                                                console.error('PDF file not found (status:', response.status, ')');
-                                                // Try alternative path
-                                                console.log('Trying alternative path:', alternativePdfUrl);
-                                                window.location.href = alternativePdfUrl;
-                                            }
-                                        })
-                                        .catch(error => {
-                                            console.error('Error checking PDF file:', error);
-                                            // Try alternative path
-                                            console.log('Trying alternative path due to error:', alternativePdfUrl);
-                                            window.location.href = alternativePdfUrl;
-                                        });
-                                } catch (error) {
-                                    console.error('Download failed:', error);
-                                    // Fallback to opening in new tab
-                                    window.open(pdfUrl, '_blank');
-                                    alert('Thank you! Your pitch deck is opening in a new tab.');
+                            try {
+                                const response = await fetch(cloudFunctionUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        name,
+                                        email,
+                                        comment,
+                                        termsAccepted
+                                    })
+                                });
+                                
+                                if (response.ok) {
+                                    const result = await response.json();
+                                    console.log('Cloud function response:', result);
+                                    
+                                    if (result.pdfUrl) {
+                                        // Download the PDF from the cloud function response
+                                        const link = document.createElement('a');
+                                        link.href = result.pdfUrl;
+                                        link.download = 'solshr-pitch-deck.pdf';
+                                        link.style.display = 'none';
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        document.body.removeChild(link);
+                                        
+                                        alert('Thank you! Your pitch deck is downloading.');
+                                    } else {
+                                        // Fallback to direct PDF access
+                                        window.location.href = 'deck/solshr-pitch-deck.pdf';
+                                    }
+                                } else {
+                                    console.error('Cloud function error:', response.status);
+                                    // Fallback to direct PDF access
+                                    window.location.href = 'deck/solshr-pitch-deck.pdf';
                                 }
+                            } catch (cloudError) {
+                                console.error('Cloud function call failed:', cloudError);
+                                // Fallback to direct PDF access
+                                window.location.href = 'deck/solshr-pitch-deck.pdf';
                             }
                         } else {
                             alert('Thank you for joining the waitlist!');
@@ -330,17 +320,17 @@ function main() {
         amountInvestedInput.addEventListener('input', updateFromAmountInvested);
         powerGeneratedInput.addEventListener('input', updateFromPowerGenerated);
         potentialSavingsInput.addEventListener('input', updateFromPotentialSavings);
-        // Initial call to set values correctly on page load
+    // Initial call to set values correctly on page load
         updateFromAmountInvested();
     }
 
     // Robust AOS initialization
     if (window.AOS) {
-        AOS.init({
-            duration: 800,
-            once: false,
-            mirror: true
-        });
+    AOS.init({
+        duration: 800,
+        once: false,
+        mirror: true
+    });
     } else {
         console.warn('AOS library not loaded');
     }
@@ -444,21 +434,21 @@ function main() {
     function handleFAQVisibility() {
         const faqItems = document.querySelectorAll('.faq-item');
         if (!faqItems || faqItems.length === 0) return;
-
+        
         if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
+        }, {
+            threshold: 0.1
+        });
 
-            faqItems.forEach(item => {
-                observer.observe(item);
-            });
+        faqItems.forEach(item => {
+            observer.observe(item);
+        });
         } else {
             // Fallback: just show all
             faqItems.forEach(item => item.classList.add('visible'));
