@@ -109,51 +109,151 @@ function main() {
                         
                         // Only handle deck download if on deck.html
                         if (window.location.pathname.endsWith('deck.html')) {
-                            // Call cloud function to process form and get PDF URL
-                            const cloudFunctionUrl = 'https://europe-west1-928758805701.cloudfunctions.net/joinWaitlistDeck';
+                            // Check if we're in production
+                            const isProduction = !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1');
                             
-                            try {
-                                const response = await fetch(cloudFunctionUrl, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        name,
-                                        email,
-                                        comment,
-                                        termsAccepted
-                                    })
-                                });
+                            if (isProduction) {
+                                // In production, try direct download first (simpler approach)
+                                console.log('Production detected, using direct download');
                                 
-                                if (response.ok) {
-                                    const result = await response.json();
-                                    console.log('Cloud function response:', result);
+                                // First check if the PDF exists
+                                const pdfUrl = 'https://solshr.com/deck/solshr-pitch-deck.pdf';
+                                console.log('Checking if PDF exists at:', pdfUrl);
+                                
+                                try {
+                                    const checkResponse = await fetch(pdfUrl, { method: 'HEAD' });
+                                    console.log('PDF check response:', checkResponse.status, checkResponse.statusText);
                                     
-                                    if (result.pdfUrl) {
-                                        // Download the PDF from the cloud function response
-                                        const link = document.createElement('a');
-                                        link.href = result.pdfUrl;
-                                        link.download = 'solshr-pitch-deck.pdf';
-                                        link.style.display = 'none';
-                                        document.body.appendChild(link);
-                                        link.click();
-                                        document.body.removeChild(link);
+                                    if (checkResponse.ok) {
+                                        console.log('PDF file found, proceeding with download');
                                         
-                                        alert('Thank you! Your pitch deck is downloading.');
+                                        // Try multiple download methods
+                                        try {
+                                            // Method 1: Direct download link
+                                            const link = document.createElement('a');
+                                            link.href = pdfUrl;
+                                            link.download = 'solshr-pitch-deck.pdf';
+                                            link.style.display = 'none';
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                            
+                                            alert('Thank you! Your pitch deck is downloading.');
+                                        } catch (downloadError) {
+                                            console.error('Download link failed:', downloadError);
+                                            
+                                            // Method 2: Direct redirect (simpler, often works better)
+                                            console.log('Trying direct redirect');
+                                            window.location.href = pdfUrl;
+                                        }
                                     } else {
+                                        console.error('PDF file not found (status:', checkResponse.status, ')');
+                                        console.log('Trying alternative paths...');
+                                        
+                                        // Try alternative paths
+                                        const alternativePaths = [
+                                            'https://solshr.com/solshr-pitch-deck.pdf',
+                                            'https://solshr.com/assets/solshr-pitch-deck.pdf',
+                                            'https://solshr.com/files/solshr-pitch-deck.pdf'
+                                        ];
+                                        
+                                        for (const altPath of alternativePaths) {
+                                            try {
+                                                const altResponse = await fetch(altPath, { method: 'HEAD' });
+                                                if (altResponse.ok) {
+                                                    console.log('PDF found at alternative path:', altPath);
+                                                    window.location.href = altPath;
+                                                    return;
+                                                }
+                                            } catch (e) {
+                                                console.log('Alternative path failed:', altPath);
+                                            }
+                                        }
+                                        
+                                        // If no PDF found, fallback to cloud function
+                                        console.log('No PDF found, falling back to cloud function');
+                                        callCloudFunction();
+                                    }
+                                } catch (error) {
+                                    console.error('Error checking PDF:', error);
+                                    // Fallback to cloud function
+                                    callCloudFunction();
+                                }
+                            } else {
+                                // In development, use cloud function
+                                callCloudFunction();
+                            }
+                            
+                            // Cloud function call (separate function for cleaner code)
+                            async function callCloudFunction() {
+                                const cloudFunctionUrl = 'https://europe-west1-928758805701.cloudfunctions.net/joinWaitlistDeck';
+                                console.log('Calling cloud function:', cloudFunctionUrl);
+                                
+                                try {
+                                    const response = await fetch(cloudFunctionUrl, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            name,
+                                            email,
+                                            comment,
+                                            termsAccepted
+                                        })
+                                    });
+                                    
+                                    console.log('Cloud function response status:', response.status);
+                                    
+                                    if (response.ok) {
+                                        const result = await response.json();
+                                        console.log('Cloud function response:', result);
+                                        
+                                        if (result.pdfUrl) {
+                                            console.log('Attempting to download PDF from:', result.pdfUrl);
+                                            
+                                            // Try multiple download methods
+                                            try {
+                                                // Method 1: Direct download
+                                                const link = document.createElement('a');
+                                                link.href = result.pdfUrl;
+                                                link.download = 'solshr-pitch-deck.pdf';
+                                                link.style.display = 'none';
+                                                document.body.appendChild(link);
+                                                link.click();
+                                                document.body.removeChild(link);
+                                                
+                                                console.log('Download link clicked');
+                                                alert('Thank you! Your pitch deck is downloading.');
+                                                
+                                                // Method 2: Fallback - open in new tab after delay
+                                                setTimeout(() => {
+                                                    console.log('Opening PDF in new tab as fallback');
+                                                    window.open(result.pdfUrl, '_blank');
+                                                }, 2000);
+                                                
+                                            } catch (downloadError) {
+                                                console.error('Download failed:', downloadError);
+                                                // Method 3: Direct redirect
+                                                console.log('Trying direct redirect');
+                                                window.location.href = result.pdfUrl;
+                                            }
+                                        } else {
+                                            console.error('No PDF URL in response');
+                                            alert('PDF URL not received. Please contact support.');
+                                        }
+                                    } else {
+                                        console.error('Cloud function error:', response.status, response.statusText);
+                                        const errorText = await response.text();
+                                        console.error('Error response:', errorText);
                                         // Fallback to direct PDF access
                                         window.location.href = 'deck/solshr-pitch-deck.pdf';
                                     }
-                                } else {
-                                    console.error('Cloud function error:', response.status);
+                                } catch (cloudError) {
+                                    console.error('Cloud function call failed:', cloudError);
                                     // Fallback to direct PDF access
                                     window.location.href = 'deck/solshr-pitch-deck.pdf';
                                 }
-                            } catch (cloudError) {
-                                console.error('Cloud function call failed:', cloudError);
-                                // Fallback to direct PDF access
-                                window.location.href = 'deck/solshr-pitch-deck.pdf';
                             }
                         } else {
                             alert('Thank you for joining the waitlist!');
