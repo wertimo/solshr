@@ -109,90 +109,62 @@ function main() {
                         
                         // Only handle deck download if on deck.html
                         if (window.location.pathname.endsWith('deck.html')) {
-                            // Check if we're in development (local) or production
-                            const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                            // Call cloud function to process form and get PDF URL
+                            const cloudFunctionUrl = 'https://europe-west1-928758805701.cloudfunctions.net/joinWaitlistDeck';
+                            console.log('Calling cloud function:', cloudFunctionUrl);
                             
-                            if (isDevelopment) {
-                                // In development, call the local Express server
-                                console.log('Development detected, calling local Express server');
+                            try {
+                                const response = await fetch(cloudFunctionUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        name,
+                                        email,
+                                        comment,
+                                        termsAccepted
+                                    })
+                                });
                                 
-                                try {
-                                    const response = await fetch('/join-waitlist-deck', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
-                                            name,
-                                            email,
-                                            comment,
-                                            termsAccepted
-                                        })
-                                    });
-                                    
-                                    console.log('Express server response status:', response.status);
-                                    
-                                    if (response.ok) {
-                                        console.log('Form submitted successfully, downloading PDF');
-                                        // Download the PDF directly from Express server
-                                        window.location.href = '/deck/solshr-pitch-deck.pdf';
-                                    } else {
-                                        console.error('Express server error:', response.status);
-                                        alert('Error submitting form. Please try again.');
-                                    }
-                                } catch (error) {
-                                    console.error('Express server call failed:', error);
-                                    alert('Error submitting form. Please try again.');
-                                }
-                            } else {
-                                // In production, use the cloud function
-                                callCloudFunction();
-                            }
-                            
-                            // Cloud function call (for production)
-                            async function callCloudFunction() {
-                                const cloudFunctionUrl = 'https://europe-west1-928758805701.cloudfunctions.net/joinWaitlistDeck';
-                                console.log('Calling cloud function:', cloudFunctionUrl);
+                                console.log('Cloud function response status:', response.status);
                                 
-                                try {
-                                    const response = await fetch(cloudFunctionUrl, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                        },
-                                        body: JSON.stringify({
-                                            name,
-                                            email,
-                                            comment,
-                                            termsAccepted
-                                        })
-                                    });
+                                if (response.ok) {
+                                    const result = await response.json();
+                                    console.log('Cloud function response:', result);
                                     
-                                    console.log('Cloud function response status:', response.status);
-                                    
-                                    if (response.ok) {
-                                        const result = await response.json();
-                                        console.log('Cloud function response:', result);
-                                        
-                                        if (result.pdfUrl) {
-                                            console.log('Downloading PDF from cloud function');
-                                            
-                                            // Download the PDF from the cloud function
-                                            window.location.href = result.pdfUrl;
+                                    if (result.pdfUrl) {
+                                        // Show thank you modal instead of alert
+                                        const thankYouModal = document.getElementById('thankYouModal');
+                                        const thankYouOkBtn = document.getElementById('thankYouOkBtn');
+                                        if (modal) modal.style.display = 'none';
+                                        if (thankYouModal && thankYouOkBtn) {
+                                            thankYouModal.style.display = 'block';
+                                            thankYouModal.classList.add('show');
+                                            thankYouOkBtn.onclick = function() {
+                                                thankYouModal.classList.remove('show');
+                                                setTimeout(() => {
+                                                    thankYouModal.style.display = 'none';
+                                                    window.location.href = result.pdfUrl;
+                                                }, 300);
+                                            };
                                         } else {
-                                            console.error('No PDF URL in response');
-                                            alert('PDF URL not received. Please contact support.');
+                                            // Fallback to direct redirect if modal not found
+                                            window.location.href = result.pdfUrl;
                                         }
                                     } else {
-                                        console.error('Cloud function error:', response.status, response.statusText);
-                                        const errorText = await response.text();
-                                        console.error('Error response:', errorText);
-                                        alert('Error submitting form. Please try again.');
+                                        console.error('No PDF URL in response');
+                                        alert('PDF URL not received. Please contact support.');
                                     }
-                                } catch (cloudError) {
-                                    console.error('Cloud function call failed:', cloudError);
+                                } else {
+                                    console.error('Cloud function error:', response.status, response.statusText);
+                                    const errorText = await response.text();
+                                    console.error('Error response:', errorText);
                                     alert('Error submitting form. Please try again.');
                                 }
+                            } catch (cloudError) {
+                                console.error('Cloud function call failed:', cloudError);
+                                alert('Error submitting form. Please try again.');
                             }
                         } else {
                             alert('Thank you for joining the waitlist!');

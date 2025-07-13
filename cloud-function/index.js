@@ -1,5 +1,11 @@
 const functions = require('@google-cloud/functions-framework');
 
+const allowedOrigins = [
+  'https://solshr.com',
+  'http://localhost:4242',
+  'http://127.0.0.1:4242'
+];
+
 /**
  * Handles CORS preflight and actual requests.
  * @param {Object} req - The HTTP request object.
@@ -7,16 +13,17 @@ const functions = require('@google-cloud/functions-framework');
  * @param {Function} next - The next middleware function.
  */
 const cors = (req, res, next) => {
-  res.set('Access-Control-Allow-Origin', 'https://solshr.com');
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.set('Access-Control-Allow-Origin', origin);
+  }
   res.set('Access-Control-Allow-Methods', 'POST, OPTIONS, GET');
   res.set('Access-Control-Allow-Headers', 'Content-Type');
   res.set('Access-Control-Max-Age', '3600');
 
   if (req.method === 'OPTIONS') {
-    // Stops the request from continuing to the function code
     res.status(204).send('');
   } else {
-    // Allows the request to continue to the function code
     next();
   }
 };
