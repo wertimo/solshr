@@ -167,10 +167,26 @@ function main() {
                                 alert('Error submitting form. Please try again.');
                             }
                         } else {
-                            alert('Thank you for joining the waitlist!');
-                            form.reset();
-                            if (modal) {
-                                modal.style.display = 'none';
+                            // Show thank you modal for non-deck pages
+                            const thankYouModal = document.getElementById('thankYouModal');
+                            const thankYouOkBtn = document.getElementById('thankYouOkBtn');
+                            if (modal) modal.style.display = 'none';
+                            if (thankYouModal && thankYouOkBtn) {
+                                thankYouModal.style.display = 'block';
+                                thankYouModal.classList.add('show');
+                                thankYouOkBtn.onclick = function() {
+                                    thankYouModal.classList.remove('show');
+                                    setTimeout(() => {
+                                        thankYouModal.style.display = 'none';
+                                        form.reset();
+                                    }, 300);
+                                };
+                            } else {
+                                alert('Thank you for joining the waitlist!');
+                                form.reset();
+                                if (modal) {
+                                    modal.style.display = 'none';
+                                }
                             }
                         }
                     } catch (error) {

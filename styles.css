@@ -110,6 +110,8 @@ nav ul li a {
     white-space: nowrap;
 }
 
+
+
 main {
     max-width: 1900px;
     margin: 0 auto;
@@ -653,35 +655,6 @@ footer {
   margin-bottom: 4vw; /* Added bottom margin */
 }
 
-/*#how-it-works::before {
-  content: '';
-  position: absolute;
-  width: 8.25rem;   /* 100px */
-  /*height: 8.25rem;  /* 100px */
-  /*background: var(--accent-brown);
-  border-radius: 100%;
-  opacity: 0.2;
-  top: 3.125rem;    /* 50px */
-  /*right: -2.125rem;  /* 50px */
-  /*z-index: -1;
-}*/
-
-/*#how-it-works::after {
-  content: '';
-  position: absolute;
-  width: 13.75rem;  /* 300px */
-  /*height: 13.75rem; /* 300px */
- /* background-image: radial-gradient(var(--accent-brown) 20%, transparent 21%),
-  radial-gradient(var(--accent-brown) 20%, transparent 21%);
-  background-size: 1.875rem 1.875rem;       /* 30px */
- /* background-position: 0 0, 0.9375rem 0.9375rem; /* 15px */
- /* left: -3.25rem;   /* -100px */
- /* bottom: 3.125rem; /* 50px */
- /* border-radius: 100%;
- /* transform: skew(0deg);
- /* opacity: 0.2;
- /* z-index: -1;
-} */
 
 .footer {
     background-color: #333; /* Dark background for the footer */
@@ -1772,6 +1745,34 @@ body.dark-mode #theme-toggle .fa-sun {
 .cookie-banner a {
   color: var(--primary-color);
   text-decoration: underline;
+}
+
+/* Center thank you modal and make button full width */
+#thankYouModal .modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10% auto;
+  width: 100%;
+  max-width: 400px;
+  min-width: 250px;
+  padding: 2.5rem 2rem;
+  box-sizing: border-box;
+}
+#thankYouModal h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+#thankYouModal .btn {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  display: block;
+  font-size: 1.1rem;
+  padding: 1rem 0;
 }
 
 
