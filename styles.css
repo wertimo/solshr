@@ -1753,14 +1753,14 @@ body.dark-mode #theme-toggle .fa-sun {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 10% auto;
-  width: 100%;
+  margin: 7% auto;
+  width: 90%;
   max-width: 400px;
   min-width: 250px;
-  padding: 2.5rem 2rem;
+  padding: 2rem;
   box-sizing: border-box;
 }
-#thankYouModal h2 {
+#thankYouModal p {
   text-align: center;
   margin-bottom: 2rem;
   width: 100%;
@@ -1771,9 +1771,6 @@ body.dark-mode #theme-toggle .fa-sun {
   box-sizing: border-box;
   margin: 0 auto;
   display: block;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   padding: 1rem 0;
 }
-
-
-
