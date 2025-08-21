@@ -24,7 +24,8 @@ SOLSHR is a web-based platform that enables community-driven solar energy projec
 ## Key Files and Directories
 
 ### Frontend Files
-- `index.html` - Main landing page with hero section, mission, how-it-works, calculator, FAQ
+- `index.html` - Main TikTok Agency landing page with hero section, services, and creator network features
+- `solar-project.html` - Solar energy project page with hero section, mission, how-it-works, calculator, FAQ
 - `deck.html` - Pitch deck download page with form submission
 - `styles.css` - Comprehensive styling with CSS variables, responsive design, animations
 - `script.js` - Main JavaScript functionality including form handling, theme toggle, calculator

@@ -160,7 +160,29 @@ const translations = {
         "pitch-deck": "DOWNLOAD OUR PITCH DECK",
         "download-deck": "DOWNLOAD",
         "join-to-download": "Join to Download",
-        "join-and-download": "Join & Download"
+        "join-and-download": "Join & Download",
+        
+        // TikTok Agency Page Translations
+        "tiktok-hero-title": "Live your dream, one stream at a time",
+        "tiktok-hero-subtitle": "TikTok Live Agency",
+        "tiktok-join-us": "JOIN US TODAY",
+        "tiktok-services-title": "Our Services",
+        "tiktok-service-1-title": "Training & Development",
+        "tiktok-service-1-desc": "Customized services for livestreamers to enhance their content and grow their TikTok audience. Expert guidance to help you succeed, entertain, and monetize effectively.",
+        "tiktok-service-2-title": "Creator Incentives",
+        "tiktok-service-2-desc": "We celebrate and reward your hard work and dedication. Achievement-based incentives, gratitude programs, and milestone celebrations.",
+        "tiktok-service-3-title": "Emotional Support",
+        "tiktok-service-3-desc": "We are more than a creator network - we are family. Our experienced team provides emotional support and guidance to help you overcome any streaming challenges.",
+        "tiktok-service-4-title": "Ban Appeals & Prevention",
+        "tiktok-service-4-desc": "Training on community guidelines, trigger words, and ban prevention. Direct connections to TikTok for efficient resolution of account issues.",
+        "tiktok-service-5-title": "Exclusive Tournaments",
+        "tiktok-service-5-desc": "Regular campaigns and tournaments offering more chances to earn rewards, with opportunities to travel and compete with fellow creators.",
+        "tiktok-service-6-title": "TikTok HQ Visits",
+        "tiktok-service-6-desc": "Exclusive opportunities to visit TikTok HQ, creating unforgettable experiences that spark creativity and generate inspiring content.",
+        "tiktok-nav-services": "Services",
+        "tiktok-nav-solar-project": "Solar Project",
+        "tiktok-nav-join-us": "JOIN US",
+        "tiktok-agency-nav": "TikTok Agency"
     },
     ro: {
         "hero-title": "DEȚINE ENERGIE SOLARĂ CHIAR DACĂ EȘTI ÎNCHIRIAȘ",
@@ -296,7 +318,29 @@ const translations = {
         "pitch-deck": "DESCĂRCAȚI PREZENTAREA NOASTRĂ",
         "download-deck": "DESCĂRCAȚI",
         "join-to-download": "Alăturați-vă pentru a Descărca",
-        "join-and-download": "Alăturați-vă și Descărcați"
+        "join-and-download": "Alăturați-vă și Descărcați",
+        
+        // TikTok Agency Page Translations
+        "tiktok-hero-title": "Trăiește-ți visul, un stream pe rând",
+        "tiktok-hero-subtitle": "Agenție TikTok Live",
+        "tiktok-join-us": "ALĂTURĂ-TE NOI ASTĂZI",
+        "tiktok-services-title": "Serviciile Noastre",
+        "tiktok-service-1-title": "Instruire și Dezvoltare",
+        "tiktok-service-1-desc": "Servicii personalizate pentru livestreameri pentru a-ți îmbunătăți conținutul și a-ți crește audiența TikTok. Ghidare expertă pentru a te ajuta să reușești, să distrezi și să monetizezi eficient.",
+        "tiktok-service-2-title": "Incentive pentru Creatori",
+        "tiktok-service-2-desc": "Sărbătorim și răsplătim munca ta grea și dedicarea. Incentive bazate pe realizări, programe de gratitudine și sărbătoriri ale marilor momente.",
+        "tiktok-service-3-title": "Suport Emoțional",
+        "tiktok-service-3-desc": "Suntem mai mult decât o rețea de creatori - suntem familie. Echipa noastră cu experiență oferă suport emoțional și ghida pentru a te ajuta să depășești orice provocări de streaming.",
+        "tiktok-service-4-title": "Apeluri de Dezactivare și Prevenire",
+        "tiktok-service-4-desc": "Instruire privind ghidurile comunității, cuvintele declanșatoare și prevenirea dezactivării. Conexiuni directe cu TikTok pentru rezolvarea eficientă a problemelor contului.",
+        "tiktok-service-5-title": "Turnee Exclusive",
+        "tiktok-service-5-desc": "Campanii regulate și turnee care oferă mai multe șanse de a câștiga recompense, cu oportunități de a călători și a concura cu alți creatori.",
+        "tiktok-service-6-title": "Vizite la Sediul TikTok",
+        "tiktok-service-6-desc": "Oportunități exclusive de a vizita sediul TikTok, creând experiențe de neuitat care declanșează creativitatea și generează conținut inspirant.",
+        "tiktok-nav-services": "Servicii",
+        "tiktok-nav-solar-project": "Proiect Solar",
+        "tiktok-nav-join-us": "ALĂTURĂ-TE",
+        "tiktok-agency-nav": "Agenție TikTok Live"
     },
     ru: {
         "hero-title": "ВЛАДЕЙТЕ СОЛНЕЧНОЙ ЭНЕРГИЕЙ ДАЖЕ ЕСЛИ ВЫ АРЕНДУЕТЕ",
@@ -433,7 +477,29 @@ const translations = {
         "pitch-deck": "СКАЧАТЬ НАШУ ПРЕЗЕНТАЦИЮ",
         "download-deck": "СКАЧАТЬ",
         "join-to-download": "Присоединяйтесь, чтобы скачать",
-        "join-and-download": "Присоединиться и скачать"
+        "join-and-download": "Присоединиться и скачать",
+        
+        // TikTok Agency Page Translations
+        "tiktok-hero-title": "Живи своей мечтой, один стрим за раз",
+        "tiktok-hero-subtitle": "Агентство TikTok Live",
+        "tiktok-join-us": "ПРИСОЕДИНЯЙТЕСЬ К НАМ СЕГОДНЯ",
+        "tiktok-services-title": "Наши Услуги",
+        "tiktok-service-1-title": "Обучение и Развитие",
+        "tiktok-service-1-desc": "Персонализированные услуги для стримеров для улучшения их контента и роста аудитории TikTok. Экспертное руководство, чтобы помочь вам добиться успеха, развлекать и эффективно монетизировать.",
+        "tiktok-service-2-title": "Стимулы для Создателей",
+        "tiktok-service-2-desc": "Мы празднуем и вознаграждаем ваш тяжелый труд и преданность. Стимулы, основанные на достижениях, программы благодарности и празднование важных вех.",
+        "tiktok-service-3-title": "Эмоциональная Поддержка",
+        "tiktok-service-3-desc": "Мы больше, чем сеть создателей - мы семья. Наша опытная команда обеспечивает эмоциональную поддержку и руководство, чтобы помочь вам преодолеть любые проблемы со стримингом.",
+        "tiktok-service-4-title": "Апелляции о Блокировке и Профилактика",
+        "tiktok-service-4-desc": "Обучение правилам сообщества, словам-триггерам и профилактике блокировки. Прямые связи с TikTok для эффективного решения проблем с аккаунтом.",
+        "tiktok-service-5-title": "Эксклюзивные Турниры",
+        "tiktok-service-5-desc": "Регулярные кампании и турниры, предлагающие больше возможностей заработать награды, с возможностями путешествовать и соревноваться с другими создателями.",
+        "tiktok-service-6-title": "Посещения Штаб-квартиры TikTok",
+        "tiktok-service-6-desc": "Эксклюзивные возможности посетить штаб-квартиру TikTok, создавая незабываемые впечатления, которые пробуждают творчество и генерируют вдохновляющий контент.",
+        "tiktok-nav-services": "Услуги",
+        "tiktok-nav-solar-project": "Проект Солнечной Энергии",
+        "tiktok-nav-join-us": "ПРИСОЕДИНЯЙТЕСЬ",
+        "tiktok-agency-nav": "Агенство TikTok Live"
     }
 };
 

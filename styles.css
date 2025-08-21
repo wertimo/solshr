@@ -9,12 +9,24 @@
     --primary-font: Arial, sans-serif;
     --accent-green: #9CA98C;
     
+    /* TikTok Agency Colors */
+    --tiktok-pink: #ff0050;
+    --tiktok-cyan: #00f2ea;
+    --tiktok-dark: #333333;
+    --tiktok-light-grey: #f8f9fa;
+    --tiktok-text-grey: #666666;
+    
 }
 
 /* Dark Mode Variables */
 body.dark-mode {
     --background-color: #333333; /* Dark background */
     --text-color: #ffffff; /* Light text color */
+    
+    /* TikTok Agency Dark Mode Colors */
+    --tiktok-light-grey: #2a2a2a; /* Dark background for services section */
+    --tiktok-dark: #ffffff; /* Light text for dark mode */
+    --tiktok-text-grey: #cccccc; /* Lighter grey text for dark mode */
 }
 
 * {
@@ -325,6 +337,7 @@ footer {
     padding: 3rem;
     text-align: center;
     list-style: none;
+    margin-top: 10vw;
 }
 
 .social-icons {
@@ -1773,4 +1786,315 @@ body.dark-mode #theme-toggle .fa-sun {
   display: block;
   font-size: 0.9rem;
   padding: 1rem 0;
+}
+
+/* TikTok Agency Styles */
+.hero-section {
+    background: linear-gradient(135deg, var(--tiktok-pink), var(--tiktok-cyan), var(--tiktok-pink));
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    color: white;
+    text-align: center;
+    padding: 150px 20px 150px 20px;
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    line-height: 1.1;
+    width: 100%;
+}
+
+/* Dark mode styles for hero title */
+body.dark-mode .hero-title {
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.2); /* Lighter shadow for dark mode */
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+/* Dark mode styles for hero subtitle */
+body.dark-mode .hero-subtitle {
+    opacity: 0.95; /* Slightly higher opacity for better visibility in dark mode */
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 2;
+    position: relative;
+}
+
+.cta-button {
+    background: white;
+    color: var(--tiktok-pink);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Dark mode styles for CTA button */
+body.dark-mode .cta-button {
+    background: var(--tiktok-pink); /* Use pink background in dark mode */
+    color: white; /* White text for better contrast */
+    box-shadow: 0 4px 15px rgba(255, 0, 80, 0.3); /* Pink glow effect */
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .cta-button:hover {
+    box-shadow: 0 10px 25px rgba(255, 0, 80, 0.4); /* Enhanced pink glow on hover */
+}
+
+.services-section {
+    padding: 80px;
+    background: var(--tiktok-light-grey);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Dark mode styles for service cards */
+body.dark-mode .service-card {
+    background: #444444; /* Darker background for service cards in dark mode */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Stronger shadow for dark mode */
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+body.dark-mode .service-card:hover {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5); /* Enhanced hover shadow for dark mode */
+}
+
+.service-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--tiktok-pink);
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: var(--tiktok-dark);
+}
+
+.service-description {
+    color: var(--tiktok-text-grey);
+    line-height: 1.6;
+}
+
+.testimonials-section {
+    padding: 80px;
+    background: white;
+}
+
+/* Dark mode styles for testimonials section */
+body.dark-mode .testimonials-section {
+    background: #2a2a2a; /* Dark background for testimonials in dark mode */
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    background: var(--tiktok-light-grey);
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 5px solid var(--tiktok-pink);
+}
+
+/* Dark mode styles for testimonial cards */
+body.dark-mode .testimonial-card {
+    background: #444444; /* Darker background for testimonial cards in dark mode */
+}
+
+/* Dark mode styles for navigation */
+body.dark-mode nav {
+    background-color: #2a2a2a; /* Darker navigation background */
+    border-bottom: 1px solid #444444; /* Subtle border for dark mode */
+}
+
+/* Dark mode styles for burger menu */
+body.dark-mode .burger div {
+    background-color: #ffffff; /* White burger lines for dark mode */
+}
+
+/* Dark mode styles for language selector */
+body.dark-mode .language-selector select {
+    background-color: #444444; /* Dark background for language selector */
+    color: #ffffff; /* White text for language selector */
+    border: 1px solid #666666; /* Dark border for language selector */
+}
+
+.testimonial-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    color: var(--tiktok-dark);
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    font-weight: bold;
+    color: var(--tiktok-pink);
+}
+
+.stats-section {
+    background: linear-gradient(135deg, var(--tiktok-dark), #555);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* Dark mode styles for stats section */
+body.dark-mode .stats-section {
+    background: linear-gradient(135deg, #444444, #2a2a2a); /* Darker gradient for dark mode */
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: var(--tiktok-pink);
+}
+
+.contact-section {
+    padding: 80px;
+    background: var(--tiktok-light-grey);
+    text-align: center;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--tiktok-dark);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Dark mode styles for form inputs */
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    background: #444444; /* Dark background for inputs */
+    border-color: #666666; /* Darker border for dark mode */
+    color: #ffffff; /* White text for dark mode */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--tiktok-pink);
+}
+
+/* Dark mode focus styles */
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+    border-color: var(--tiktok-pink);
+    box-shadow: 0 0 0 2px rgba(255, 0, 80, 0.2); /* Pink glow effect */
+}
+
+.submit-btn {
+    background: var(--tiktok-pink);
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #d10040;
+    transform: translateY(-2px);
+}
+
+/* TikTok Agency Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 100px 20px 80px 20px;
+        min-height: 80vh;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .services-grid,
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLSHR - Solar Energy Project | Community Driven Solar Farms</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8NXBVCDY9"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-top">
+                <div class="logo">
+                    <a href="index.html">SOLSHR</a>
+                </div>
+                <div class="burger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <button id="theme-toggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+                    </button>
+                </li>
+                <li>
+                    <div class="language-selector">
+                        <i class="fas fa-globe" onclick="toggleLanguageDropdown()"></i>
+                        <select id="languageSelect" onchange="changeLanguage()" style="display: none;">
+                            <option value="en">EN</option>
+                            <option value="ro">RO</option>
+                            <option value="ru">RU</option>
+                        </select>
+                    </div>
+                </li>
+                <li><a href="#mission" data-lang="mission">MISSION</a></li>
+                <li><a href="#how-it-works" data-lang="how-it-works">HOW IT WORKS</a></li>
+                <li><a href="index.html" data-lang="tiktok-agency-nav">TIKTOK LIVE AGENCY</a></li>
+                <li><a href="#" id="joinWaitlistButton" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a></li>
+                <li id="accountMenuItem" style="display:none;"><a href="account.html" data-lang="account">ACCOUNT</a></li>
+                <li id="signOutMenuItem" style="display:none;"><button id="signOutMenuButton" style="background:none;border:none;color:inherit;cursor:pointer;">SIGN OUT</button></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-content">
+        <section id="hero">
+            <div class="content">
+                <h1 data-lang="hero-title">GET 50% OFF NEXT ENERGY BILL*</h1>
+                <a href="#" id="joinWaitlistHero" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a>
+                <p data-lang="hero-subtitle">*First 1,000 users, T&Cs apply</p>
+            </div>
+        </section> 
+        <section id="mission" data-aos="fade-down" data-aos-duration="1200">
+            <div class="content">
+                <h2 data-lang="mission-statement">OUR MISSION IS TO MAKE SOLAR ENERGY ACCESSIBLE THROUGH COMMUNITY DRIVEN SOLAR FARMS</h2>
+                <p data-lang="discount-message">GET A DISCOUNT ON YOUR NEXT ENERGY BILL</p>
+            </div>
+        </section>
+        <section id="how-it-works" data-aos="fade-down" data-aos-duration="0" class="how-it-works">
+            <h2 data-lang="how-it-works-title">HOW IT WORKS:</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="circle">1</div>
+                    <h3 data-lang="step-1-title">Join the Community</h3>
+                    <p data-lang="step-1-description">Users sign up on the Solar Share platform and become part of a local solar project. Communities collaborate to propose and prioritize renewable energy initiatives tailored to their region.</p>
+                
+                </div>
+                <div class="step">
+                    <div class="circle">2</div>
+                    <h3 data-lang="step-2-title">Solar Energy Generation</h3>
+                    <p data-lang="step-2-description">Solar panels are installed on government-allocated land, and the generated green energy is sold to the national grid.</p>
+                </div>
+                <div class="step">
+                    <div class="circle">3</div>
+                    <h3 data-lang="step-3-title">Share the Impact</h3>
+                    <p data-lang="step-3-description">Users track the energy produced and the environmental benefits (like CO₂ reductions) through the platform while enjoying indirect economic advantages, such as reduced energy costs and local job creation.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- New Calculator Section -->
+        <section id="calculator" data-lang="calculator-section">
+            <h2 data-lang="calculator-title">Potential Savings Calculator</h2>
+            <div class="calculator-container">
+                <div class="toggle-group">
+                    <label for="amount-invested" data-lang="amount-invested-label">Invested (€):</label>
+                    <input type="range" id="amount-invested" min="1" max="10000" step="1" value="1000" oninput="updateSavings()">
+                    <span id="amount-invested-value">€1000</span>
+                </div>
+                <div class="toggle-group">
+                    <label for="power-generated" data-lang="power-generated-label">Power (kWh):</label>
+                    <input type="range" id="power-generated" min="1" max="24" step="0.01" value="2.40" oninput="updateSavings()">
+                    <span id="power-generated-value">2.40 kWh</span>
+                </div>
+                <div class="toggle-group">
+                    <label for="potential-savings" data-lang="potential-savings-label">Savings (€):</label>
+                    <input type="range" id="potential-savings" min="0" max="2000.40" step="1" value="200.40" oninput="updateSavings()">
+                    <span id="potential-savings-value">€200.40</span>
+                </div>
+            </div>
+            <div class="results">
+                <h3 style="font-size: 1rem;" data-lang="co2-reduction-label">Estimated CO2 Reduction:</h3>
+                <p id="co2-reduction" style="font-size: 1.5rem; font-weight: bold;">0 kg CO2</p>
+            </div>
+            <p class="disclaimer" style="font-size: 0.9rem; color: gray;" data-lang="disclaimer">This calculator is for illustrative purposes only. Final savings may vary.</p>
+        </section>
+
+        <section id="newsletter" data-aos="">
+            <div class="content">
+                <h1 data-lang="hero-title">OWN SOLAR POWER EVEN IF YOU RENT</h1>
+                <a href="#" id="joinWaitlistNewsletter" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a>
+                <p data-lang="hero-subtitle">*First 1,000 users, T&Cs apply</p>
+            </div>
+        </section> 
+
+        <section id="faq" data-aos="fade-up">
+            <h2 data-lang="faq-title">FREQUENTLY ASKED QUESTIONS</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3 data-lang="faq-1-question">How does SOLSHR benefit from communities?</h3>
+                    <p data-lang="faq-1-answer">SOLSHR takes a small fee from profits generated by solar communities, deducted automatically. The majority of profits goes directly to offset or reduce individual energy bills.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-lang="faq-2-question">Why choose SOLSHR vs installing directly?</h3>
+                    <p data-lang="faq-2-answer">To install yourself, you need a roof or land where you can install solar panels and go through a lengthy approval process. SOLSHR reduces all the friction and you can enjoy the benefits while forgetting about the hassle of maintenance.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-lang="faq-3-question">What happens if I move to a different area?</h3>
+                    <p data-lang="faq-3-answer">Your investment and benefits are tied to your account, not your location. When you move, you can easily transfer your participation to a new community in your area, ensuring continuous benefits from solar energy.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 data-lang="faq-4-question">How long does it take to see the benefits?</h3>
+                    <p data-lang="faq-4-answer">Once your local community solar farm is operational, you'll start seeing benefits immediately. The first energy bill reduction typically appears within 1-2 billing cycles after the solar farm begins generating power.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="running-line-container">
+                <a href="#" class="running-line" id="joinWaitlistScroller">
+                    <span data-lang="scroller-join-waitlist">JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                    <span data-lang="scroller-join-waitlist">JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                    <span data-lang="scroller-join-waitlist">JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                    <span data-lang="scroller-join-waitlist">JOIN WAITLIST</span>
+                    <span>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="social-icons">
+            <li class="footer-icon">
+                <a href="https://www.instagram.com/solshr_official/" target="_blank" aria-label="Instagram">
+                    <i class="fab fab fa-instagram icon-instagram"></i>
+                </a>
+            </li>
+            <li class="footer-icon">
+                <a href="https://www.tiktok.com/@solshr_official" target="_blank" aria-label="TikTok">
+                    <i class="fab fa-tiktok icon-tiktok"></i>
+                </a>
+            </li>
+            <li class="footer-icon">
+                <a href="https://www.youtube.com/@solshr_official" target="_blank" aria-label="YouTube">
+                    <i class="fab fa-youtube icon-youtube"></i>
+                </a>
+            </li>
+        </div>
+        <!-- <div class="auth-buttons">
+            <a href="#" id="signInButton" class="btn" data-lang="sign-in">SIGN IN</a>
+            <a href="#" id="signUpButton" class="btn" data-lang="sign-up">SIGN UP</a>
+        </div> -->
+        <div class="footer-info">
+            <p>&copy; 2025 SOLSHR. All rights reserved.</p>
+            <p>
+                <a href="privacy-policy.html" class="contact-link">Privacy Policy</a> | 
+                <a href="terms-and-conditions.html" class="contact-link">Terms & Conditions</a>
+            </p>
+        </div>
+    </footer>
+
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-lang="close">&times;</span>
+            <form id="responseForm">
+                <h2 data-lang="form-title">Join Our Waitlist</h2>
+                <div>
+                    <label for="name" data-lang="name-label">Name:</label>
+                    <input type="text" id="name" required placeholder="Enter your name" data-lang="name-placeholder">
+                </div>
+                <div>
+                    <label for="email" data-lang="email-label">Email:</label>
+                    <input type="email" id="email" required placeholder="Enter your email" data-lang="email-placeholder">
+                </div>
+                <div>
+                    <label for="comment" data-lang="comment-label">Comment (optional):</label>
+                    <input type="text" id="comment" placeholder="Enter your comment" data-lang="comment-placeholder">
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms-checkbox" required>
+                    <span>
+                        <label for="terms-checkbox" data-lang="terms-agree">I agree to the</label>
+                        <a href="privacy-policy.html" target="_blank" onclick="event.stopPropagation()" data-lang="privacy-policy">Privacy Policy</a> 
+                        <span data-lang="and">and</span> 
+                        <a href="terms-and-conditions.html" target="_blank" onclick="event.stopPropagation()" data-lang="terms-conditions">Terms & Conditions</a>
+                    </span>
+                </div>
+                <button type="submit" data-lang="submit-button">Join Waitlist</button>
+            </form>
+        </div>
+    </div>
+    <!-- Thank You Modal -->
+    <div id="thankYouModal" class="modal">
+      <div class="modal-content">
+        <p>Thank you for joining the waitlist!</p>
+        <button id="thankYouOkBtn" class="btn">OK</button>
+      </div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-lang="close">&times;</span>
+            <form id="authForm">
+                <h2 id="authTitle" data-lang="sign-in-title">Sign In</h2>
+                <div id="authName" style="display: none;">
+                    <label for="authNameInput" data-lang="name-label">Name:</label>
+                    <input type="text" id="authNameInput" required placeholder="Enter your name" data-lang="name-placeholder">
+                </div>
+                <div>
+                    <label for="authEmail" data-lang="email-label">Email:</label>
+                    <input type="email" id="authEmail" required placeholder="Enter your email" data-lang="email-placeholder">
+                </div>
+                <div>
+                    <label for="authPassword" data-lang="password-label">Password:</label>
+                    <input type="password" id="authPassword" required placeholder="Enter your password" data-lang="password-placeholder">
+                </div>
+                <button type="submit" id="authSubmitBtn" data-lang="sign-in-button">Sign In</button>
+                <p class="auth-switch">
+                    <span id="authSwitch" data-lang="no-account">Don't have an account? </span>
+                    <a href="#" id="switchAuthMode" data-lang="sign-up-link">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div id="cookieConsentBanner" class="cookie-banner" style="display:none;">
+      <span>
+        We care about your data. We use cookies to personalize content and to analyze our traffic.
+        No data is collected for marketing purposes.
+        <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+      </span>
+      <button id="cookieConsentAccept" class="btn">Okay!</button>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="translations.js"></script>
+    <!-- Load environment configuration -->
+    <script>
+        // Determine if we're in development mode
+        const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const configScript = document.createElement('script');
+        configScript.src = isDevelopment ? 'build/env-config.dev.js' : 'env-config.js';
+        configScript.async = false; // Ens
+        document.head.appendChild(configScript);
+    </script>
+    <!-- Wait for config to load before loading other scripts -->
+    <script>
+        // Wait for config to load before initializing Firebase and Stripe
+        window.addEventListener('load', function() {
+            if (!window._env_) {
+                console.error('Environment configuration not loaded');
+                return;
+            }
+            console.log('Environment configuration loaded:', window._env_);
+        });
+    </script>
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <!-- Firebase Auth -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <!-- Firebase Analytics -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
+    <!-- Your custom script -->
+    <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Test if Stripe is loaded
+        window.addEventListener('load', function() {
+            if (typeof Stripe === 'undefined') {
+                console.error('Stripe failed to load');
+            } else {
+                console.log('Stripe loaded successfully');
+            }
+        });
+    </script>
+    
+    <script type="module" src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="payment-form">
+                <label>
+                  Email
+                  <input type="text" id="payment-email" placeholder="you@example.com" />
+                </label>
+                <div type="text" id="email-errors"></div>
+                <h4>Billing Address</h4>
+                <div id="billing-address-element">
+                  <!--Stripe.js injects the Address Element-->
+                </div>
+                <h4>Payment</h4>
+                <div id="payment-element">
+                  <!--Stripe.js injects the Payment Element-->
+                </div>
+                <button id="submit" class="btn">
+                  <div class="spinner hidden" id="spinner"></div>
+                  <span id="button-text">Pay now</span>
+                </button>
+                <div id="payment-message" class="hidden"></div>
+            </form>
+            <section id="success" class="hidden">
+              <p>
+                We appreciate your business! A confirmation email will be sent to <span id="customer-email"></span>.<br>
+                If you have any questions, please email <a href="mailto:orders@example.com">orders@example.com</a>.
+              </p>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('start-payment').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const { url } = await response.json();
+                window.location.href = url;
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const banner = document.getElementById('cookieConsentBanner');
+      const acceptBtn = document.getElementById('cookieConsentAccept');
+      if (!localStorage.getItem('cookieConsent')) {
+        banner.style.display = 'flex';
+      }
+      acceptBtn.addEventListener('click', function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        banner.style.display = 'none';
+      });
+    });
+    </script>
+</body>
+</html>

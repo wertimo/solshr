@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add a small delay before redirect to ensure modal is hidden
             setTimeout(() => {
                 console.log('Redirecting to account page...');
-                window.location.replace('account.html');
+                window.location.replace('index.html');
             }, 500);
             
         } catch (error) {

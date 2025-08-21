@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(msg);
 
             setTimeout(() => {
-                window.location.replace('index.html');
+                window.location.replace('solar-project.html');
             }, 5000);
             return;
         }
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             try {
                 await signOut(auth);
-                window.location.replace('index.html');
+                window.location.replace('solar-project.html');
             } catch (error) {
                 console.error('Error signing out:', error);
                 alert('Error signing out. Please try again.');
@@ -184,13 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 await deleteUser(user);
 
                 alert('Your account has been deleted.');
-                window.location.replace('index.html');
+                window.location.replace('solar-project.html');
             } catch (error) {
                 console.error('Error deleting account:', error);
                 if (error.code === 'auth/requires-recent-login') {
                     alert('For security, please sign in again before deleting your account.');
                     await signOut(auth);
-                    window.location.replace('index.html');
+                    window.location.replace('solar-project.html');
                 } else {
                     alert('Error deleting account: ' + error.message);
                 }
