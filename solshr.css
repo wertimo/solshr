@@ -237,6 +237,8 @@ button, input, textarea, select { font: inherit; }
 }
 .page-hero .narrow {
     margin-left: 0;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
 }
 .stack-lg { display: grid; gap: 1.3rem; }
 .stack-md { display: grid; gap: 1rem; }
@@ -348,4 +350,6 @@ button, input, textarea, select { font: inherit; }
     .hero { padding-top: 4.5rem; }
     .hero h1, .page-hero h1, .section h2 { max-width: none; }
     .calendly-inline-widget { height: 620px !important; }
+}
+nt; }
 }
