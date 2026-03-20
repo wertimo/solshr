@@ -34,6 +34,6 @@ Current bottlenecks / context:
 ${bottlenecks}`
         );
 
-        window.location.href = `mailto:founder@solshr.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:alex@solshr.com?subject=${subject}&body=${body}`;
     });
 }
