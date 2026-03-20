@@ -86,7 +86,7 @@ button, input, textarea, select { font: inherit; }
 }
 
 .hero { padding-top: 6.5rem; }
-.hero-grid, .two-col, .contact-grid, .grid {
+.hero-grid, .two-col, .contact-grid, .grid, .booking-shell {
     display: grid;
     gap: 1.5rem;
 }
@@ -172,7 +172,7 @@ button, input, textarea, select { font: inherit; }
     margin: 0.2rem 0 1rem;
     max-width: 13ch;
 }
-.audit-shell h2 { max-width: 9ch; }
+.audit-shell h2, .booking-copy h2 { max-width: 10ch; }
 .section p, .service-card p, .service-detail p, .value-card p, .contact-card p, .step p { color: var(--muted); }
 .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -211,7 +211,6 @@ button, input, textarea, select { font: inherit; }
 }
 .cta-shell p, .cta-shell h2, .cta-shell .section-kicker, .text-link { color: #f7f4ed; }
 .text-link { font-weight: 600; opacity: 0.86; }
-.dark-link { color: var(--text); }
 .button {
     display: inline-flex;
     align-items: center;
@@ -287,11 +286,21 @@ button, input, textarea, select { font: inherit; }
 .form-note {
     font-size: 0.9rem;
     color: var(--muted);
-    margin: 0;
+    margin: 0.8rem 0 0;
+}
+.booking-shell {
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: start;
+}
+.calendly-card {
+    padding: 1rem;
+}
+.calendly-inline-widget {
+    width: 100%;
 }
 
 @media (max-width: 980px) {
-    .hero-grid, .two-col, .grid-4, .grid-3, .steps-grid, .contact-grid {
+    .hero-grid, .two-col, .grid-4, .grid-3, .steps-grid, .contact-grid, .booking-shell {
         grid-template-columns: 1fr 1fr;
     }
     .hero-grid { grid-template-columns: 1fr; }
@@ -320,8 +329,9 @@ button, input, textarea, select { font: inherit; }
         box-shadow: var(--shadow);
     }
     .site-nav.open { display: flex; }
-    .grid-4, .grid-3, .two-col, .steps-grid, .contact-grid { grid-template-columns: 1fr; }
+    .grid-4, .grid-3, .two-col, .steps-grid, .contact-grid, .booking-shell { grid-template-columns: 1fr; }
     .section { padding: 4rem 0; }
     .hero { padding-top: 4.5rem; }
     .hero h1, .page-hero h1, .section h2 { max-width: none; }
+    .calendly-inline-widget { height: 620px !important; }
 }
