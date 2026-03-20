@@ -3,186 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOLSHR - solar energy enabler</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Privacy Policy | SOLSHR</title>
+    <meta name="description" content="Read the SOLSHR privacy policy.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="solshr.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8NXBVCDY9"></script>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="nav-top">
-                <div class="logo">
-                    <a href="index.html">SOLSHR</a>
-                </div>
-                <div class="burger">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-            <ul>
-                <li>
-                    <button id="theme-toggle" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
-                    </button>
-                </li>
-                <li>
-                    <div class="language-selector">
-                        <i class="fas fa-globe" onclick="toggleLanguageDropdown()"></i>
-                        <select id="languageSelect" onchange="changeLanguage()" style="display: none;">
-                            <option value="en">EN</option>
-                            <option value="ro">RO</option>
-                            <option value="ru">RU</option>
-                        </select>
-                    </div>
-                </li>
-                <li><a href="#mission" data-lang="mission">MISSION</a></li>
-                <li><a href="#how-it-works" data-lang="how-it-works">HOW IT WORKS</a></li>
-                <li><a href="index.html" data-lang="tiktok-agency-nav">TikTok Agency</a></li>
-                <li><a href="solar-project.html" data-lang="tiktok-nav-solar-project">Solar Project</a></li>
-                <li><a href="#" id="joinWaitlistButton" class="btn" data-lang="join-waitlist">JOIN WAITLIST</a></li>
-            </ul>
-        </nav>
+    <header class="site-header">
+        <div class="container nav-shell">
+            <a class="brand" href="index.html">SOLSHR</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="site-nav">
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="audit.html">AI Audit</a>
+                <a href="contact.html">Contact</a>
+                <a href="contact.html" class="button button-dark">Book a call</a>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section class="legal-content">
-            <h1 data-lang="privacy-policy-title">Privacy Policy</h1>
-            
-            <p data-lang="last-updated">Last updated: 10.05.2025</p>
-            
-            <h2 data-lang="privacy-section-1">1. Introduction</h2>
-            <p data-lang="privacy-intro">Welcome to SOLSHR's Privacy Policy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
-            
-            <h2 data-lang="privacy-section-2">2. Information We Collect</h2>
-            <p data-lang="info-collect-desc">We may collect information about you in a variety of ways. The information we may collect via the Website includes:</p>
-            
-            <h3 data-lang="privacy-section-2-1">2.1 Personal Data</h3>
-            <p data-lang="personal-data-desc">Personally identifiable information, such as your name, email address, and telephone number, that you voluntarily give to us when you register with the Website or when you choose to participate in various activities related to the Website.</p>
-            
-            <h3 data-lang="privacy-section-2-2">2.2 Derivative Data</h3>
-            <p data-lang="derivative-data-desc">Information our servers automatically collect when you access the Website, such as your IP address, browser type, operating system, access times, and the pages you have viewed.</p>
-            
-            <h2 data-lang="privacy-section-3">3. Use of Your Information</h2>
-            <p data-lang="use-info-desc">Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Website to:</p>
-            <ul>
-                <li data-lang="use-info-1">Create and manage your account.</li>
-                <li data-lang="use-info-2">Email you regarding your account or order.</li>
-                <li data-lang="use-info-3">Process payments and refunds.</li>
-                <li data-lang="use-info-4">Send you a newsletter.</li>
-                <li data-lang="use-info-5">Respond to your inquiries.</li>
-                <li data-lang="use-info-6">Request feedback and contact you about your use of the Website.</li>
-                <li data-lang="use-info-7">Monitor and analyze usage and trends to improve your experience with the Website.</li>
-            </ul>
-            
-            <h2 data-lang="privacy-section-4">4. Disclosure of Your Information</h2>
-            <p data-lang="disclosure-desc">We may share information we have collected about you in certain situations. Your information may be disclosed as follows:</p>
-            
-            <h3 data-lang="privacy-section-4-1">4.1 By Law or to Protect Rights</h3>
-            <p data-lang="disclosure-law-desc">If we believe the release of information about you is necessary to respond to legal process, to investigate or remedy potential violations of our policies, or to protect the rights, property, and safety of others, we may share your information as permitted or required by any applicable law, rule, or regulation.</p>
-            
-            <h3 data-lang="privacy-section-4-2">4.2 Third-Party Service Providers</h3>
-            <p data-lang="disclosure-third-party-desc">We may share your information with third parties that perform services for us or on our behalf, including payment processing, data analysis, email delivery, hosting services, customer service, and marketing assistance.</p>
-            
-            <h2 data-lang="privacy-section-5">5. Security of Your Information</h2>
-            <p data-lang="security-desc">We use administrative, technical, and physical security measures to help protect your personal information. While we have taken reasonable steps to secure the personal information you provide to us, please be aware that despite our efforts, no security measures are perfect or impenetrable, and no method of data transmission can be guaranteed against any interception or other type of misuse.</p>
-            
-            <h2 data-lang="privacy-section-6">6. Contact Us</h2>
-            <p data-lang="contact-desc">If you have questions or comments about this Privacy Policy, please contact us at:</p>
-            <p data-lang="contact-email">Email: alex@solshr.com</p>
+        <section class="page-hero section">
+            <div class="container page-hero-inner legal-intro">
+                <p class="eyebrow">Legal</p>
+                <h1>Privacy Policy</h1>
+                <p class="lead">Last updated: 10.05.2025</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container legal-shell">
+                <div class="legal-content card">
+                    <h2>1. Introduction</h2>
+                    <p>Welcome to SOLSHR's Privacy Policy. This policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
+
+                    <h2>2. Information We Collect</h2>
+                    <p>We may collect information about you in a variety of ways through the website, including the following:</p>
+
+                    <h3>2.1 Personal Data</h3>
+                    <p>Personally identifiable information such as your name, email address, and telephone number that you voluntarily provide when you contact us, register, or take part in activities related to the website.</p>
+
+                    <h3>2.2 Derivative Data</h3>
+                    <p>Information our servers collect automatically when you access the website, such as your IP address, browser type, operating system, access times, and pages viewed.</p>
+
+                    <h2>3. Use of Your Information</h2>
+                    <p>We may use information collected about you to provide a smooth and efficient experience, including to:</p>
+                    <ul class="bullet-list legal-list">
+                        <li>create and manage your account</li>
+                        <li>email you regarding your account or order</li>
+                        <li>process payments and refunds</li>
+                        <li>send newsletters or updates</li>
+                        <li>respond to enquiries</li>
+                        <li>request feedback</li>
+                        <li>monitor and analyse usage trends</li>
+                    </ul>
+
+                    <h2>4. Disclosure of Your Information</h2>
+                    <p>We may share information we collect in certain circumstances.</p>
+
+                    <h3>4.1 By Law or to Protect Rights</h3>
+                    <p>We may disclose your information if necessary to respond to legal process, investigate policy violations, or protect rights, property, or safety.</p>
+
+                    <h3>4.2 Third-Party Service Providers</h3>
+                    <p>We may share your information with third parties performing services on our behalf, including payment processing, data analysis, email delivery, hosting, customer service, and marketing assistance.</p>
+
+                    <h2>5. Security of Your Information</h2>
+                    <p>We use administrative, technical, and physical security measures to protect your personal information. However, no security measure is perfect, and no transmission method can be guaranteed against interception or misuse.</p>
+
+                    <h2>6. Contact</h2>
+                    <p>If you have any questions about this Privacy Policy, contact us at <a href="mailto:alex@solshr.com">alex@solshr.com</a>.</p>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="social-icons">
-            <li class="footer-icon">
-                <a href="https://www.instagram.com/solshr_official/" target="_blank" aria-label="Instagram">
-                    <i class="fab fab fa-instagram icon-instagram"></i>
-                </a>
-            </li>
-            <li class="footer-icon">
-                <a href="https://www.tiktok.com/@solshr_official" target="_blank" aria-label="TikTok">
-                    <i class="fab fa-tiktok icon-tiktok"></i>
-                </a>
-            </li>
-            <li class="footer-icon">
-                <a href="https://www.youtube.com/@solshr_official" target="_blank" aria-label="YouTube">
-                    <i class="fab fa-youtube icon-youtube"></i>
-                </a>
-            </li>
-        </div>
-        <div class="footer-info">
-            <p>&copy; 2025 SOLSHR. All rights reserved.</p>
-            <p>
-                <a href="privacy-policy.html" class="contact-link">Privacy Policy</a> | 
-                <a href="terms-and-conditions.html" class="contact-link">Terms & Conditions</a>
-            </p>
+    <footer class="site-footer">
+        <div class="container footer-shell">
+            <div>
+                <a class="brand footer-brand" href="index.html">SOLSHR</a>
+                <p>Practical AI enablement for growing businesses.</p>
+            </div>
+            <div class="footer-links">
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="audit.html">AI Audit</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            </div>
         </div>
     </footer>
 
-    <div id="cookieConsentBanner" class="cookie-banner" style="display:none;">
-        <span>
-            We care about your data. We use cookies to personalize content and to analyze our traffic.
-            No data is collected for marketing purposes.
-            <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
-        </span>
-        <button id="cookieConsentAccept" class="btn">Okay!</button>
-    </div>
-
-    <div id="formModal" class="modal">
-        <div class="modal-content">
-            <span class="close" data-lang="close">&times;</span>
-            <form id="responseForm">
-                <h2 data-lang="form-title">Join Our Waitlist</h2>
-                <div>
-                    <label for="name" data-lang="name-label">Name:</label>
-                    <input type="text" id="name" required placeholder="Enter your name" data-lang="name-placeholder">
-                </div>
-                <div>
-                    <label for="email" data-lang="email-label">Email:</label>
-                    <input type="email" id="email" required placeholder="Enter your email" data-lang="email-placeholder">
-                </div>
-                <div>
-                    <label for="comment" data-lang="comment-label">Comment (optional):</label>
-                    <input type="text" id="comment" placeholder="Enter your comment" data-lang="comment-placeholder">
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms-checkbox" required>
-                    <label for="terms-checkbox" data-lang="terms-checkbox-label">I agree to the <a href="privacy-policy.html" target="_blank">Privacy Policy</a> and <a href="terms-and-conditions.html" target="_blank">Terms & Conditions</a></label>
-                </div>
-                <button type="submit" data-lang="submit-button">Join Waitlist</button>
-            </form>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: false,
-            mirror: true
-        });
-    </script>  
-
-    <!-- Your scripts -->
-    <script type="module" src="script.js"></script>
-    <script type="module" src="auth.js"></script>
-    <script src="translations.js"></script>
-    <script src="env-config.js"></script>
-    <!-- Firebase App (the core Firebase SDK) -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-    <!-- Firebase Analytics -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
-    <!-- Your custom script -->
-    <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script type="module"src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    
-    <script type="module" src="script.js"></script>
+    <script src="solshr.js"></script>
 </body>
-</html> 
+</html>
