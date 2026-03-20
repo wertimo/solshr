@@ -7,3 +7,33 @@ if (navToggle && siteNav) {
         navToggle.setAttribute('aria-expanded', String(isOpen));
     });
 }
+
+const leadForm = document.querySelector('#leadForm');
+
+if (leadForm) {
+    leadForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(leadForm);
+        const name = formData.get('name')?.toString().trim() || '';
+        const company = formData.get('company')?.toString().trim() || '';
+        const email = formData.get('email')?.toString().trim() || '';
+        const interest = formData.get('interest')?.toString().trim() || '';
+        const bottlenecks = formData.get('bottlenecks')?.toString().trim() || '';
+        const budget = formData.get('budget')?.toString().trim() || 'Not specified';
+
+        const subject = encodeURIComponent(`${interest || 'New Enquiry'} | ${company || name || 'SOLSHR lead'}`);
+        const body = encodeURIComponent(
+`Name: ${name}
+Company: ${company}
+Email: ${email}
+Interest: ${interest}
+Budget: ${budget}
+
+Current bottlenecks / context:
+${bottlenecks}`
+        );
+
+        window.location.href = `mailto:founder@solshr.com?subject=${subject}&body=${body}`;
+    });
+}

@@ -30,27 +30,71 @@
         <section class="page-hero section">
             <div class="container narrow">
                 <p class="eyebrow">Contact</p>
-                <h1>Let’s talk about where AI can create the most value in your business.</h1>
+                <h1>Lets talk about where AI can create the most value in your business.</h1>
                 <p class="lead">If you are looking for practical support across strategy, automation, or operational efficiency, get in touch and we can start with the highest-leverage opportunity first.</p>
             </div>
         </section>
 
         <section class="section">
-            <div class="container contact-grid">
+            <div class="container contact-grid contact-grid-wide">
                 <div class="card contact-card">
-                    <p class="section-kicker">Start here</p>
-                    <h2>Book a discovery call</h2>
-                    <p>The fastest route is a short conversation about your current bottlenecks, priorities, and where AI could drive a real return.</p>
-                    <a href="mailto:founder@solshr.com?subject=Discovery%20Call%20Request" class="button button-dark">Email founder@solshr.com</a>
+                    <p class="section-kicker">Primary CTA</p>
+                    <h2>Request an AI Readiness Audit</h2>
+                    <p>Tell us where your business is stuck and we will map the clearest opportunities for AI, automation, and process improvement.</p>
+                    <form class="lead-form" id="leadForm">
+                        <label>
+                            Name
+                            <input type="text" name="name" required>
+                        </label>
+                        <label>
+                            Company
+                            <input type="text" name="company" required>
+                        </label>
+                        <label>
+                            Email
+                            <input type="email" name="email" required>
+                        </label>
+                        <label>
+                            What do you want help with?
+                            <select name="interest" required>
+                                <option value="">Select one</option>
+                                <option>AI Readiness Audit</option>
+                                <option>Marketing Strategy</option>
+                                <option>Automation</option>
+                                <option>Process Optimisation</option>
+                                <option>General Enquiry</option>
+                            </select>
+                        </label>
+                        <label>
+                            Current bottlenecks
+                            <textarea name="bottlenecks" rows="5" placeholder="What feels slow, inefficient, unclear, or expensive right now?" required></textarea>
+                        </label>
+                        <label>
+                            Budget range
+                            <select name="budget">
+                                <option value="Not specified">Prefer not to say</option>
+                                <option>GBP 1k-3k</option>
+                                <option>GBP 3k-7k</option>
+                                <option>GBP 7k-15k</option>
+                                <option>GBP 15k+</option>
+                            </select>
+                        </label>
+                        <button type="submit" class="button button-dark">Send enquiry</button>
+                        <p class="form-note">Submitting opens your email client with the enquiry pre-filled to <strong>founder@solshr.com</strong>.</p>
+                    </form>
                 </div>
                 <div class="card contact-card">
-                    <p class="section-kicker">What to include</p>
+                    <p class="section-kicker">What to expect</p>
                     <ul class="bullet-list">
-                        <li>Your business and sector</li>
-                        <li>Current growth or operational bottlenecks</li>
-                        <li>Where you think AI might help</li>
-                        <li>Your timeline and budget range</li>
+                        <li>A focused first conversation, not a vague brainstorm</li>
+                        <li>Clarity on where AI could create actual ROI</li>
+                        <li>Practical next steps based on your business stage</li>
+                        <li>Honest pushback if something is not worth doing</li>
                     </ul>
+                    <div class="contact-divider"></div>
+                    <p class="section-kicker">Direct contact</p>
+                    <p>If you prefer, email directly instead of using the form.</p>
+                    <a href="mailto:founder@solshr.com?subject=Discovery%20Call%20Request" class="button button-light">founder@solshr.com</a>
                 </div>
             </div>
         </section>
