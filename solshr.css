@@ -350,7 +350,10 @@ button, input, textarea, select { font: inherit; }
         padding-right: 0;
     }
     .section { padding: 4rem 0; }
-    .hero { padding-top: 4.5rem; }
+    .hero {
+        padding-top: 4.5rem;
+        padding-bottom: 4rem;
+    }
     .hero h1, .page-hero h1, .section h2 { max-width: none; }
     .calendly-inline-widget { height: 620px !important; }
 }
