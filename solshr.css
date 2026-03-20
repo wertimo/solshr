@@ -149,10 +149,6 @@ button, input, textarea, select { font: inherit; }
     padding: 1.75rem;
     box-shadow: var(--shadow);
 }
-.hero-panel {
-    padding: 2rem;
-    align-self: end;
-}
 .check-list li, .bullet-list li {
     position: relative;
     padding-left: 1.5rem;
@@ -177,10 +173,7 @@ button, input, textarea, select { font: inherit; }
     max-width: 13ch;
 }
 .audit-shell h2, .booking-copy h2 { max-width: 10ch; }
-.section p, .service-card p, .service-detail p, .value-card p, .contact-card p, .step p { color: var(--muted); }
-.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.service-card h3, .value-card h3, .contact-card h2, .step h3 { margin-top: 0; font-size: 1.25rem; }
+.section p, .servivice-card h3, .value-card h3, .contact-card h2, .step h3 { margin-top: 0; font-size: 1.25rem; }
 .two-col { grid-template-columns: 1.1fr 0.9fr; align-items: start; }
 .emphasis-card {
     background: var(--accent-dark);
@@ -355,5 +348,16 @@ button, input, textarea, select { font: inherit; }
         padding-bottom: 4rem;
     }
     .hero h1, .page-hero h1, .section h2 { max-width: none; }
+    .calendly-inline-widget { height: 620px !important; }
+}
+on { padding: 4rem 0; }
+    .hero {
+        padding-top: 4.5rem;
+        padding-bottom: 4rem;
+    }
+    .hero h1, .page-hero h1, .section h2 { max-width: none; }
+    .calendly-inline-widget { height: 620px !important; }
+}
+page-hero h1, .section h2 { max-width: none; }
     .calendly-inline-widget { height: 620px !important; }
 }
