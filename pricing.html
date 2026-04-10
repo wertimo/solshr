@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | SOLSHR</title>
+    <meta name="description" content="Simple, transparent pricing for SOLSHR AI marketing and automation systems. Choose the tier that fits where your business is right now.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="solshr.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--
+        STRIPE INTEGRATION:
+        This page uses Stripe Payment Links — the simplest way to accept payments on a static site.
+        To connect each tier to Stripe:
+        1. Go to dashboard.stripe.com → Payment Links → Create link
+        2. Set the product name, price, and billing interval
+        3. Copy the generated URL (e.g. https://buy.stripe.com/xxxx)
+        4. Replace the href="#stripe-clarity", href="#stripe-build", href="#stripe-scale"
+           attributes on the three CTA buttons below with your actual Stripe Payment Link URLs
+    -->
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-shell">
+            <a class="brand" href="index.html">SOLSHR</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="site-nav">
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="audit.html">AI Audit</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="contact.html" class="button button-dark">Book a call</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero section">
+            <div class="container page-hero-inner">
+                <p class="eyebrow">Pricing</p>
+                <h1>Simple, transparent pricing.</h1>
+                <p class="lead">No retainer surprises. No tool licensing markups. Choose the tier that fits where your business is right now — and scale when you are ready.</p>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="pricing-intro">
+                    <p class="section-kicker">Three tiers</p>
+                    <h2>Start with clarity. Scale with results.</h2>
+                    <p style="color:var(--muted);">Every engagement starts with understanding your business first. We do not sell generic packages — each tier is focused on a specific outcome.</p>
+                </div>
+
+                <div class="pricing-grid">
+
+                    <!-- TIER 1: CLARITY -->
+                    <div class="pricing-card">
+                        <div class="pricing-name">Clarity</div>
+                        <div class="pricing-desc">For businesses that want to understand where AI will actually move the needle before committing to implementation.</div>
+                        <div class="pricing-divider"></div>
+                        <div class="pricing-amount">£497</div>
+                        <div class="pricing-period">one-time · delivered in 5 days</div>
+                        <ul class="pricing-features">
+                            <li>Full AI Readiness Audit of your business</li>
+                            <li>90-minute strategy session (recorded)</li>
+                            <li>Prioritised automation opportunity map</li>
+                            <li>Tool stack review and recommendations</li>
+                            <li>Written action plan with quick wins</li>
+                            <li>30-day follow-up Q&amp;A via email</li>
+                        </ul>
+                        <!--
+                            Replace href="#stripe-clarity" with your Stripe Payment Link URL.
+                            Example: href="https://buy.stripe.com/your_link_here"
+                        -->
+                        <a href="#stripe-clarity" class="button button-light" onclick="handleStripeLink(event, 'clarity')">Get started</a>
+                    </div>
+
+                    <!-- TIER 2: BUILD (featured) -->
+                    <div class="pricing-card featured">
+                        <div class="pricing-badge">Most popular</div>
+                        <div class="pricing-name">Build</div>
+                        <div class="pricing-desc">For businesses ready to implement a full AI automation system across lead generation, follow-up, and content.</div>
+                        <div class="pricing-divider"></div>
+                        <div class="pricing-amount">£1,497</div>
+                        <div class="pricing-period">per month · 3-month minimum</div>
+                        <ul class="pricing-features">
+                            <li>Everything in Clarity</li>
+                            <li>ManyChat + AI DM automation setup</li>
+                            <li>Lead qualification and scoring system</li>
+                            <li>5-step automated follow-up sequences</li>
+                            <li>AI content calendar (weekly drafts)</li>
+                            <li>CRM integration and pipeline view</li>
+                            <li>2× monthly performance check-ins</li>
+                            <li>30-day results review and optimisation</li>
+                        </ul>
+                        <!--
+                            Replace href="#stripe-build" with your Stripe Payment Link URL.
+                            Example: href="https://buy.stripe.com/your_link_here"
+                        -->
+                        <a href="#stripe-build" class="button button-light-on-dark" onclick="handleStripeLink(event, 'build')">Get started</a>
+                    </div>
+
+                    <!-- TIER 3: SCALE -->
+                    <div class="pricing-card">
+                        <div class="pricing-name">Scale</div>
+                        <div class="pricing-desc">For businesses that want a full ongoing AI growth partner — strategy, implementation, and continuous optimisation.</div>
+                        <div class="pricing-divider"></div>
+                        <div class="pricing-amount">£2,997</div>
+                        <div class="pricing-period">per month · rolling contract</div>
+                        <ul class="pricing-features">
+                            <li>Everything in Build</li>
+                            <li>Custom AI integrations built to your workflow</li>
+                            <li>Multi-platform automation (Instagram, WhatsApp, Email)</li>
+                            <li>Weekly strategy and performance calls</li>
+                            <li>Real-time reporting dashboard</li>
+                            <li>Priority support (response within 4 hours)</li>
+                            <li>Dedicated Slack channel</li>
+                            <li>Continuous system optimisation and A/B testing</li>
+                        </ul>
+                        <!--
+                            Replace href="#stripe-scale" with your Stripe Payment Link URL.
+                            Example: href="https://buy.stripe.com/your_link_here"
+                        -->
+                        <a href="#stripe-scale" class="button button-light" onclick="handleStripeLink(event, 'scale')">Get started</a>
+                    </div>
+
+                </div>
+
+                <p class="pricing-note">Not sure which tier is right for you? <a href="contact.html" style="color:var(--accent);font-weight:600;">Book a free 20-minute call</a> and we will point you in the right direction.</p>
+
+            </div>
+        </section>
+
+        <section class="section section-soft">
+            <div class="container">
+                <div class="pricing-faq">
+                    <p class="section-kicker">Common questions</p>
+                    <h2>Things people ask before getting started.</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h4>Do I need to sign a long contract?</h4>
+                            <p>Clarity is one-time with no ongoing commitment. Build requires a 3-month minimum so we can implement and prove results properly. Scale is a rolling monthly contract — cancel with 30 days' notice.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Do I need ManyChat already set up?</h4>
+                            <p>No. We handle the full ManyChat setup, AI configuration, and integration as part of the Build and Scale tiers. You just need a Meta Business account and we take it from there.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>What platforms do you automate on?</h4>
+                            <p>We primarily work across Instagram, Facebook Messenger, and WhatsApp for DM automation, with email and SMS sequences for follow-up. Scale also covers multi-channel custom builds.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>How quickly will I see results?</h4>
+                            <p>Most clients see faster lead response times and improved conversion rates within the first two weeks of going live. We track and report on this from day one.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Can I upgrade between tiers?</h4>
+                            <p>Yes — most clients start with Clarity, then move to Build once they have a clear roadmap. Upgrading mid-month is straightforward and we credit any overlap.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>What does the onboarding process look like?</h4>
+                            <p>After payment, you will receive an onboarding form and we schedule a kickoff call within 48 hours. Most automations are live within 10–14 business days from kickoff.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Are there any tool costs on top of this?</h4>
+                            <p>ManyChat Pro costs around £15/month and is the only consistent third-party cost. We will outline the full tool stack during onboarding — no hidden markups.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Is this only for marketing businesses?</h4>
+                            <p>No. We work with fitness coaches, e-commerce brands, service businesses, agencies, and more. If your business gets enquiries and has leads to follow up, we can build a system that works.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pricing-cta-section">
+                    <p class="section-kicker">Next step</p>
+                    <h2>Not sure where to start?</h2>
+                    <p>Book a free 20-minute call. We will look at your current setup, tell you where the biggest opportunity is, and give you an honest recommendation — even if that is not us.</p>
+                    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                        <a href="contact.html" class="button button-light-on-dark">Book a free call</a>
+                        <a href="audit.html" class="text-link" style="display:flex;align-items:center;">See the AI Audit</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-shell">
+            <div>
+                <a class="brand footer-brand" href="index.html">SOLSHR</a>
+                <p>Practical AI enablement for growing businesses.</p>
+            </div>
+            <div class="footer-links">
+                <a href="services.html">Services</a>
+                <a href="about.html">About</a>
+                <a href="audit.html">AI Audit</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="solshr.js"></script>
+    <script>
+        /*
+         * STRIPE PAYMENT LINKS — SETUP INSTRUCTIONS
+         * ==========================================
+         * 1. Go to https://dashboard.stripe.com/payment-links
+         * 2. Create a Payment Link for each tier (Clarity, Build, Scale)
+         * 3. Replace the placeholder URLs below with your actual Stripe Payment Link URLs
+         *
+         * Once you replace these, the buttons above will redirect directly to Stripe Checkout —
+         * no backend or server code needed.
+         */
+        const STRIPE_LINKS = {
+            clarity: 'https://buy.stripe.com/cNi3cwfiN86jbwqbUJ2cg00',
+            build:   'https://buy.stripe.com/dRm14o9Ytbivasm9MB2cg01',
+            scale:   'https://buy.stripe.com/cNifZi8Up3Q31VQ0c12cg02',
+        };
+
+        function handleStripeLink(e, tier) {
+            const url = STRIPE_LINKS[tier];
+            if (!url || url === '#') {
+                e.preventDefault();
+                // Fallback to contact page until Stripe links are configured
+                window.location.href = 'contact.html';
+            }
+            // If url is a real Stripe link, the normal href click will follow it
+        }
+    </script>
+</body>
+</html>
