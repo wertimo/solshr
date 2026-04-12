@@ -320,17 +320,17 @@ button, input, textarea, select { font: inherit; }
     margin: 0.8rem 0 0;
 }
 .booking-shell {
-    grid-template-columns: 0.9fr 1.1fr;
+    grid-template-columns: 1fr 1fr;
     align-items: stretch;
 }
-.booking-copy {
+.booking-copy, .booking-card {
     display: flex;
     flex-direction: column;
+}
+.booking-copy {
     justify-content: space-between;
 }
 .booking-card {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 .booking-card .button {
