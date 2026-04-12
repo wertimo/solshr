@@ -311,13 +311,7 @@ button, input, textarea, select { font: inherit; }
     align-items: start;
 }
 .booking-card {
-    padding: 1rem;
-}
-.gcal-embed {
-    width: 100%;
-    height: 700px;
-    border: none;
-    border-radius: 12px;
+    padding: 1.75rem;
 }
 .legal-shell {
     max-width: 900px;
@@ -682,7 +676,6 @@ button, input, textarea, select { font: inherit; }
         padding-bottom: 4rem;
     }
     .hero h1, .page-hero h1, .section h2 { max-width: none; }
-    .gcal-embed { height: 620px !important; }
     .legal-content {
         padding: 1.4rem;
     }
