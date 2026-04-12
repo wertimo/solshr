@@ -2,12 +2,6 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Firebase Hosting Emulator",
-      "runtimeExecutable": "firebase",
-      "runtimeArgs": ["emulators:start", "--only", "hosting"],
-      "port": 5000
-    },
-    {
       "name": "Static Server (serve)",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", ".", "--listen", "3000"],

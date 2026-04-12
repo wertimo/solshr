@@ -310,11 +310,14 @@ button, input, textarea, select { font: inherit; }
     grid-template-columns: 0.9fr 1.1fr;
     align-items: start;
 }
-.calendly-card {
+.booking-card {
     padding: 1rem;
 }
-.calendly-inline-widget {
+.gcal-embed {
     width: 100%;
+    height: 700px;
+    border: none;
+    border-radius: 12px;
 }
 .legal-shell {
     max-width: 900px;
@@ -679,7 +682,7 @@ button, input, textarea, select { font: inherit; }
         padding-bottom: 4rem;
     }
     .hero h1, .page-hero h1, .section h2 { max-width: none; }
-    .calendly-inline-widget { height: 620px !important; }
+    .gcal-embed { height: 620px !important; }
     .legal-content {
         padding: 1.4rem;
     }
