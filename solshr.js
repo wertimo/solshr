@@ -147,25 +147,60 @@ if (leadForm) {
         event.preventDefault();
 
         const formData = new FormData(leadForm);
-        const name = formData.get('name')?.toString().trim() || '';
-        const company = formData.get('company')?.toString().trim() || '';
-        const email = formData.get('email')?.toString().trim() || '';
-        const interest = formData.get('interest')?.toString().trim() || '';
+        const name        = formData.get('name')?.toString().trim() || '';
+        const company     = formData.get('company')?.toString().trim() || '';
+        const email       = formData.get('email')?.toString().trim() || '';
+        const interest    = formData.get('interest')?.toString().trim() || '';
         const bottlenecks = formData.get('bottlenecks')?.toString().trim() || '';
-        const budget = formData.get('budget')?.toString().trim() || 'Not specified';
+        const budget      = formData.get('budget')?.toString().trim() || 'Not specified';
 
-        const subject = encodeURIComponent(`${interest || 'New Enquiry'} | ${company || name || 'SOLSHR lead'}`);
-        const body = encodeURIComponent(
-`Name: ${name}
-Company: ${company}
-Email: ${email}
-Interest: ${interest}
-Budget: ${budget}
+        const btn = leadForm.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        leadForm.style.opacity = '0.6';
+        leadForm.style.pointerEvents = 'none';
 
-Current bottlenecks / context:
-${bottlenecks}`
-        );
-
-        window.location.href = `mailto:alex@solshr.com?subject=${subject}&body=${body}`;
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                access_key:  '8664a220-852d-44c9-9343-ac4a8ec79fcc',
+                subject:     `${interest || 'New Enquiry'} | ${company || name || 'SOLSHR lead'}`,
+                from_name:   name,
+                email,
+                company,
+                interest,
+                budget,
+                message:     bottlenecks,
+            }),
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                leadForm.innerHTML = `
+                    <div style="padding:1.5rem 0;display:flex;flex-direction:column;gap:0.75rem;">
+                        <p style="font-weight:700;font-size:1.05rem;margin:0;">Thanks, ${name || 'there'}!</p>
+                        <p style="color:var(--muted);margin:0;">Your enquiry has been sent. Alex will be in touch within one business day.</p>
+                    </div>`;
+                leadForm.style.opacity = '1';
+                leadForm.style.pointerEvents = '';
+            } else {
+                throw new Error(data.message || 'Submission failed');
+            }
+        })
+        .catch(() => {
+            btn.textContent = 'Send enquiry';
+            btn.disabled = false;
+            leadForm.style.opacity = '1';
+            leadForm.style.pointerEvents = '';
+            const existing = leadForm.querySelector('.form-error');
+            if (!existing) {
+                const err = document.createElement('p');
+                err.className = 'form-error';
+                err.style.cssText = 'color:#c0392b;font-size:0.9rem;margin:0;';
+                err.textContent = 'Something went wrong — please email alex@solshr.com directly.';
+                btn.insertAdjacentElement('beforebegin', err);
+            }
+        });
     });
 }
